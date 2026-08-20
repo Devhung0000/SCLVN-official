@@ -1,0 +1,20 @@
+{
+    "id": 145052376,
+    "name": "your best nightmare",
+    "author": "baominh",
+    "creators": ["baominh"],
+    "verifier": "baominh",
+    "verification": "https://youtu.be/M4IhSaWC0rk",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

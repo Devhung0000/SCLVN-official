@@ -1,0 +1,27 @@
+{
+    "id": 146759545,
+    "name": "breakthrought",
+    "author": "LXQP",
+    "creators": ["LXQP"],
+    "verifier": "LXQP",
+    "verification": "https://youtu.be/wVG5pEIskXY",
+    "percentToQualify": 100,
+    "fps": "Any",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "NookGD",
+        "link":"https://drive.google.com/open?id=102Whc76VhrZzZpefkDyfid9v_0vPw_5D",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "baominh",
+        "link": "https://youtu.be/eYm5zIF9ahU",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

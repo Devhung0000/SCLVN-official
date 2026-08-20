@@ -1,0 +1,68 @@
+{
+    "id": 80997232,
+    "name": "ambatakum",
+    "author": "icedperry",
+    "creators": ["icedperry"],
+    "verifier": "icedperry",
+    "verification": "https://youtu.be/tX_cRiobxDw",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Baominh",
+        "hz": "60",
+        "percent": 100,
+        "link": "https://youtu.be/k29SCpILJZc"
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/file/d/1E636Mx8jHsh3VTBLTpec31ifGqsEaj3c/view?usp=sharing",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Jaokujn",
+        "link": "https://youtu.be/Np38RgF79H0?si=o0KSvPNreS1GnDHk",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "finaliteration",
+        "link": "https://youtu.be/4opWfvTPrs4",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "LXQP",
+        "link": "https://youtu.be/LxPbkH_GnB8",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "longhet20110",
+        "link": "https://youtube.com/shorts/OIBByqfwvis?feature=share",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "yarubGMD",
+        "link": "https://youtu.be/OEIF_SZlaYc",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/open?id=1BKNMW5nFlwugmM0EdhZqAJeiTnOD_Fnh",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

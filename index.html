@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:url" content="https://thespamchallengelistvietnam.pages.dev/"/>
+        <meta property="og:title" content="The Spam Challenge List Vietnam" />
+        <meta property="og:description" content="This is a website for the hardest spam challenges in Vietnam!" />
+        <meta property="og:image" content="https://thespamchallengelistvietnam2.pages.dev/assets/the%20sclvn%20logo.png" />
+        <title>The Spam Challenge List Vietnam</title>
+
+        <link rel="icon" href="/assets/the sclvn logo.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="/css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="/css/typography.css" />
+        <link rel="stylesheet" type="text/css" href="/css/main.css" />
+        <link rel="stylesheet" type="text/css" href="/css/pages/list.css" />
+        <link rel="stylesheet" type="text/css" href="/css/pages/leaderboard.css" />
+        <link rel="stylesheet" type="text/css" href="/css/pages/roulette.css" />
+        <link rel="stylesheet" type="text/css" href="/css/components/nav.css" />
+        <link rel="stylesheet" type="text/css" href="/css/components/btn.css" />
+        <link rel="stylesheet" type="text/css" href="/css/components/tabs.css" />
+
+        <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
+        <script src="https://unpkg.com/vue-router@4.0.14/dist/vue-router.global.prod.js"></script>
+        <script type="module" src="/js/main.js"></script>
+    </head>
+
+    <body id="app">
+        <aside class="app-sidebar">
+            <div>
+                <nav class="sidebar-nav">
+                    <router-link class="sidebar-item" to="/" title="List">
+                        <span class="sidebar-icon">📋</span>
+                        <span class="sidebar-label">List</span>
+                    </router-link>
+
+                    <router-link class="sidebar-item" to="/leaderboard" title="Leaderboard">
+                        <span class="sidebar-icon">🏆</span>
+                        <span class="sidebar-label">Leaderboard</span>
+                    </router-link>
+
+                    <router-link class="sidebar-item" to="/roulette" title="Roulette">
+                        <span class="sidebar-icon">🎰</span>
+                        <span class="sidebar-label">Roulette</span>
+                    </router-link>
+
+                    <router-link class="sidebar-item" to="/submit" title="Submit Record">
+                        <span class="sidebar-icon">📤</span>
+                        <span class="sidebar-label">Submit</span>
+                    </router-link>
+
+                    <router-link
+                        v-if="store.user && store.user.role === 'admin'"
+                        class="sidebar-item sidebar-item-admin"
+                        to="/admin"
+                        title="Duyệt Record"
+                    >
+                        <span class="sidebar-icon">🛡️</span>
+                        <span class="sidebar-label">Duyệt Record</span>
+                    </router-link>
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+                <a class="sidebar-item" href="https://discord.gg/Qcj5JSRKa" target="_blank" rel="noopener noreferrer" title="Discord Server">
+                    <span class="sidebar-icon">
+                        <img src="/assets/discord.svg" alt="Discord" />
+                    </span>
+                    <span class="sidebar-label">Discord Server</span>
+                </a>
+
+                <div v-if="!store.user">
+                    <router-link to="/login" class="sidebar-item sidebar-login" title="Login / Register">
+                        <span class="sidebar-icon">🔑</span>
+                        <span class="sidebar-label">Login / Register</span>
+                    </router-link>
+                </div>
+
+                <template v-else>
+                    <div class="user-info-box">
+                        <img :src="store.user.avatar || '/assets/the sclvn logo.png'" class="user-avatar" alt="Avatar">
+                        <div class="sidebar-label sidebar-user-label">
+                            <span class="sidebar-username">{{ store.user.username || store.user.displayName || 'Player' }}</span>
+                            <span v-if="store.user.role === 'admin'" class="sidebar-admin-label">ADMIN</span>
+                        </div>
+                    </div>
+
+                    <router-link to="/profile" class="sidebar-item" title="Profile">
+                        <span class="sidebar-icon">👤</span>
+                        <span class="sidebar-label">Profile</span>
+                    </router-link>
+
+                    <button @click="store.handleLogout()" class="sidebar-item sidebar-logout" title="Logout">
+                        <span class="sidebar-icon">🚪</span>
+                        <span class="sidebar-label">Logout</span>
+                    </button>
+                </template>
+            </div>
+        </aside>
+
+        <div class="main-content">
+            <div class="topbar">
+                <div class="topbar-left">
+                    <router-link to="/" class="topbar-brand">
+                        <img src="/assets/the sclvn logo.png" alt="SCLVN Logo" class="topbar-logo" />
+                        <div class="topbar-brand-text">
+                            <h2>SCLVN</h2>
+                            <span>Spam Challenge List Vietnam</span>
+                        </div>
+                    </router-link>
+                </div>
+
+                <div class="topbar-center">
+                    <form class="topbar-search" @submit.prevent="handleGlobalSearch">
+                        <span class="topbar-search-icon">⌕</span>
+                        <input
+                            id="global-search"
+                            v-model="globalSearchQuery"
+                            type="search"
+                            autocomplete="off"
+                            placeholder="Search levels..."
+                            aria-label="Search levels"
+                        />
+                        <span class="topbar-shortcut">Ctrl K</span>
+                    </form>
+                </div>
+
+                <div class="topbar-right">
+                    <router-link to="/submit" class="topbar-btn">Submit Record</router-link>
+
+                    <a href="https://discord.gg/Qcj5JSRKa" target="_blank" rel="noopener noreferrer" class="topbar-icon-btn" title="Discord">
+                        <img src="/assets/discord.svg" alt="Discord" />
+                    </a>
+
+                    <router-link v-if="store.user" to="/profile" class="topbar-user">
+                        <img :src="store.user.avatar || '/assets/the sclvn logo.png'" alt="Avatar" />
+                        <span>{{ store.user.username || 'Player' }}</span>
+                    </router-link>
+
+                    <router-link v-else to="/login" class="topbar-btn">Login</router-link>
+                </div>
+            </div>
+
+            <div class="page-shell">
+                <router-view></router-view>
+            </div>
+        </div>
+    </body>
+</html>

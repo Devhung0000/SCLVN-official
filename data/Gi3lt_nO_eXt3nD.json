@@ -1,0 +1,83 @@
+{
+    "id": 143559873,
+    "name": "Gi3lt nO eXt3nD",
+    "author": "giangdelt",
+    "creators": ["giangdelt"],
+    "verifier": "giangdelt",
+    "verification": "https://www.youtube.com/watch?v=yKeP4Co-B7o",
+    "percentToQualify": 100,
+    "fps": "Any",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "QuyetDat",
+        "hz": "240",
+        "percent": 100
+        },
+        {
+        "user": "sakiraGMD",
+        "hz": "COS",
+        "percent": 100
+        },
+        {
+        "user": "baominh",
+        "link": "https://www.youtube.com/watch?v=wmvc8mQiOMY",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "HGL2",
+        "hz": "240",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "hz": "240",
+        "percent": 100
+        },
+        {
+        "user": "Jaokujn",
+        "link": "https://youtu.be/Txec-LP4ckQ?si=jHwyMOEV1ZKieOdo",
+        "hz": "COS",
+        "percent": 100
+        },
+        {
+        "user": "longhet20110",
+        "link": "https://youtube.com/shorts/zX5WtRih9-4?feature=share",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "finaliteration",
+        "link": "https://youtu.be/4opWfvTPrs4",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "chillguy73",
+        "link": "https://www.youtube.com/watch?v=H40waZsfjNM",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "JunhaHoangGD",
+        "link": "https://youtu.be/5K46L0HCxcQ",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/open?id=1SjGYE2LbSj0tedLTKr234oCHjhlOpFT8",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "HaDuc",
+        "link": "https://youtu.be/v1mQyC9L5B8",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

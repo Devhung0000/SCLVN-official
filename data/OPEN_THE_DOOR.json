@@ -1,0 +1,31 @@
+{
+    "id": 144111001,
+    "name": "OPEN THE DOOR",
+    "author": "NookGD",
+    "creators": ["NookGD"],
+    "verifier": "NookGD",
+    "verification": "https://www.youtube.com/watch?v=f0RIlRPlrI4",
+    "percentToQualify": "100",
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "baominh",
+        "link": "https://www.youtube.com/watch?v=lhZkV_vo1sQ",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "QuyetDat",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "HGL2",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

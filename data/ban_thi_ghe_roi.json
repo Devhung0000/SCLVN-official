@@ -1,0 +1,20 @@
+{
+    "id": 65481091,
+    "name": "ban thi ghe roi",
+    "author": "Korvak",
+    "creators": ["Korvak"],
+    "verifier": "Korvak",
+    "verification": "https://youtu.be/iAyRiEcYbrs",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "necessary",
+    "device": "All",
+    "method": "Jitter",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

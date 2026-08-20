@@ -1,0 +1,20 @@
+{
+    "id": 147162899 ,
+    "name": "longhet spam",
+    "author": "longhet20110",
+    "creators": ["longhet20110"],
+    "verifier": "longhet20110",
+    "verification": "https://youtu.be/oSJZrao78YI",
+    "percentToQualify": "100",
+    "fps": "CBF",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

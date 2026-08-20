@@ -1,0 +1,47 @@
+{
+    "id": 131450305,
+    "name": "neck hurts challenge",
+    "author": "baominh",
+    "creators": ["baominh"],
+    "verifier": "baominh",
+    "verification": "https://www.youtube.com/watch?v=h56g5vzNC14",
+    "percentToQualify": 100,
+    "fps": "CBF",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "QuyetDat",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "finaliteration",
+        "hz": "CBF",
+        "link": "https://youtu.be/Lc2NU7kaSJE",
+        "percent": 100
+        },
+        {
+        "user": "HGL2",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/open?id=1mc2tyDoTCEH-IC0uWR4UGgmlXDU0blKK",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "giangdelt",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

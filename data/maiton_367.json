@@ -1,0 +1,48 @@
+{
+    "id": 144103410,
+    "name": "maiton 367",
+    "author": "giangdelt",
+    "creators": ["giangdelt,JunhaHoangGD"],
+    "verifier": "giangdelt",
+    "verification": "https://www.youtube.com/watch?v=YLM6z92bK6Y",
+    "percentToQualify": 100,
+    "fps": "CBF",
+    "handcam": "necessary",
+    "device": "All",
+    "method": "Jitter",
+    "records": [
+        {
+        "user": "QuyetDat",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "HGL2",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "Baominh",
+        "hz": "CBF",
+        "percent": 100,
+        "link": "https://youtu.be/k8tm1TzP0JE"
+        } ,
+        {
+        "user": "JunhaHoangGD",
+        "link": "https://youtu.be/VrTaU4qEM4s",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "LXQP",
+        "link": "https://youtu.be/VrTaU4qEM4s",
+        "hz": "240",
+        "percent": 100
+        }
+    ]
+}

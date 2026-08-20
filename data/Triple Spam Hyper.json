@@ -1,0 +1,85 @@
+{
+    "id": 69477316,
+    "name": "Triple Spam Hyper",
+    "author": "HyperVN",
+    "creators": ["HyperVN"],
+    "verifier": "HyperVN",
+    "verification": "https://www.youtube.com/watch?v=uDduXHzWdQg",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Baominh",
+        "hz": "60",
+        "percent": 100,
+        "link": "https://youtu.be/hHRIBhTTCao"
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/file/d/1I5wiLb7RVSDNRaxAOsFwMoWn451-FRx8/view?usp=sharing",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Jaokujn",
+        "link": "https://youtu.be/ZVFHCZACmqQ?si=ObcXLBcTz74fnJU8",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "finaliteration",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "JunhaHoangGD",
+        "link": "https://youtu.be/kON1x8eM2Zo?si=aW0AhHL_lm5GgSj-",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "chillguy73",
+        "link": "https://www.youtube.com/watch?v=98cG9H-LfL8&t=23s",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "longhet20110",
+        "link": "https://www.youtube.com/watch?v=98cG9H-LfL8&t=23s",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "yarubGMD",
+        "link": "https://youtu.be/5_aZSmHTOhY",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/file/d/11ghgj1iHVCT8CKdebod7oAjsbEAnHCP3/view?usp=drivesdk",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "LXQP",
+        "link": "https://youtu.be/oNZDa1wvSF8",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "CREZOOOGD",
+        "link": "https://medal.tv/games/geometry-dash/clips/nl44Q07tpd51W19KI?invite=cr-MSxNUngsNDcyMjQ3Mzcw",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

@@ -1,0 +1,61 @@
+{
+    "id": 71459201,
+    "name": "vai lon luon",
+    "author": "TipsX",
+    "creators": ["TipsX"],
+    "verifier": "TipsX",
+    "verification": "https://www.youtube.com/watch?v=wLND8xUWgJ0",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Baominh",
+        "hz": "60",
+        "percent": 100,
+        "link": "https://youtu.be/_OwPuvAsz_s"
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/file/d/1rmh1VHDR8ptU9EPsrM1I5kXvpT3Lm7nP/view?usp=sharing",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "finaliteration",
+        "link": "https://youtu.be/4opWfvTPrs4",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Jaokujn",
+        "link": "https://youtu.be/1IqvPSsF-O0?si=AOAKfXiO_3k7ckek",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "longhet20110",
+        "link": "https://youtu.be/mIgTjZMNnH0",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/file/d/19g95Zb8pdSR6XMkROtKMwbVJ9w797Lcm/view?usp=drivesdk",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "LXQP",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

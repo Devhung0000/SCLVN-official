@@ -1,0 +1,67 @@
+{
+    "id": 122231489,
+    "name": "chal for longhunter",
+    "author": "hieuhieu2012",
+    "creators": ["hieuhieu2012"],
+    "verifier": "hieuhieu2012",
+    "verification": "https://youtu.be/uOdtx3gLfpg",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Jaokujn",
+        "link": "https://youtu.be/Kf5hTp4aP9Y?si=yT_jBEb7nHNKnJtO",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "baominh",
+        "link": "https://youtu.be/yaPyMA8mlQ8",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "finaliteration",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "chillguy73",
+        "link": "https://www.youtube.com/watch?v=98cG9H-LfL8&t=15s",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "JunhaHoangGD",
+        "link": "https://youtu.be/q8b6SXlKlMs",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/open?id=1zd3bX0UrTdGoyk2ukRxMYWHfryPm8F5S",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/open?id=15ThTYwB4_Vu_DqFY51aT5BBHE3zbSqGO",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "longhet20110",
+        "link": "https://youtu.be/1XI3oStOlEI",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

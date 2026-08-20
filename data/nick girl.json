@@ -1,0 +1,32 @@
+{
+    "id": 141290687,
+    "name": "nick girl",
+    "author": "infasaegd",
+    "creators": ["infasaegd"],
+    "verifier": "infasaegd",
+    "verification": "https://youtu.be/vFxIGCIje7g?si=NbrB3Iov3tZ74P0J",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/open?id=1-jykAj46wsuLPbJFgxFv8FKVQTOx1ulI",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "baominh",
+        "link": "https://youtu.be/qPlM-vODDzc",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

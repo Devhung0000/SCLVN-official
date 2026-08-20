@@ -1,0 +1,73 @@
+{
+    "id": 67475019,
+    "name": "2x Spam",
+    "author": "HyperVN",
+    "creators": ["HyperVN"],
+    "verifier": "HyperVN",
+    "verification": "https://www.youtube.com/watch?v=uMDf-BF7K4A",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Baominh",
+        "hz": "60",
+        "percent": 100,
+        "link": "https://youtu.be/RsyzsbSREtI"
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/file/d/1QiQav3jZly6O086QYebRQgnOjdguhdAk/view?usp=sharing",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Jaokujn",
+        "link": "https://youtu.be/PSa6PqseSA0?si=iR_1kAHXuuFdluNc",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "finaliteration",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "longhet20110",
+        "link": "https://youtube.com/shorts/MoaKCIJ7ihQ?feature=share",
+        "hz": "60",
+        "percent": 100
+        } ,
+        {
+        "user": "JunhaHoangGD",
+        "link": "https://youtu.be/X2D1H82hQDE?si=cW0TFZpk-VSCNDy4",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "yarubGMD",
+        "link": "https://youtu.be/-wZkF58JIl0",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "LXQP",
+        "link": "https://youtu.be/KxV6q2IzsoU",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/open?id=172G0xvz3C1V01-7QWq6Aay7irRyVMS4P",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

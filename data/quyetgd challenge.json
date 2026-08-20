@@ -1,0 +1,50 @@
+{
+    "id": 69599392,
+    "name": "quyetgd challenge",
+    "author": "HyperVN",
+    "creators": ["HyperVN"],
+    "verifier": "HyperVN",
+    "verification": "https://youtu.be/WefHSrsuubg",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/file/d/1wTFItq47XFLNVlqSx08asqOsbTrleCS4/view?usp=sharing",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "baominh",
+        "link": "https://youtu.be/RtpS_KiaSeQ",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "JunhaHoangGD",
+        "link": "https://youtu.be/lpTXrq4mN6U?si=t1jhpw-vpqyWCqMo",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "chillguy73",
+        "link": "https://youtu.be/cK-fLAoewdE",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/file/d/1lJpWnKTfdsdYXq3HaVCw6_fkRC9k7Gx0/view?usp=drivesdkE",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

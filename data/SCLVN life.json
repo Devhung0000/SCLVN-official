@@ -1,0 +1,50 @@
+{
+    "id": 147015635,
+    "name": "SCLVN life",
+    "author": "Phuskhongbeo",
+    "creators": ["Phuskhongbeo"],
+    "verifier": "Phuskhongbeo",
+    "verification": "https://drive.google.com/open?id=1Axczi9dMKN0aQn12TW99r3NXYv118i1X",
+    "percentToQualify": 100,
+    "fps": "CBF",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/open?id=1Ayr67qmvwlZBRapSDZZel4cS7JYtydho",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/open?id=1Hq8GUyljIPjNlKPC_7T4f8Al8ScN5dBl",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "Jaokujn",
+        "link" : "https://youtu.be/Eis2SmfzhlQ?si=pYpjjESMcRy2ptGq",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "longhet20110",
+        "link": "https://youtu.be/ge7HahDtaz8",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "baominh",
+        "link": "https://youtu.be/WbKyWzeLdIM",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

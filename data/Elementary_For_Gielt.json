@@ -1,0 +1,21 @@
+{
+    "id": 144285946,
+    "name": "Elementary For Gielt",
+    "author": "giangdelt",
+    "creators": ["giangdelt"],
+    "verifier": "NookGD",
+    "verification": "https://www.youtube.com/watch?v=y8G4pBJQ5Xo",
+    "percentToQualify": 100,
+    "fps": "CBF",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "sikarodzz",
+        "link": "https://www.youtube.com/watch?v=s2Ba_waN4Yw",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

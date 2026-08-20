@@ -1,0 +1,33 @@
+{
+    "id": 146296229,
+    "name": "long spam",
+    "author": "QuyetDat",
+    "creators": ["QuyetDat"],
+    "verifier": "QuyetDat",
+    "verification": "https://youtu.be/sxumZAas33c",
+    "percentToQualify": 100,
+    "fps": "CBF",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "baominh",
+        "hz": "CBF",
+        "link": "https://youtu.be/Fdo8Mkr3Nto?si=Um-gkMnb1HNAdHM9",
+        "percent": 100
+        },
+        {
+        "user": "giangdelt",
+        "hz": "CBF",
+        "link": "https://youtu.be/_bFXthyJAIw",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/open?id=1XY3BqqPjpl_OJ3hQDaDOzBEIU_Ymqm5q",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

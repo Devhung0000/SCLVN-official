@@ -1,0 +1,21 @@
+{
+    "id": 141071748,
+    "name": "Afterspam",
+    "author": "NookGD",
+    "creators": ["NookGD"],
+    "verifier": "NookGD",
+    "verification": "https://youtu.be/FYl_uAjNEc8",
+    "percentToQualify": "100",
+    "fps": "CBF",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "baominh",
+        "link": "https://youtu.be/7kTkCWtF4pY",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

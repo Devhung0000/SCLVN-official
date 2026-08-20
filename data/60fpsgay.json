@@ -1,0 +1,26 @@
+{
+    "id": 147225035 ,
+    "name": "60fpsgay",
+    "author": "Jaokujn",
+    "creators": ["Jaokujn"],
+    "verifier": "Jaokujn",
+    "verification": "https://youtu.be/_8R4sCMTMJ0?si=QNV6SUa-Y-Jv6yu-",
+    "percentToQualify": "100",
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "limk" : "https://drive.google.com/open?id=10gtGXrMtfw5vjd3oRJz5g5f_FoVHv1UR",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

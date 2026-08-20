@@ -1,0 +1,311 @@
+.page-leaderboard-container {
+    display: block;
+}
+.page-leaderboard {
+    height: 100%;
+    display: grid;
+    grid-template-columns: minmax(24rem, 2fr) 3fr;
+    grid-template-rows: max-content 1fr;
+    column-gap: 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+.page-leaderboard > div {
+    overflow-y: auto;
+}
+.page-leaderboard .error-container {
+    grid-row: 1;
+    grid-column: 1 / span 2;
+}
+.page-leaderboard .error-container .error {
+    padding: 1rem;
+    background-color: var(--color-error);
+    color: var(--color-on-error);
+}
+.page-leaderboard .board-container,
+.page-leaderboard .player-container {
+    grid-row: 2;
+    padding-block: 2rem;
+}
+.page-leaderboard .board-container {
+    padding-inline: 1rem;
+}
+.page-leaderboard .board {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+.page-leaderboard .board .rank .flag {
+    padding-block: 1rem;
+    text-align: end;
+}
+.page-leaderboard .board .total {
+    padding: 1rem;
+    text-align: end;
+}
+.page-leaderboard .board .user {
+    width: auto;
+    min-width: 0;
+}
+.page-leaderboard .board .user button {
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: start;
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+.page-leaderboard .board .user button:hover {
+    background-color: var(--color-background-hover);
+    color: var(--color-on-background-hover);
+    cursor: pointer;
+}
+.page-leaderboard .board .user.active button {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+}
+.page-leaderboard .player {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-right: 2rem;
+}
+.page-leaderboard .player .table {
+    table-layout: fixed;
+}
+.page-leaderboard .player .table tr td:not(:last-child) {
+    padding-right: 2rem;
+}
+.page-leaderboard .player .table p,
+.page-leaderboard .player .table a {
+    padding-block: 1rem;
+}
+
+.page-leaderboard .player .table .rank .flag p,
+.page-leaderboard .player .table .score p {
+    text-align: end;
+}
+.page-leaderboard .player .table .level {
+    width: 100%;
+}
+.page-leaderboard .player .table a:hover {
+    text-decoration: underline;
+}
+/* =========================================
+   LEADERBOARD ROW
+   ========================================= */
+
+.page-leaderboard .board-row {
+    display: grid;
+    grid-template-columns: max-content max-content 1fr;
+    align-items: center;
+    width: 100%;
+}
+
+
+/* =========================================
+   TOP 1 / 2 / 3 - CARD
+   ========================================= */
+
+.page-leaderboard .board-row.top-1,
+.page-leaderboard .board-row.top-2,
+.page-leaderboard .board-row.top-3 {
+    width: 90%;
+    margin-inline: auto;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+
+/* =========================================
+   TOP 1 - GOLD
+   ========================================= */
+
+.page-leaderboard .board-row.top-1 {
+    background: linear-gradient(135deg, #f6d365, #dca928);
+}
+
+
+/* =========================================
+   TOP 2 - SILVER
+   ========================================= */
+
+.page-leaderboard .board-row.top-2 {
+    background: linear-gradient(135deg, #cfd4d6, #8e969a);
+}
+
+
+/* =========================================
+   TOP 3 - BRONZE
+   ========================================= */
+
+.page-leaderboard .board-row.top-3 {
+    background: linear-gradient(135deg, #d18a5a, #a8582e);
+}
+
+
+/* =========================================
+   TOP 1/2/3 - USER BUTTON
+   ========================================= */
+
+.page-leaderboard .board-row.top-1 .user,
+.page-leaderboard .board-row.top-2 .user,
+.page-leaderboard .board-row.top-3 .user {
+    width: auto;
+}
+
+
+/* Nút trong Top 1/2/3 trong suốt */
+.page-leaderboard .board-row.top-1 .user button,
+.page-leaderboard .board-row.top-2 .user button,
+.page-leaderboard .board-row.top-3 .user button {
+    width: 100%;
+    background: transparent;
+    color: inherit;
+}
+
+
+/* Khi click vào Top 1/2/3 vẫn giữ màu */
+.page-leaderboard .board-row.top-1 .user.active button,
+.page-leaderboard .board-row.top-2 .user.active button,
+.page-leaderboard .board-row.top-3 .user.active button {
+    background: transparent;
+    color: inherit;
+}
+
+
+/* =========================================
+   PADDING TOP 1/2/3
+   ========================================= */
+
+.page-leaderboard .board-row.top-1 > .rank,
+.page-leaderboard .board-row.top-2 > .rank,
+.page-leaderboard .board-row.top-3 > .rank {
+    padding-left: 1rem;
+}
+
+.page-leaderboard .board-row.top-1 > .total,
+.page-leaderboard .board-row.top-2 > .total,
+.page-leaderboard .board-row.top-3 > .total {
+    padding: 1rem;
+}
+
+.page-leaderboard .board-row.top-1 > .user,
+.page-leaderboard .board-row.top-2 > .user,
+.page-leaderboard .board-row.top-3 > .user {
+    padding-right: 1rem;
+}
+/* =========================================
+   PLAYER TITLE - TOP 1 / 2 / 3
+   ========================================= */
+
+.page-leaderboard .player .player-title.top-1 {
+    color: #dca928 !important;
+    background: linear-gradient(135deg, #f6d365, #dca928) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+.page-leaderboard .player .player-title.top-2 {
+    color: #8e969a !important;
+    background: linear-gradient(135deg, #cfd4d6, #8e969a) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+.page-leaderboard .player .player-title.top-3 {
+    color: #a8582e !important;
+    background: linear-gradient(135deg, #d18a5a, #a8582e) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+/* Không cho phần user tràn ra ngoài */
+.page-leaderboard .board-row {
+    position: relative;
+    z-index: 1;
+}
+
+/* Đảm bảo phần player nằm trên các phần tử khác */
+.page-leaderboard .player-container {
+    position: relative;
+    z-index: 2;
+}
+
+.page-leaderboard .player {
+    position: relative;
+    z-index: 3;
+}
+
+/* Tiêu đề người chơi */
+.page-leaderboard .player-title {
+    position: relative;
+    z-index: 10;
+}
+/* =========================================
+   LEVEL RANK #1 / #2 / #3
+   ========================================= */
+
+.page-leaderboard .rank-top-1 {
+    background: linear-gradient(
+        135deg,
+        #f6d365,
+        #dca928
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-leaderboard .rank-top-2 {
+    background: linear-gradient(
+        135deg,
+        #cfd4d6,
+        #8e969a
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-leaderboard .rank-top-3 {
+    background: linear-gradient(
+        135deg,
+        #d18a5a,
+        #a8582e
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+/* #1 */
+.page-leaderboard .player .rank-top-1 {
+    background: linear-gradient(135deg, #f6d365, #dca928);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* #2 */
+.page-leaderboard .player .rank-top-2 {
+    background: linear-gradient(135deg, #cfd4d6, #8e969a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* #3 */
+.page-leaderboard .player .rank-top-3 {
+    background: linear-gradient(135deg, #d18a5a, #a8582e);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

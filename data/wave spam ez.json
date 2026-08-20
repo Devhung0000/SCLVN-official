@@ -1,0 +1,55 @@
+{
+    "id": 139134327,
+    "name": "wave spam ez",
+    "author": "SilentBall",
+    "creators": ["SilentBall"],
+    "verifier": "SilentBall",
+    "verification": "https://youtu.be/N0QOiTOM-84",
+    "percentToQualify": 100,
+    "fps": "240/CBF",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "240",
+        "percent": 100
+        },
+        {
+        "user": "Jaokujn",
+        "link": "https://youtu.be/PwFdjlY6FNQ?si=U6WUEgbPWSyqJE5E",
+        "hz": "240",
+        "percent": 100
+        },
+        {
+        "user": "baominh",
+        "link": "https://drive.google.com/open?id=1ZvYcNsUB5IGp5viPdLigtcyJdHSYhNaR",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/open?id=1ylK7VYVswxRc8eIgxJohAVBxByVZhikd",
+        "hz": "240",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://discord.com/channels/956750554154020884/1521015273023475822/1536571117228134520",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "LXQP",
+        "hz": "240",
+        "percent": 100
+        },
+        {
+        "user": "JunhaHoangGD",
+        "link": "https://youtu.be/krH3-pN5jXA",
+        "hz": "CBF",
+        "percent": 100
+        }
+     ]
+}

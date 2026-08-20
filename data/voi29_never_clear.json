@@ -1,0 +1,26 @@
+{
+    "id": 141969357,
+    "name": "voi29 never clear",
+    "author": "sikarodzz",
+    "creators": ["sikarodzz"],
+    "verifier": "sikarodzz",
+    "verification": "https://www.youtube.com/watch?v=YJPt1sV5ECY",
+    "percentToQualify": "100",
+    "method": "Alternate",
+    "fps": "240/360",
+    "handcam": "recommended",
+    "device": "All",
+    "records": [
+        {
+        "user": "NookGD",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "QuyetDat",
+        "hz": "CBF",
+        "percent": 100,
+        "link" : "https://drive.google.com/open?id=1DPCGG5EZu-VhrBoVZtS8vLumA66gfz5I"
+        }
+    ]
+}

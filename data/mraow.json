@@ -1,0 +1,20 @@
+{
+    "id": 145938789,
+    "name": "mraow",
+    "author": "HGL2",
+    "creators": ["HGL2"],
+    "verifier": "HGL2",
+    "verification": "https://youtu.be/OpjG-SNUyvg",
+    "percentToQualify": 100,
+    "fps": "CBF",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "NookGD",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

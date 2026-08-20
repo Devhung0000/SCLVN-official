@@ -1,0 +1,38 @@
+{
+    "id": 144779298,
+    "name": "your worst nightmare",
+    "author": "baominh",
+    "creators": ["baominh"],
+    "verifier": "baominh",
+    "verification": "https://youtu.be/8vQn6Y2TCos",
+    "percentToQualify": 100,
+    "fps": "60",
+    "method": "Alternate",
+    "handcam": "recommended",
+    "device": "All",
+    "records": [
+        {
+        "user": "finaliteration",
+        "hz": "60",
+        "link": "https://youtu.be/Lc2NU7kaSJE",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "chillguy73",
+        "link": "https://youtu.be/jYE-QzWukXM",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/open?id=1HwAJ8hex-f4S4x9D0pNQaStbo8zSc4y-",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "id": 147111659,
+    "name": "long ball spam",
+    "author": "longhet20110",
+    "creators": ["longhet20110"],
+    "verifier": "longhet20110",
+    "verification": "https://youtu.be/_6jSrq_FUHw",
+    "percentToQualify": 100,
+    "fps": "CBF",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/open?id=1mpGGSB7Neb1zqRwUSchW1kxU8VXl_XkX",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

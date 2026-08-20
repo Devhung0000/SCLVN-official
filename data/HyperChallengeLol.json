@@ -1,0 +1,73 @@
+{
+    "id":  70527415,
+    "name": "HyperChallengeLol",
+    "author": "TipsX",
+    "creators": ["TipsX"],
+    "verifier": "TipsX",
+    "verification": "https://youtu.be/whNqXiiMkpI",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Baominh",
+        "hz": "60",
+        "percent": 100,
+        "link": "https://youtu.be/1hUR9CXtg8o"
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/file/d/1NMtkXJ3Fhik26KGnJh3pqsRr5E7_3bU3/view?usp=sharing",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Jaokujn",
+        "link": "https://youtu.be/jcwlZXwwQMc?si=UpRLP1P92JqRIcv6",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "finaliteration",
+        "link": "https://youtu.be/4opWfvTPrs4",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "longhet20110",
+        "link": "https://youtu.be/q_bMgNNDxfY",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "changbeo12",
+        "link": "https://www.facebook.com/reel/841686608968610?locale=vi_VN",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "JunhaHoangGD",
+        "link": "https://youtu.be/dYNpi1XIOEk",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/open?id=1O5ifwQ78wZ1oc-1bAYFLb-6myWl3R6cx",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "LXQP",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

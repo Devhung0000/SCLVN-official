@@ -1,0 +1,44 @@
+{
+    "id": 146893319,
+    "name": "triple ufo spam",
+    "author": "longhet20110",
+    "creators": ["longhet20110"],
+    "verifier": "longhet20110",
+    "verification": "https://youtu.be/pf5_Qxqb82c",
+    "percentToQualify": 100,
+    "fps": "CBF",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/open?id=1J5z2eTZ-wU5teubYMEE-eqyqfs3MXFoo",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/open?id=1ZB_hdgEEELyedf9PMNDXvpMyKFqnAmEL",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "Jaokujn",
+        "link":"https://youtu.be/Eis2SmfzhlQ?si=pYpjjESMcRy2ptGq",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "baominh",
+        "link": "https://youtu.be/K7Noclc8L4A",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

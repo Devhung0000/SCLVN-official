@@ -1,0 +1,37 @@
+{
+    "id": 146836856,
+    "name": "sh orb spam",
+    "author": "infasaegd",
+    "creators": ["infasaegd"],
+    "verifier": "infasaegd",
+    "verification": "https://discord.com/channels/956750554154020884/956750555466858508/1537072599765487681",
+    "percentToQualify": 100,
+    "fps": "60",
+    "method": "Alternate",
+    "handcam": "recommended",
+    "device": "All",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "longhet20110",
+        "link": "https://youtu.be/x1rJ09zSP-g",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "NookGD",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "baominh",
+        "link": "https://youtu.be/X2X57fDZqEY",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}

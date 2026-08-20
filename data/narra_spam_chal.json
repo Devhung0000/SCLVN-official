@@ -1,0 +1,31 @@
+{
+    "id": 143621505,
+    "name": "narra spam chal",
+    "author": "vphogn69",
+    "creators": ["vphogn69"],
+    "verifier": "vphogn69",
+    "verification": "https://www.youtube.com/watch?v=bqFY5Quktdc",
+    "percentToQualify": 100,
+    "fps": "CBF",
+    "handcam": "necessary",
+    "device": "All",
+    "method": "Rake",
+    "records": [
+        {
+        "user": "QuyetDat",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "giangdelt",
+        "hz": "CBF",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/file/d/1Tr0ecGdZC8e0xQ5zjmjtfPRui3jlR2Gr/view?usp=drivesdk",
+        "hz": "CBF",
+        "percent": 100
+        }
+    ]
+}

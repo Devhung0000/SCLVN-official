@@ -1,0 +1,472 @@
+.page-list .list-container,
+.page-list .level-container,
+.page-list .meta-container {
+    padding-block: 2rem;
+}
+.page-list .list-container {
+    padding-inline: 1rem;
+}
+.page-list .meta-container {
+    padding-right: 2rem;
+}
+.desc {
+    text-align: center;
+}
+.link-button {
+    margin-left: 0.5em;
+    height: 50px;
+    width: 50px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: white;
+    border-radius: 25%;
+}
+.link-button:hover {
+  filter: brightness(150%);
+}
+.button-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin: auto;
+                                                display: flex;
+                                                justify-content: center;
+                                                align-items: center;
+      text-align: center;
+      width: 60%;
+}
+.button-holder {
+/* money folder */
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+.page-list .list {
+    table-layout: auto;
+}
+.page-list .list .rank {
+    text-align: end;
+    padding-right: 1rem;
+}
+.page-list .list .level {
+    width: 100%;
+    color: #fff;
+}
+.page-list .list .level button {
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: start;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+.page-list .list .level.error button {
+    color: var(--color-error);
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+.page-list .list .level button {
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background-color .2s ease;
+}
+
+.page-list .list .level button:hover {
+    background-color: var(--color-background-hover);
+    transform: translateX(6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,.25);
+}
+.page-list .list .level.active button {
+    border: 3px solid var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-on-background);
+}
+.page-list .level-container .level {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+	padding-right: 4rem;
+    padding-left: 4rem;
+    width: 100%;
+	justify-self: center;
+}
+.page-list .level-container .level .level-authors {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-auto-rows: max-content;
+    gap: 1rem;
+}
+.page-list .level-container .level .video {
+    aspect-ratio: 16/9;
+}
+.page-list .level-container .level .stats {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    gap: 2rem;
+}
+.page-list .level-container .level .stats li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.page-list .level-container .level .records {
+    table-layout: fixed;
+}
+.page-list .level-container .level .records tr td:not(:last-child) {
+    padding-right: 1rem;
+}
+.page-list .level-container .level .records .percent,
+.page-list .level-container .level .records .user,
+.page-list .level-container .level .records .hz {
+    padding-block: 1rem;
+}
+.page-list .level-container .level .records .user {
+    width: 100%;
+}
+.page-list .level-container .level .records .percent,
+.page-list .level-container .level .records .hz {
+    text-align: end;
+}
+.page-list .meta-container .og a:hover,
+.page-list .level-container .level .records a:hover {
+    text-decoration: underline;
+}
+.page-list .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.page-list .meta .errors {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.page-list .meta .errors .error {
+    padding: 1rem;
+    background-color: var(--color-error);
+    color: var(--color-on-error);
+    border-radius: 0.5rem;
+}
+.page-list .meta .editors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.page-list .meta .editors li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.page-list .meta .editors li img {
+    height: 1.25rem;
+}
+.page-list .meta .editors li a:hover {
+    text-decoration: underline;
+}
+.cl {
+    margin-left: 24px;
+    color: #808080;
+}
+.cl clw {
+    color: var(--color-on-background);
+	font-weight: 550;
+}
+/* =========================================
+   MAIN LIST - TOP 1 / 2 / 3 RANK COLORS
+   ========================================= */
+
+/* TOP 1 - GOLD */
+.page-list .rank-top-1 {
+    background: linear-gradient(
+        135deg,
+        #f6d365,
+        #dca928
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* TOP 2 - SILVER */
+.page-list .rank-top-2 {
+    background: linear-gradient(
+        135deg,
+        #cfd4d6,
+        #8e969a
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* TOP 3 - BRONZE */
+.page-list .rank-top-3 {
+    background: linear-gradient(
+        135deg,
+        #d18a5a,
+        #a8582e
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+/* =========================================
+   LEVEL DETAIL TITLE - TOP 1 / 2 / 3
+   ========================================= */
+
+/* TOP 1 - GOLD */
+.page-list .level-title-top-1 {
+    background: linear-gradient(
+        135deg,
+        #f6d365,
+        #dca928
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* TOP 2 - SILVER */
+.page-list .level-title-top-2 {
+    background: linear-gradient(
+        135deg,
+        #cfd4d6,
+        #8e969a
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* TOP 3 - BRONZE */
+.page-list .level-title-top-3 {
+    background: linear-gradient(
+        135deg,
+        #d18a5a,
+        #a8582e
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+/* =========================================
+   BACK TO LIST BUTTON
+   ========================================= */
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--color-primary);
+    color: var(--color-on-background);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-size: 14px;
+
+    /* Chỉnh vị trí */
+    position: relative;
+    top: -16px;   /* lên trên 8px */
+    left: 8px;   /* sang phải 8px */
+}
+
+.back-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    transform: translateX(-2px);
+}
+
+.page-list .list .level button:active{
+    transform:scale(.97);
+}
+
+/* =========================================================
+   Discord Nitro Style Animated Roles
+   ========================================================= */
+
+@keyframes nitroGradient {
+    from {
+        background-position: 0% 50%;
+    }
+    to {
+        background-position: 100% 50%;
+    }
+}
+
+/* ==========================
+   Shared Settings
+   ========================== */
+
+.owner-name,
+.admin-name,
+.dev-name,
+.helper-name {
+
+    font-weight: 500;
+
+    display: inline-block;
+
+    background-size: 250% 100%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    will-change: background-position;
+
+    animation: nitroGradient 10s ease-in-out infinite;
+}
+
+/* ==========================
+   Owner
+   ========================== */
+
+.owner-name {
+
+    font-weight: 700;
+
+    background-image: linear-gradient(
+        90deg,
+
+        #006466 0%,
+        #065a60 12%,
+
+        #6ef9ff 22%,
+        #d9ffff 28%,
+        #6ef9ff 34%,
+
+        #0b525b 46%,
+        #144552 58%,
+
+        #9ae7ff 68%,
+        #ffffff 74%,
+        #9ae7ff 80%,
+
+        #312244 90%,
+        #4d194d 100%
+    );
+}
+
+/* ==========================
+   Admin
+   ========================== */
+
+.admin-name {
+
+    background-image: linear-gradient(
+        90deg,
+
+        #583101 0%,
+        #603808 12%,
+
+        #ffd17d 22%,
+        #fff8dc 30%,
+        #ffd17d 38%,
+
+        #8b5e34 50%,
+        #bc8a5f 62%,
+
+        #ffe0aa 72%,
+        #ffffff 78%,
+        #ffe0aa 84%,
+
+        #d4a276 92%,
+        #ffedd8 100%
+    );
+}
+
+/* ==========================
+   Dev
+   ========================== */
+
+.dev-name {
+
+    background-image: linear-gradient(
+        90deg,
+
+        #004b23 0%,
+        #006400 12%,
+
+        #9ef01a 22%,
+        #ffffff 30%,
+        #9ef01a 38%,
+
+        #008000 50%,
+        #38b000 62%,
+
+        #cfff77 72%,
+        #ffffff 78%,
+        #cfff77 84%,
+
+        #70e000 92%,
+        #ccff33 100%
+    );
+}
+
+/* ==========================
+   Helper
+   ========================== */
+
+.helper-name {
+
+    background-image: linear-gradient(
+        90deg,
+
+        #590d22 0%,
+        #800f2f 12%,
+
+        #ff8fa3 22%,
+        #ffffff 30%,
+        #ff8fa3 38%,
+
+        #c9184a 50%,
+        #ff4d6d 62%,
+
+        #ffc0cb 72%,
+        #ffffff 78%,
+        #ffc0cb 84%,
+
+        #ff8fa3 92%,
+        #ffb3c1 100%
+    );
+}
+
+.page-list .meta .editors .type-label-lg::before,
+.page-list .meta .editors .type-label-lg::after {
+    content: none !important;
+}
+
+.page-list .meta .editors .type-label-lg {
+    display: inline-block;
+    line-height: 1.6rem !important;
+}
+
+/* ==========================
+   Rank Glow
+   ========================== */
+
+.rank-top-1{
+    text-shadow:
+        0 0 8px rgba(255,220,100,.4),
+        0 0 18px rgba(255,220,100,.2);
+}
+
+.rank-top-2{
+    text-shadow:
+        0 0 8px rgba(220,220,220,.4);
+}
+
+.rank-top-3{
+    text-shadow:
+        0 0 8px rgba(210,130,70,.4);
+}

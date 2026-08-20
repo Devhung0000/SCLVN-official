@@ -1,0 +1,38 @@
+{
+    "id": 66193140,
+    "name": "S P 4 M",
+    "author": "BensonGd",
+    "creators": ["BensonGd"],
+    "verifier": "TipsX",
+    "verification": "https://youtu.be/ytzx72bft8U",
+    "percentToQualify": 100,
+    "fps": "60",
+    "handcam": "recommended",
+    "device": "All",
+    "method": "Alternate",
+    "records": [
+        {
+        "user": "giangdelt",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "Baominh",
+        "hz": "60",
+        "percent": 100,
+        "link": "https://youtu.be/q__aeh5-xNk"
+        },
+        {
+        "user": "NookGD",
+        "link": "https://drive.google.com/file/d/1E636Mx8jHsh3VTBLTpec31ifGqsEaj3c/view?usp=sharing",
+        "hz": "60",
+        "percent": 100
+        },
+        {
+        "user": "infasaegd",
+        "link": "https://drive.google.com/file/d/1R5mblVE2la4sgUeNPY1usZtPqCNJY2Y2/view?usp=drivesdk",
+        "hz": "60",
+        "percent": 100
+        }
+    ]
+}
