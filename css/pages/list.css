@@ -1250,3 +1250,123 @@
         0 0 18px rgba(255,255,255,.055),
         0 14px 34px rgba(0,0,0,.24) !important;
 }
+
+
+/* =========================================================
+   FINAL LIST SPACING + WHITE GLOW — SCLVN
+   Keep this block LAST in list.css
+   ========================================================= */
+
+/*
+   The scrolling list occupies the full viewport, including the
+   area behind the fixed topbar. Top padding keeps the first card
+   visible initially, but cards can scroll under the glass.
+*/
+.page-list {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    overflow: hidden !important;
+}
+
+.page-list .accordion-list-container {
+    height: 100vh !important;
+    min-height: 0 !important;
+
+    padding-top:
+        calc(var(--topbar-height) + 18px) !important;
+
+    padding-bottom: 30px !important;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* Keep moderators visually below the topbar. */
+.page-list .meta-container {
+    height: 100vh !important;
+
+    padding-top:
+        calc(var(--topbar-height) + 22px) !important;
+}
+
+/* Real visible spacing: the old later rule was forcing 12px. */
+.level-accordion-card {
+    margin-bottom: 24px !important;
+
+    position: relative !important;
+
+    border:
+        1px solid rgba(255,255,255,.075) !important;
+
+    transition:
+        transform .26s cubic-bezier(.22,1,.36,1),
+        border-color .24s ease,
+        box-shadow .24s ease,
+        filter .24s ease !important;
+}
+
+/* Calm Apple-like hover */
+.level-accordion-card:hover {
+    transform:
+        translateY(-3px) !important;
+
+    border-color:
+        rgba(255,255,255,.18) !important;
+
+    box-shadow:
+        0 12px 28px rgba(0,0,0,.27),
+        0 0 14px rgba(255,255,255,.045) !important;
+
+    filter:
+        brightness(1.025) !important;
+}
+
+/*
+   Expanded state:
+   white, subtle, but still visible at a glance.
+*/
+.level-accordion-card.is-expanded {
+    transform: none !important;
+
+    border-color:
+        rgba(255,255,255,.31) !important;
+
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,.075),
+        0 0 12px rgba(255,255,255,.13),
+        0 0 26px rgba(255,255,255,.07),
+        0 16px 38px rgba(0,0,0,.28) !important;
+
+    filter:
+        brightness(1.035) !important;
+}
+
+/* Thin white highlight, similar to the old navbar underline. */
+.level-accordion-card.is-expanded::after {
+    content: "" !important;
+
+    position: absolute !important;
+    z-index: 20 !important;
+
+    left: 11% !important;
+    right: 11% !important;
+    top: 0 !important;
+
+    height: 1px !important;
+
+    pointer-events: none !important;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255,255,255,.34) 20%,
+            rgba(255,255,255,.78) 50%,
+            rgba(255,255,255,.34) 80%,
+            transparent 100%
+        ) !important;
+
+    box-shadow:
+        0 0 7px rgba(255,255,255,.20),
+        0 0 14px rgba(255,255,255,.08) !important;
+}
