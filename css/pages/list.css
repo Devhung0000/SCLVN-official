@@ -509,7 +509,7 @@
 /* card shell */
 .level-accordion-card {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 22px !important;
     overflow: hidden;
     border-radius: 20px;
     border: 1px solid rgba(82, 211, 154, .22);
@@ -1235,4 +1235,18 @@
     color: #e5e7eb !important;
     background: rgba(255,255,255,.08) !important;
     border-color: rgba(255,255,255,.14) !important;
+}
+
+/* =========================================================
+   SUBTLE WHITE LEVEL GLOW
+   ========================================================= */
+
+.level-accordion-card.is-expanded {
+    border-color:
+        rgba(255,255,255,.22) !important;
+
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,.045),
+        0 0 18px rgba(255,255,255,.055),
+        0 14px 34px rgba(0,0,0,.24) !important;
 }
