@@ -1005,3 +1005,234 @@
         align-items: flex-start;
     }
 }
+
+
+/* =========================================================
+   SCLVN COMPACT LEVEL BAR / YOUTUBE THUMBNAIL V4
+   ========================================================= */
+
+.level-accordion-card {
+    margin-bottom: 12px !important;
+    border-radius: 15px !important;
+    transition:
+        transform .24s cubic-bezier(.22,1,.36,1),
+        border-color .24s ease,
+        box-shadow .24s ease !important;
+}
+
+.level-accordion-card:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(255,255,255,.22) !important;
+    box-shadow:
+        0 10px 26px rgba(0,0,0,.28),
+        0 0 18px rgba(255,255,255,.035) !important;
+}
+
+.level-accordion-card.is-expanded {
+    transform: none !important;
+    border-color: rgba(96, 165, 250, .52) !important;
+    box-shadow:
+        0 0 0 1px rgba(96,165,250,.08),
+        0 0 24px rgba(96,165,250,.13),
+        0 14px 36px rgba(0,0,0,.28) !important;
+}
+
+.level-accordion-summary {
+    min-height: 132px !important;
+    grid-template-columns: 250px minmax(0, 1fr) !important;
+}
+
+.level-card-thumb,
+.level-card-main,
+.level-card-content {
+    min-height: 132px !important;
+}
+
+.level-card-thumb {
+    background-color: #111 !important;
+    background-position: center !important;
+}
+
+.level-card-thumb-shade {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.02),
+            rgba(0,0,0,.13)
+        ) !important;
+}
+
+.level-card-main-shade {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(7,7,9,.44) 0%,
+            rgba(7,7,9,.55) 56%,
+            rgba(7,7,9,.88) 100%
+        ) !important;
+}
+
+.level-card-content {
+    padding: 14px 18px !important;
+    gap: 18px !important;
+}
+
+.level-card-center {
+    gap: 7px !important;
+}
+
+.level-card-title-row {
+    gap: 9px !important;
+}
+
+.level-card-rank {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.045em !important;
+    line-height: 1 !important;
+    font-variant-numeric: tabular-nums;
+}
+
+.level-card-title {
+    font-size: clamp(21px, 1.8vw, 29px) !important;
+    letter-spacing: -0.025em;
+}
+
+.level-card-verifier {
+    font-size: 12px !important;
+}
+
+.level-card-tags {
+    gap: 5px !important;
+}
+
+.level-tag {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+}
+
+.level-tag-custom {
+    color: #dbeafe !important;
+    background: rgba(37, 99, 235, .28) !important;
+    border-color: rgba(96, 165, 250, .42) !important;
+}
+
+.level-card-right {
+    min-width: 145px !important;
+    gap: 5px !important;
+}
+
+.level-card-fps {
+    font-size: clamp(20px, 1.65vw, 27px) !important;
+}
+
+.level-card-method {
+    font-size: 12px !important;
+}
+
+.level-card-points {
+    font-size: 13px !important;
+}
+
+.level-card-toggle {
+    margin-top: 5px !important;
+    font-size: 10px !important;
+}
+
+.level-accordion-detail {
+    padding: 14px !important;
+}
+
+.level-detail-top {
+    grid-template-columns: minmax(0, 1.72fr) minmax(275px, .78fr) !important;
+}
+
+/* SVG icon support */
+.sidebar-icon svg,
+.topbar-search-icon svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@media (max-width: 1180px) {
+    .level-accordion-summary {
+        grid-template-columns: 220px minmax(0,1fr) !important;
+    }
+}
+
+@media (max-width: 720px) {
+    .level-accordion-summary {
+        grid-template-columns: 1fr !important;
+    }
+
+    .level-card-thumb {
+        min-height: 145px !important;
+    }
+}
+
+
+/* =========================================================
+   CUSTOM TAG PALETTE V5
+   Allowed tags:
+   Control / Frame Perfect / High CPS / Capped / Uncapped
+   ========================================================= */
+
+.level-tag {
+    padding: 4px 9px !important;
+    border-radius: 999px !important;
+    font-size: 10px !important;
+    font-weight: 650 !important;
+    letter-spacing: .01em;
+}
+
+/* Control */
+.level-tag-control {
+    color: #ffe68a !important;
+    background: rgba(202, 138, 4, .23) !important;
+    border-color: rgba(250, 204, 21, .58) !important;
+    box-shadow: inset 0 0 10px rgba(250, 204, 21, .05);
+}
+
+/* Frame Perfect — yellow/gold */
+.level-tag-frame-perfect {
+    color: #ffe68a !important;
+    background: rgba(202, 138, 4, .23) !important;
+    border-color: rgba(250, 204, 21, .58) !important;
+    box-shadow: inset 0 0 10px rgba(250, 204, 21, .05);
+}
+
+/* High CPS */
+.level-tag-high-cps {
+    color: #fecaca !important;
+    background: rgba(220, 38, 38, .20) !important;
+    border-color: rgba(248, 113, 113, .46) !important;
+}
+
+/* Capped */
+.level-tag-capped {
+    color: #ffe68a !important;
+    background: rgba(202, 138, 4, .23) !important;
+    border-color: rgba(250, 204, 21, .58) !important;
+    box-shadow: inset 0 0 10px rgba(250, 204, 21, .05);
+}
+
+/* Uncapped */
+.level-tag-uncapped {
+    color: #ffe68a !important;
+    background: rgba(202, 138, 4, .23) !important;
+    border-color: rgba(250, 204, 21, .58) !important;
+    box-shadow: inset 0 0 10px rgba(250, 204, 21, .05);
+}
+
+.level-tag-default {
+    color: #e5e7eb !important;
+    background: rgba(255,255,255,.08) !important;
+    border-color: rgba(255,255,255,.14) !important;
+}

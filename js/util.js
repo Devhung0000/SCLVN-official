@@ -1,9 +1,34 @@
 // https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
 export function getYoutubeIdFromUrl(url) {
-    if (!url) return '';
-    return url.match(
-        /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&]*).*/,
-    )?.[1] ?? '';
+    if (!url) return "";
+
+    try {
+        const parsed = new URL(url);
+
+        if (parsed.hostname.includes("youtu.be")) {
+            return parsed.pathname.split("/").filter(Boolean)[0] || "";
+        }
+
+        if (parsed.hostname.includes("youtube.com")) {
+            if (parsed.pathname === "/watch") {
+                return parsed.searchParams.get("v") || "";
+            }
+
+            const parts = parsed.pathname.split("/").filter(Boolean);
+
+            if (["embed", "shorts", "live"].includes(parts[0])) {
+                return parts[1] || "";
+            }
+        }
+    } catch (_) {
+        // Fallback for malformed/relative URLs.
+    }
+
+    const match = String(url).match(
+        /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([A-Za-z0-9_-]{6,})/
+    );
+
+    return match?.[1] || "";
 }
 
 export function getMedalIdFromUrl(url) {
@@ -43,6 +68,26 @@ export function getLevelThumbnail(levelPos, list) {
         const currentLevel = list[levelPos][0] || list[levelPos];
         return setUpThumbnailStyle(currentLevel.name);
     }
+}
+
+export function getVideoThumbnailStyle(level) {
+    if (!level) return "";
+
+    const video = level.verification || level.showcase || "";
+    const youtubeId = getYoutubeIdFromUrl(video);
+
+    if (!youtubeId) {
+        return setUpThumbnailStyle(level.name || "");
+    }
+
+    const thumbnail = `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
+
+    return [
+        `background-image: linear-gradient(rgba(0,0,0,.10), rgba(0,0,0,.10)), url("${thumbnail}")`,
+        "background-size: cover",
+        "background-repeat: no-repeat",
+        "background-position: center"
+    ].join("; ");
 }
 
 export function getLevelThumbnailR(levelPos, list) {

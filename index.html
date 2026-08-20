@@ -34,22 +34,22 @@
             <div>
                 <nav class="sidebar-nav">
                     <router-link class="sidebar-item" to="/" title="List">
-                        <span class="sidebar-icon">📋</span>
+                        <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 4.5h6"></path><path d="M8 9h8M8 13h8M8 17h5"></path></svg></span>
                         <span class="sidebar-label">List</span>
                     </router-link>
 
                     <router-link class="sidebar-item" to="/leaderboard" title="Leaderboard">
-                        <span class="sidebar-icon">🏆</span>
+                        <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v3a4 4 0 0 1-8 0V4Z"></path><path d="M8 6H5v1a4 4 0 0 0 4 4M16 6h3v1a4 4 0 0 1-4 4"></path><path d="M12 11v5M9 20h6M10 16h4"></path></svg></span>
                         <span class="sidebar-label">Leaderboard</span>
                     </router-link>
 
                     <router-link class="sidebar-item" to="/roulette" title="Roulette">
-                        <span class="sidebar-icon">🎰</span>
+                        <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M7 9h10v6H7z"></path><path d="M8 12h.01M12 12h.01M16 12h.01"></path><path d="M18 5V3h2"></path></svg></span>
                         <span class="sidebar-label">Roulette</span>
                     </router-link>
 
                     <router-link class="sidebar-item" to="/submit" title="Submit Record">
-                        <span class="sidebar-icon">📤</span>
+                        <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"></path><path d="m7 9 5-5 5 5"></path><path d="M5 14v5h14v-5"></path></svg></span>
                         <span class="sidebar-label">Submit</span>
                     </router-link>
 
@@ -59,7 +59,7 @@
                         to="/admin"
                         title="Duyệt Record"
                     >
-                        <span class="sidebar-icon">🛡️</span>
+                        <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.6 2.8 8.2 7 10 4.2-1.8 7-5.4 7-10V6l-7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
                         <span class="sidebar-label">Duyệt Record</span>
                     </router-link>
                 </nav>
@@ -75,7 +75,7 @@
 
                 <div v-if="!store.user">
                     <router-link to="/login" class="sidebar-item sidebar-login" title="Login / Register">
-                        <span class="sidebar-icon">🔑</span>
+                        <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="4"></circle><path d="M12 12h8M17 12v3M20 12v2"></path></svg></span>
                         <span class="sidebar-label">Login / Register</span>
                     </router-link>
                 </div>
@@ -90,12 +90,12 @@
                     </div>
 
                     <router-link to="/profile" class="sidebar-item" title="Profile">
-                        <span class="sidebar-icon">👤</span>
+                        <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M5 21a7 7 0 0 1 14 0"></path></svg></span>
                         <span class="sidebar-label">Profile</span>
                     </router-link>
 
                     <button @click="store.handleLogout()" class="sidebar-item sidebar-logout" title="Logout">
-                        <span class="sidebar-icon">🚪</span>
+                        <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5"></path><path d="M14 8l4 4-4 4M18 12H9"></path></svg></span>
                         <span class="sidebar-label">Logout</span>
                     </button>
                 </template>
@@ -116,7 +116,7 @@
 
                 <div class="topbar-center">
                     <form class="topbar-search" @submit.prevent="handleGlobalSearch">
-                        <span class="topbar-search-icon">⌕</span>
+                        <span class="topbar-search-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="m16 16 4 4"></path></svg></span>
                         <input
                             id="global-search"
                             v-model="globalSearchQuery"

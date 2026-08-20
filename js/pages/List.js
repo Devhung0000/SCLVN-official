@@ -1,5 +1,5 @@
 import { store } from "../main.js";
-import { embed, getEngineSelect, getSelectSelect, doStuff, getThumbnailImage, incVisits, getYoutubeIdFromUrl, getLevelThumbnail, listLevelNameFilter, getFpsSelect } from "../util.js";
+import { embed, getEngineSelect, getSelectSelect, doStuff, getThumbnailImage, incVisits, getYoutubeIdFromUrl, getLevelThumbnail, getVideoThumbnailStyle, listLevelNameFilter, getFpsSelect } from "../util.js";
 import { score } from "../score.js";
 import { fetchEditors, fetchList, fetchPacks } from "../content.js";
 
@@ -42,7 +42,7 @@ export default {
                         <!-- Thumbnail block on the left -->
                         <div
                             class="level-card-thumb"
-                            :style="getLevelThumbnail(item.originalIndex, list)"
+                            :style="getVideoThumbnailStyle(item.level)"
                         >
                             <span class="level-card-thumb-shade"></span>
                         </div>
@@ -77,24 +77,24 @@ export default {
                                         Verified by {{ item.level?.verifier || 'Unknown' }}
                                     </p>
 
-                                    <div v-if="item.level" class="level-card-tags">
-                                        <span v-if="item.level.handcam" class="level-tag level-tag-gold">
-                                            {{ item.level.handcam }}
-                                        </span>
-
-                                        <span v-if="item.level.device" class="level-tag">
-                                            {{ item.level.device }}
-                                        </span>
-
-                                        <span v-if="item.level.method" class="level-tag">
-                                            {{ item.level.method }}
+                                    <div
+                                        v-if="item.level.tags && item.level.tags.length"
+                                        class="level-card-tags"
+                                    >
+                                        <span
+                                            v-for="(tag, tagIndex) in item.level.tags"
+                                            :key="'tag-' + tagIndex + '-' + tag"
+                                            class="level-tag"
+                                            :class="tagClass(tag)"
+                                        >
+                                            {{ tag }}
                                         </span>
                                     </div>
                                 </div>
 
                                 <div v-if="item.level" class="level-card-right">
                                     <strong class="level-card-fps">
-                                        {{ item.level.fps || 'N/A' }} FPS
+                                        {{ formatFps(item.level.fps) }}
                                     </strong>
 
                                     <span class="level-card-method">
@@ -187,6 +187,14 @@ export default {
                                 <div class="level-info-row">
                                     <span class="level-info-label">Method</span>
                                     <strong>{{ item.level.method || 'N/A' }}</strong>
+                                </div>
+
+                                <div
+                                    v-if="item.level.tags && item.level.tags.length"
+                                    class="level-info-row"
+                                >
+                                    <span class="level-info-label">Tags</span>
+                                    <strong>{{ item.level.tags.join(', ') }}</strong>
                                 </div>
 
                                 <div class="level-info-row">
@@ -459,6 +467,28 @@ export default {
             }
         },
 
+        tagClass(tag) {
+            const value = String(tag || "").trim().toLowerCase();
+
+            if (value === "frame perfect") return "level-tag-frame-perfect";
+            if (value === "control") return "level-tag-control";
+            if (value === "high cps") return "level-tag-high-cps";
+            if (value === "capped") return "level-tag-capped";
+            if (value === "uncapped") return "level-tag-uncapped";
+
+            return "level-tag-default";
+        },
+
+        formatFps(fps) {
+            const value = String(fps || "N/A").trim();
+
+            if (value.toUpperCase() === "CBF") {
+                return "CBF";
+            }
+
+            return `${value} FPS`;
+        },
+
         applyFilters() {
             this.engineAsked = this.engineSelected;
             this.fpsAsked = this.fpsSelected.trim() || null;
@@ -477,6 +507,7 @@ export default {
         embed,
         score,
         getLevelThumbnail,
+        getVideoThumbnailStyle,
         getThumbnailImage,
         listLevelNameFilter,
     },
