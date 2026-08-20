@@ -81,19 +81,6 @@
                 </div>
 
                 <template v-else>
-                    <div class="user-info-box">
-                        <img :src="store.user.avatar || '/assets/the sclvn logo.png'" class="user-avatar" alt="Avatar">
-                        <div class="sidebar-label sidebar-user-label">
-                            <span class="sidebar-username">{{ store.user.username || store.user.displayName || 'Player' }}</span>
-                            <span v-if="store.user.role === 'admin'" class="sidebar-admin-label">ADMIN</span>
-                        </div>
-                    </div>
-
-                    <router-link to="/profile" class="sidebar-item" title="Profile">
-                        <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M5 21a7 7 0 0 1 14 0"></path></svg></span>
-                        <span class="sidebar-label">Profile</span>
-                    </router-link>
-
                     <button @click="store.handleLogout()" class="sidebar-item sidebar-logout" title="Logout">
                         <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5"></path><path d="M14 8l4 4-4 4M18 12H9"></path></svg></span>
                         <span class="sidebar-label">Logout</span>
@@ -138,7 +125,10 @@
 
                     <router-link v-if="store.user" to="/profile" class="topbar-user">
                         <img :src="store.user.avatar || '/assets/the sclvn logo.png'" alt="Avatar" />
-                        <span>{{ store.user.username || 'Player' }}</span>
+                        <span class="topbar-user-meta">
+                            <span class="topbar-username">{{ store.user.username || 'Player' }}</span>
+                            <span v-if="store.user.role === 'admin'" class="topbar-admin-label">ADMIN</span>
+                        </span>
                     </router-link>
 
                     <router-link v-else to="/login" class="topbar-btn">Login</router-link>

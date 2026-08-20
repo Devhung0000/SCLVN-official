@@ -1370,3 +1370,86 @@
         0 0 7px rgba(255,255,255,.20),
         0 0 14px rgba(255,255,255,.08) !important;
 }
+
+
+/* =========================================================
+   FINAL COMPACT LEVEL BAR
+   ========================================================= */
+
+.level-card-points {
+    color: #ffd166 !important;
+}
+
+.level-accordion-summary {
+    min-height: 108px !important;
+    grid-template-columns: 205px minmax(0, 1fr) !important;
+}
+
+.level-card-thumb,
+.level-card-main,
+.level-card-content {
+    min-height: 108px !important;
+}
+
+.level-card-content {
+    padding: 10px 14px !important;
+    gap: 14px !important;
+}
+
+.level-card-center {
+    gap: 5px !important;
+}
+
+.level-card-title-row {
+    gap: 8px !important;
+}
+
+.level-card-rank {
+    font-size: 18px !important;
+}
+
+.level-card-title {
+    font-size: clamp(18px, 1.55vw, 24px) !important;
+    line-height: 1.02 !important;
+}
+
+.level-card-verifier {
+    font-size: 11px !important;
+}
+
+.level-card-tags {
+    gap: 4px !important;
+}
+
+.level-tag {
+    padding: 3px 7px !important;
+    font-size: 9px !important;
+}
+
+.level-card-right {
+    min-width: 126px !important;
+    gap: 3px !important;
+}
+
+.level-card-fps {
+    font-size: clamp(18px, 1.45vw, 23px) !important;
+}
+
+.level-card-method {
+    font-size: 11px !important;
+}
+
+.level-card-points {
+    font-size: 12px !important;
+}
+
+.level-card-toggle {
+    margin-top: 3px !important;
+    font-size: 9px !important;
+}
+
+@media (max-width: 1180px) {
+    .level-accordion-summary {
+        grid-template-columns: 180px minmax(0, 1fr) !important;
+    }
+}

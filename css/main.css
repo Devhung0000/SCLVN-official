@@ -1602,3 +1602,73 @@ input[type="radio"] {
         0 0 16px rgba(255,255,255,.060),
         0 7px 20px rgba(0,0,0,.12) !important;
 }
+
+
+/* =========================================================
+   FINAL GLOBAL SCROLL FIX + TOPBAR USER ROLE
+   ========================================================= */
+
+.page-shell {
+    flex: 1 !important;
+    min-height: 0 !important;
+    height: 100vh !important;
+    padding-top: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    background: transparent !important;
+}
+
+/* Normal pages scroll with page-shell and begin below the fixed topbar. */
+.page-shell > *:not(.page-list):not(.page-roulette) {
+    min-height: 100vh !important;
+    padding-top: var(--topbar-height) !important;
+}
+
+/* List and Roulette keep their own scoped scrolling. */
+.page-shell > .page-list,
+.page-shell > .page-roulette {
+    padding-top: 0 !important;
+}
+
+.topbar-user {
+    min-height: 42px !important;
+    padding: 5px 10px !important;
+}
+
+.topbar-user-meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    min-width: 0;
+    line-height: 1.05;
+}
+
+.topbar-username {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.topbar-admin-label {
+    margin-top: 3px;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .08em;
+
+    background: linear-gradient(
+        90deg,
+        #EECDA3,
+        #EF629F,
+        #EECDA3
+    );
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: admin-gradient 3s linear infinite;
+}
