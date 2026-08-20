@@ -29,48 +29,244 @@ export default {
         store,
     }),
     template: `
-        <main class="page-auth" style="display:flex; justify-content:center; padding: 3rem 1rem;">
-            <div style="width: 100%; max-width: 400px; display:flex; flex-direction:column; gap:1rem;">
+        <main class="page-auth">
+            <section class="auth-shell">
 
-                <template v-if="store.user">
-                    <h1>Xin chào, {{ store.user.displayName || 'Player' }}!</h1>
-                    <p class="type-body-lg">Bạn đã đăng nhập bằng {{ store.user.email }}.</p>
-                    <router-link class="btn" to="/submit">Đi tới trang Nộp Record</router-link>
-                    <router-link v-if="store.user.role === 'admin'" class="btn" to="/admin">Đi tới trang Duyệt Record</router-link>
-                    <button class="btn" @click="logout">Đăng xuất</button>
-                </template>
+                <!-- LEFT BRAND PANEL -->
+                <div class="auth-brand-panel">
+                    <div class="auth-brand-mark">
+                        <img src="/assets/the sclvn logo.png" alt="SCLVN">
+                    </div>
 
-                <template v-else>
-                    <h1>{{ mode === 'login' ? 'Đăng nhập' : 'Tạo tài khoản' }}</h1>
+                    <div class="auth-brand-copy">
+                        <span class="auth-kicker">SCLVN ACCOUNT</span>
+                        <h1>Welcome back.</h1>
+                        <p>
+                            Sign in to submit records, manage your profile
+                            and access SCLVN account features.
+                        </p>
+                    </div>
 
-                    <!-- Form Đăng ký -->
-                    <template v-if="mode === 'register'">
-                        <input v-model="displayName" class="btn" type="text" placeholder="Tên Geometry Dash (Tên player của bạn)" />
-                        <input v-model="email" class="btn" type="email" placeholder="Email" />
+                    <div class="auth-brand-footer">
+                        <span class="auth-dot"></span>
+                        <span>Spam Challenge List Vietnam</span>
+                    </div>
+                </div>
+
+                <!-- RIGHT AUTH PANEL -->
+                <div class="auth-card">
+
+                    <!-- Already logged in -->
+                    <template v-if="store.user">
+                        <div class="auth-logged-user">
+                            <img
+                                :src="store.user.avatar || '/assets/the sclvn logo.png'"
+                                alt="Avatar"
+                            >
+
+                            <div>
+                                <span class="auth-kicker">SIGNED IN</span>
+                                <h2>
+                                    {{ store.user.displayName || store.user.username || 'Player' }}
+                                </h2>
+                                <p>{{ store.user.email }}</p>
+                            </div>
+                        </div>
+
+                        <div class="auth-account-actions">
+                            <router-link class="auth-primary-btn" to="/submit">
+                                Submit Record
+                            </router-link>
+
+                            <router-link
+                                v-if="store.user.role === 'admin'"
+                                class="auth-secondary-btn"
+                                to="/admin"
+                            >
+                                Review Records
+                            </router-link>
+
+                            <router-link class="auth-secondary-btn" to="/profile">
+                                Profile
+                            </router-link>
+
+                            <button
+                                class="auth-danger-btn"
+                                type="button"
+                                @click="logout"
+                            >
+                                Logout
+                            </button>
+                        </div>
                     </template>
 
-                    <!-- Form Đăng nhập -->
+                    <!-- Login / Register -->
                     <template v-else>
-                        <input v-model="usernameOrEmail" class="btn" type="text" placeholder="Tên Geometry Dash" />
+                        <header class="auth-card-header">
+                            <div>
+                                <span class="auth-kicker">
+                                    {{ mode === 'login' ? 'SIGN IN' : 'CREATE ACCOUNT' }}
+                                </span>
+
+                                <h2>
+                                    {{ mode === 'login' ? 'Login to SCLVN' : 'Join SCLVN' }}
+                                </h2>
+
+                                <p>
+                                    {{
+                                        mode === 'login'
+                                            ? 'Use your Geometry Dash name or account email.'
+                                            : 'Create an account linked to your Geometry Dash name.'
+                                    }}
+                                </p>
+                            </div>
+                        </header>
+
+                        <div class="auth-form">
+
+                            <!-- Register fields -->
+                            <template v-if="mode === 'register'">
+                                <label class="auth-field">
+                                    <span>Geometry Dash name</span>
+
+                                    <div class="auth-input-wrap">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <circle cx="12" cy="8" r="4"></circle>
+                                            <path d="M5 21a7 7 0 0 1 14 0"></path>
+                                        </svg>
+
+                                        <input
+                                            v-model="displayName"
+                                            type="text"
+                                            autocomplete="username"
+                                            placeholder="Your player name"
+                                        >
+                                    </div>
+                                </label>
+
+                                <label class="auth-field">
+                                    <span>Email</span>
+
+                                    <div class="auth-input-wrap">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                                            <path d="m4 7 8 6 8-6"></path>
+                                        </svg>
+
+                                        <input
+                                            v-model="email"
+                                            type="email"
+                                            autocomplete="email"
+                                            placeholder="name@example.com"
+                                        >
+                                    </div>
+                                </label>
+                            </template>
+
+                            <!-- Login field -->
+                            <template v-else>
+                                <label class="auth-field">
+                                    <span>Geometry Dash name or email</span>
+
+                                    <div class="auth-input-wrap">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <circle cx="12" cy="8" r="4"></circle>
+                                            <path d="M5 21a7 7 0 0 1 14 0"></path>
+                                        </svg>
+
+                                        <input
+                                            v-model="usernameOrEmail"
+                                            type="text"
+                                            autocomplete="username"
+                                            placeholder="Player name or email"
+                                        >
+                                    </div>
+                                </label>
+                            </template>
+
+                            <label class="auth-field">
+                                <span>Password</span>
+
+                                <div class="auth-input-wrap">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+                                        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                                    </svg>
+
+                                    <input
+                                        v-model="password"
+                                        type="password"
+                                        autocomplete="current-password"
+                                        placeholder="At least 6 characters"
+                                        @keyup.enter="submit"
+                                    >
+                                </div>
+                            </label>
+
+                            <div v-if="error" class="auth-error">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="9"></circle>
+                                    <path d="M12 7v6M12 17h.01"></path>
+                                </svg>
+
+                                <span>{{ error }}</span>
+                            </div>
+
+                            <button
+                                class="auth-primary-btn auth-full-btn"
+                                type="button"
+                                :disabled="loading"
+                                @click="submit"
+                            >
+                                {{
+                                    loading
+                                        ? 'Processing...'
+                                        : (mode === 'login' ? 'Login' : 'Create account')
+                                }}
+                            </button>
+
+                            <div class="auth-divider">
+                                <span>or continue with</span>
+                            </div>
+
+                            <button
+                                class="auth-google-btn"
+                                type="button"
+                                :disabled="loading"
+                                @click="googleSignIn"
+                            >
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M21 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.1a4.4 4.4 0 0 1-1.9 2.8v2.3h3.1c1.8-1.7 2.7-4.1 2.7-6.9Z"></path>
+                                    <path d="M12 21c2.6 0 4.8-.9 6.4-2.3l-3.1-2.3c-.9.6-2 1-3.3 1-2.5 0-4.6-1.7-5.4-4H3.4v2.4A9.7 9.7 0 0 0 12 21Z"></path>
+                                    <path d="M6.6 13.4a5.8 5.8 0 0 1 0-3.7V7.3H3.4A9 9 0 0 0 3.4 16l3.2-2.6Z"></path>
+                                    <path d="M12 5.6c1.4 0 2.7.5 3.7 1.4l2.8-2.8A9.4 9.4 0 0 0 3.4 7.3l3.2 2.4c.8-2.4 2.9-4.1 5.4-4.1Z"></path>
+                                </svg>
+
+                                <span>Google</span>
+                            </button>
+                        </div>
+
+                        <footer class="auth-card-footer">
+                            <span>
+                                {{
+                                    mode === 'login'
+                                        ? 'New to SCLVN?'
+                                        : 'Already have an account?'
+                                }}
+                            </span>
+
+                            <button type="button" @click="toggleMode">
+                                {{
+                                    mode === 'login'
+                                        ? 'Create account'
+                                        : 'Login instead'
+                                }}
+                            </button>
+                        </footer>
                     </template>
+                </div>
 
-                    <input v-model="password" class="btn" type="password" placeholder="Mật khẩu (ít nhất 6 ký tự)" @keyup.enter="submit" />
-
-                    <p v-if="error" class="error" style="color: #ff4d4d; margin: 0;">{{ error }}</p>
-
-                    <button class="btn" :disabled="loading" @click="submit">
-                        {{ loading ? 'Đang xử lý...' : (mode === 'login' ? 'Đăng nhập' : 'Đăng ký') }}
-                    </button>
-
-                    <button class="btn" :disabled="loading" @click="googleSignIn">
-                        Đăng nhập bằng Google
-                    </button>
-
-                    <p class="type-label-md" style="cursor:pointer; text-decoration:underline;" @click="toggleMode">
-                        {{ mode === 'login' ? 'Chưa có tài khoản? Đăng ký ngay' : 'Đã có tài khoản? Đăng nhập' }}
-                    </p>
-                </template>
-            </div>
+            </section>
         </main>
     `,
     methods: {
