@@ -542,27 +542,42 @@ input[type="radio"] {
 
 .app-sidebar {
     position: fixed;
-    inset: 0 auto 0 0;
+    top: 0;
+    left: 0;
+
     width: var(--sidebar-width);
     height: 100vh;
-    padding: 12px 8px;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    padding: 12px 8px;
+
+    /* Glass */
+    background: rgba(7, 7, 9, 0.62);
+
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        8px 0 30px rgba(0, 0, 0, 0.16);
+
     overflow: hidden;
+
     z-index: 2000;
 
-    background: rgba(12, 12, 16, .78);
-    backdrop-filter: blur(22px) saturate(165%);
-    -webkit-backdrop-filter: blur(22px) saturate(165%);
-    border-right: 1px solid rgba(255, 255, 255, .07);
-
-    transition: width .3s cubic-bezier(.22, 1, .36, 1), background .25s ease;
+    transition:
+        width .3s cubic-bezier(.22, 1, .36, 1),
+        background .25s ease;
 }
 
 .app-sidebar:hover {
     width: 250px;
-    background: rgba(12, 12, 16, .90);
+
+    background: rgba(7, 7, 9, 0.72);
 }
 
 .sidebar-nav,
@@ -678,9 +693,31 @@ input[type="radio"] {
 }
 
 .sidebar-admin-label {
-    color: #ef4444;
     font-size: 10px;
     font-weight: 700;
+
+    background: linear-gradient(
+        90deg,
+        #EECDA3,
+        #EF629F,
+        #EECDA3
+    );
+
+    background-size: 200% auto;
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    animation: admin-gradient 3s linear infinite;
+}
+
+@keyframes admin-gradient {
+    to {
+        background-position: 200% center;
+    }
 }
 
 .main-content {
