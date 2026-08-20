@@ -536,229 +536,35 @@ input[type="radio"] {
 
 
 /* ================= APP SHELL ================= */
+
 #app {
     min-height: 100vh;
 }
 
+
+/* ================= GLASS SIDEBAR ================= */
+
 .app-sidebar {
     position: fixed;
+
     top: 0;
     left: 0;
 
     width: var(--sidebar-width);
     height: 100vh;
 
+    padding: 12px 8px;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    padding: 12px 8px;
-
-    /* Glass */
-    background: rgba(7, 7, 9, 0.62);
-
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-
-    box-shadow:
-        8px 0 30px rgba(0, 0, 0, 0.16);
 
     overflow: hidden;
 
     z-index: 2000;
 
-    transition:
-        width .3s cubic-bezier(.22, 1, .36, 1),
-        background .25s ease;
-}
-
-.app-sidebar:hover {
-    width: 250px;
-
-    background: rgba(7, 7, 9, 0.72);
-}
-
-.sidebar-nav,
-.sidebar-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.sidebar-footer {
-    padding-top: 12px;
-    border-top: 1px solid rgba(255, 255, 255, .07);
-}
-
-.sidebar-item {
-    width: 100%;
-    min-height: 44px;
-    padding: 10px 12px;
-    border: 0;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-shrink: 0;
-
-    background: transparent;
-    color: #a1a1aa;
-    text-decoration: none;
-    white-space: nowrap;
-    cursor: pointer;
-    font: inherit;
-
-    transition: background .2s ease, color .2s ease, transform .2s ease;
-}
-
-.sidebar-item:hover,
-.sidebar-item.router-link-exact-active {
-    background: rgba(255, 255, 255, .08);
-    color: #ffffff;
-}
-
-.sidebar-item:hover {
-    transform: translateX(2px);
-}
-
-.sidebar-item-admin,
-.sidebar-logout {
-    color: #ef4444;
-}
-
-.sidebar-login {
-    background: linear-gradient(135deg, #6366f1, #a855f7);
-    color: #fff;
-}
-
-.sidebar-icon {
-    width: 24px;
-    min-width: 24px;
-    height: 24px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-}
-
-.sidebar-icon img {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    max-width: 20px !important;
-    object-fit: contain !important;
-    filter: var(--the-button-on-top);
-}
-
-.sidebar-label {
-    opacity: 0;
-    pointer-events: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: opacity .18s ease;
-}
-
-.app-sidebar:hover .sidebar-label {
-    opacity: 1;
-}
-
-.user-info-box {
-    min-height: 44px;
-    padding: 6px 8px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.user-avatar {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 1px solid #a855f7;
-}
-
-.sidebar-user-label {
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar-username {
-    color: #fff;
-    font-weight: 700;
-    font-size: 13px;
-}
-
-.sidebar-admin-label {
-    font-size: 10px;
-    font-weight: 700;
-
-    background: linear-gradient(
-        90deg,
-        #EECDA3,
-        #EF629F,
-        #EECDA3
-    );
-
-    background-size: 200% auto;
-
-    background-clip: text;
-    -webkit-background-clip: text;
-
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-
-    animation: admin-gradient 3s linear infinite;
-}
-
-@keyframes admin-gradient {
-    to {
-        background-position: 200% center;
-    }
-}
-
-.main-content {
-    margin-left: var(--sidebar-width);
-    width: calc(100% - var(--sidebar-width));
-    height: 100vh;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: var(--color-background);
-    color: var(--color-on-background);
-}
-
-/* ================= GLASS TOPBAR ================= */
-.topbar {
-    height: var(--topbar-height);
-    min-height: var(--topbar-height);
-
-    padding: 0 24px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-
-    position: relative;
-    z-index: 1000;
-
-    /* ===== GLASS ===== */
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.055) 0%,
-            rgba(255, 255, 255, 0.018) 35%,
-            rgba(255, 255, 255, 0.008) 65%,
-            rgba(255, 255, 255, 0.035) 100%
-        ),
-        rgba(7, 7, 9, 0.58);
+    /* Glass */
+    background: rgba(12, 12, 16, 0.30);
 
     backdrop-filter:
         blur(24px)
@@ -768,291 +574,756 @@ input[type="radio"] {
         blur(24px)
         saturate(180%);
 
-    /* cạnh kính */
-
-    border-bottom:
-        1px solid rgba(255, 255, 255, 0.09);
-
-    /* chiều sâu */
+    border-right:
+        1px solid rgba(255, 255, 255, 0.08);
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.06),
-        0 8px 30px rgba(0, 0, 0, 0.18);
+        inset -1px 0 0 rgba(255,255,255,.025),
+        8px 0 30px rgba(0, 0, 0, 0.14);
 
-    color: white;
-
-    overflow: visible;
+    transition:
+        width .3s cubic-bezier(.22, 1, .36, 1),
+        background .25s ease,
+        box-shadow .25s ease;
 }
+
+
+/* ánh sáng nhẹ trên mặt kính */
+
+.app-sidebar::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055) 0%,
+            transparent 28%,
+            rgba(255,255,255,.012) 65%,
+            transparent 100%
+        );
+}
+
+
+/* Hover sidebar */
+
+.app-sidebar:hover {
+    width: 250px;
+
+    background: rgba(12, 12, 16, 0.40);
+
+    box-shadow:
+        inset -1px 0 0 rgba(255,255,255,.035),
+        12px 0 36px rgba(0,0,0,.18);
+}
+
+
+/* ================= SIDEBAR CONTENT ================= */
+
+.sidebar-nav,
+.sidebar-footer {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.sidebar-footer {
+    padding-top: 12px;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+}
+
+
+.sidebar-item {
+    width: 100%;
+    min-height: 44px;
+
+    padding: 10px 12px;
+
+    border: 0;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    flex-shrink: 0;
+
+    background: transparent;
+
+    color: #a1a1aa;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    font: inherit;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
+}
+
+
+.sidebar-item:hover,
+.sidebar-item.router-link-exact-active {
+    background:
+        rgba(255,255,255,.08);
+
+    color: #fff;
+}
+
+
+.sidebar-item:hover {
+    transform: translateX(2px);
+}
+
+
+.sidebar-item-admin,
+.sidebar-logout {
+    color: #ef4444;
+}
+
+
+.sidebar-login {
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #a855f7
+        );
+
+    color: #fff;
+}
+
+
+/* ================= SIDEBAR ICON ================= */
+
+.sidebar-icon {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+
+.sidebar-icon img {
+    width: 20px !important;
+    height: 20px !important;
+
+    min-width: 20px !important;
+    max-width: 20px !important;
+
+    object-fit: contain !important;
+
+    filter: var(--the-button-on-top);
+}
+
+
+/* label chỉ hiện khi hover sidebar */
+
+.sidebar-label {
+    opacity: 0;
+
+    pointer-events: none;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition:
+        opacity .18s ease;
+}
+
+
+.app-sidebar:hover .sidebar-label {
+    opacity: 1;
+}
+
+
+/* ================= SIDEBAR USER ================= */
+
+.user-info-box {
+    min-height: 44px;
+
+    padding: 6px 8px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.user-avatar {
+    width: 32px !important;
+    height: 32px !important;
+
+    min-width: 32px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        1px solid rgba(168,85,247,.7);
+}
+
+
+.sidebar-user-label {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.sidebar-username {
+    color: #fff;
+
+    font-weight: 700;
+    font-size: 13px;
+}
+
+
+/* gradient ADMIN */
+
+.sidebar-admin-label {
+    font-size: 10px;
+    font-weight: 700;
+
+    background:
+        linear-gradient(
+            90deg,
+            #EECDA3,
+            #EF629F,
+            #EECDA3
+        );
+
+    background-size: 200% auto;
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    animation:
+        admin-gradient 3s linear infinite;
+}
+
+
+@keyframes admin-gradient {
+    to {
+        background-position:
+            200% center;
+    }
+}
+
+
+/* ================= MAIN CONTENT ================= */
+
+.main-content {
+    margin-left:
+        var(--sidebar-width);
+
+    width:
+        calc(100% - var(--sidebar-width));
+
+    height: 100vh;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background:
+        var(--color-background);
+
+    color:
+        var(--color-on-background);
+}
+
+
+/* ================= GLASS TOPBAR ================= */
+
+.topbar {
+    height:
+        var(--topbar-height);
+
+    min-height:
+        var(--topbar-height);
+
+    padding:
+        0 24px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    position: fixed;
+
+    top: 0;
+
+    left:
+        var(--sidebar-width);
+
+    right: 0;
+
+    z-index: 1500;
+
+    /* Frosted glass */
+    background:
+        rgba(12, 12, 16, 0.28);
+
+    backdrop-filter:
+        blur(24px)
+        saturate(180%);
+
+    -webkit-backdrop-filter:
+        blur(24px)
+        saturate(180%);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.055),
+        0 8px 30px rgba(0,0,0,.13);
+
+    color: #fff;
+
+    overflow: hidden;
+}
+
+
+/* ánh phản chiếu trên topbar */
+
+.topbar::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.06),
+            transparent 32%,
+            rgba(255,255,255,.012) 68%,
+            transparent
+        );
+}
+
+
+/* line kính phía dưới */
 
 .topbar::after {
     content: "";
 
     position: absolute;
 
-    left: 20px;
-    right: 20px;
+    left: 24px;
+    right: 24px;
+
     bottom: 0;
 
     height: 1px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.13),
-        transparent
-    );
-
     pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.12),
+            transparent
+        );
 }
+
+
+/* ================= TOPBAR CONTENT ================= */
 
 .topbar-left,
 .topbar-center,
 .topbar-right {
+    position: relative;
+
+    z-index: 1;
+
     display: flex;
     align-items: center;
 }
+
 
 .topbar-left,
 .topbar-right {
     flex-shrink: 0;
 }
 
+
 .topbar-center {
     flex: 1;
+
     justify-content: center;
+
     min-width: 0;
 }
+
 
 .topbar-right {
     gap: 10px;
 }
 
+
+/* ================= BRAND ================= */
+
 .topbar-brand {
     display: inline-flex;
+
     align-items: center;
+
     gap: 12px;
+
     text-decoration: none;
 }
+
 
 .topbar-logo {
     width: 42px;
     height: 42px;
+
     border-radius: 10px;
+
     object-fit: cover;
 }
+
 
 .topbar-brand-text {
     display: flex;
     flex-direction: column;
+
     line-height: 1.1;
+
     white-space: nowrap;
 }
 
+
 .topbar-brand-text h2 {
     margin: 0;
+
     color: #fff;
+
     font-size: 21px;
     font-weight: 700;
 }
 
+
 .topbar-brand-text span {
     margin-top: 4px;
+
     color: #8f8f98;
+
     font-size: 11px;
 }
 
+
+/* ================= GLASS SEARCH ================= */
+
 .topbar-search {
-    width: min(470px, 100%);
+    width:
+        min(470px, 100%);
+
     height: 44px;
 
-    padding: 0 13px;
+    padding:
+        0 13px;
 
     display: flex;
+
     align-items: center;
+
     gap: 9px;
 
     border-radius: 14px;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.07),
-            rgba(255, 255, 255, 0.025)
-        );
+        rgba(255,255,255,.055);
 
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    backdrop-filter:
+        blur(16px)
+        saturate(160%);
+
+    -webkit-backdrop-filter:
+        blur(16px)
+        saturate(160%);
+
+    border:
+        1px solid rgba(255,255,255,.10);
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.055),
-        0 4px 16px rgba(0, 0, 0, 0.10);
-
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+        inset 0 1px 0 rgba(255,255,255,.045),
+        0 5px 18px rgba(0,0,0,.11);
 
     transition:
-        border-color .25s ease,
-        background .25s ease,
-        box-shadow .25s ease,
-        transform .25s cubic-bezier(.22,1,.36,1);
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
 }
+
 
 .topbar-search:focus-within {
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.09),
-            rgba(255,255,255,.035)
-        );
+        rgba(255,255,255,.075);
 
-    border-color: rgba(168, 85, 247, 0.42);
+    border-color:
+        rgba(168,85,247,.45);
 
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.07),
-        0 0 0 3px rgba(168,85,247,.07),
-        0 8px 24px rgba(0,0,0,.15);
+        inset 0 1px 0 rgba(255,255,255,.06),
+        0 0 0 3px rgba(168,85,247,.08),
+        0 8px 24px rgba(0,0,0,.14);
 
-    transform: translateY(-1px);
+    transform:
+        translateY(-1px);
 }
+
 
 .topbar-search-icon {
     color: #a1a1aa;
+
     font-size: 20px;
+
     line-height: 1;
 }
 
+
 .topbar-search input {
     flex: 1;
+
     min-width: 0;
+
     border: 0;
+
     outline: 0;
+
     background: transparent;
+
     color: #fff;
+
     font: inherit;
+
     font-size: 14px;
 }
 
+
 .topbar-search input::placeholder {
-    color: #75757e;
+    color: #8a8a93;
 }
 
+
 .topbar-shortcut {
-    padding: 4px 7px;
+    padding:
+        4px 7px;
+
     border-radius: 7px;
-    background: rgba(255, 255, 255, .07);
-    color: #8d8d96;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.05);
+
+    color: #a0a0a8;
+
     font-size: 11px;
+
     white-space: nowrap;
 }
+
+
+/* ================= GLASS TOPBAR BUTTONS ================= */
 
 .topbar-btn,
 .topbar-icon-btn,
 .topbar-user {
     min-height: 40px;
 
+    border:
+        1px solid rgba(255,255,255,.09);
+
     border-radius: 11px;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.07),
-            rgba(255,255,255,.025)
-        );
+        rgba(255,255,255,.055);
 
-    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter:
+        blur(14px)
+        saturate(160%);
+
+    -webkit-backdrop-filter:
+        blur(14px)
+        saturate(160%);
 
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.045),
-        0 4px 14px rgba(0,0,0,.08);
+        inset 0 1px 0 rgba(255,255,255,.04),
+        0 4px 14px rgba(0,0,0,.09);
 
     color: #fff;
+
     text-decoration: none;
 
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-
     transition:
-        transform .22s cubic-bezier(.22,1,.36,1),
-        background .22s ease,
-        border-color .22s ease,
-        box-shadow .22s ease;
+        transform .2s cubic-bezier(.22,1,.36,1),
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
 }
 
+
 .topbar-btn {
-    padding: 0 15px;
+    padding:
+        0 15px;
+
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
+
     font-size: 13px;
     font-weight: 600;
+
     white-space: nowrap;
 }
 
+
 .topbar-icon-btn {
     width: 40px;
+
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 }
+
 
 .topbar-icon-btn img {
     width: 19px;
     height: 19px;
-    filter: var(--the-button-on-top);
+
+    filter:
+        var(--the-button-on-top);
 }
 
+
 .topbar-user {
-    padding: 0 10px;
+    padding:
+        0 10px;
+
     display: inline-flex;
+
     align-items: center;
+
     gap: 8px;
+
     font-size: 13px;
     font-weight: 600;
 }
 
+
 .topbar-user img {
     width: 27px;
     height: 27px;
+
     border-radius: 50%;
+
     object-fit: cover;
 }
+
 
 .topbar-btn:hover,
 .topbar-icon-btn:hover,
 .topbar-user:hover {
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.11),
-            rgba(255,255,255,.045)
-        );
+        rgba(255,255,255,.095);
 
-    border-color: rgba(255,255,255,.15);
+    border-color:
+        rgba(255,255,255,.15);
 
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.08),
-        0 7px 20px rgba(0,0,0,.14);
+        inset 0 1px 0 rgba(255,255,255,.07),
+        0 7px 20px rgba(0,0,0,.13);
 }
+
+
+/* ================= PAGE CONTENT ================= */
 
 .page-shell {
     flex: 1;
+
     min-height: 0;
+
     overflow: auto;
-    background: var(--color-background);
+
+    /*
+       QUAN TRỌNG:
+       content chạy phía sau topbar.
+       Vì vậy topbar mới blur được thumbnail/background phía sau.
+    */
+
+    padding-top:
+        var(--topbar-height);
+
+    background:
+        var(--color-background);
 }
+
 
 .page-shell > * {
     min-width: 0;
 }
 
+
+/* ================= RESPONSIVE ================= */
+
 @media (max-width: 1050px) {
+
     .topbar-center {
         display: none;
     }
+
 }
 
+
 @media (max-width: 760px) {
+
     .topbar-brand-text span,
     .topbar-user span,
     .topbar-btn:first-child {
@@ -1062,4 +1333,5 @@ input[type="radio"] {
     .topbar {
         padding-inline: 14px;
     }
+
 }
