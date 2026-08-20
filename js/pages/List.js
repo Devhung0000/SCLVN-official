@@ -22,9 +22,6 @@ export default {
         </main>
         <main v-else class="page-list">
             <div class="list-container">
-		<div style="display: grid;">
-			<input v-model="searchQuery" placeholder="Input text to Filter! here..." class="btn" type="text" id="filterForLevelName"/>
-		</div>
                 <table class="list" v-if="list && list.length">
                     <tr v-for="(item, i) in filteredListDisplay" :key="item.originalIndex">
                                 <td class="rank">
@@ -57,9 +54,6 @@ export default {
                 </p>
             </div>
             <div class="level-container">
-                <a v-if="level" class="back-button" @click="selected = null">
-                    ← Back to Homepage
-                </a>
                 <div class="level" v-if="level">
 					<div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; justify-self: center;">
                     <div class="button-holder" style="gap: 1em; ">
