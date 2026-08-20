@@ -1309,3 +1309,45 @@ input[type="radio"] {
     }
 
 }
+
+.page-list {
+    height: calc(100vh - var(--topbar-height));
+    min-height: 0;
+
+    overflow: hidden;
+}
+
+/* Cột danh sách level */
+.page-list .list-container {
+    min-height: 0;
+    height: 100%;
+
+    overflow-y: auto;
+}
+
+/* Cột thông tin level */
+.page-list .level-container {
+    min-height: 0;
+    height: 100%;
+
+    overflow-y: auto;
+}
+
+/* Cột moderators */
+.page-list .meta-container {
+    min-height: 0;
+    height: 100%;
+
+    overflow: hidden;
+
+    position: sticky;
+    top: 0;
+
+    align-self: start;
+}
+
+.page-list .meta {
+    height: 100%;
+
+    overflow: hidden;
+}
