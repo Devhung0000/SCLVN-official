@@ -1672,3 +1672,644 @@ input[type="radio"] {
 
     animation: admin-gradient 3s linear infinite;
 }
+
+
+/* =========================================================
+   SUBMIT + ADMIN UI V7
+   ========================================================= */
+
+.page-submit,
+.page-admin {
+    width: 100% !important;
+    min-height: 100vh !important;
+    padding:
+        calc(var(--topbar-height) + 30px)
+        26px
+        42px !important;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    background:
+        radial-gradient(circle at 50% -10%, rgba(255,255,255,.045), transparent 32%),
+        var(--color-background) !important;
+}
+
+/* ---------- Submit ---------- */
+
+.submit-shell {
+    width: min(880px, 100%);
+    margin: 0 auto;
+}
+
+.submit-header,
+.admin-header {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.submit-header h1,
+.admin-header h1 {
+    margin: 4px 0 4px;
+    color: #fff;
+    font-size: clamp(27px, 3vw, 36px);
+    line-height: 1.05;
+    letter-spacing: -.035em;
+}
+
+.submit-header p,
+.admin-header p,
+.submit-section-head p {
+    margin: 0;
+    color: #898993;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.submit-kicker,
+.admin-kicker,
+.admin-record-label {
+    color: #8d8d98;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .16em;
+}
+
+.submit-header-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.09);
+}
+
+.submit-header-icon svg,
+.submit-state-icon svg,
+.admin-empty-icon svg,
+.admin-refresh-btn svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.submit-header-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+.submit-card,
+.submit-state-card,
+.admin-record-card,
+.admin-empty,
+.admin-access-card {
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.09);
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.038), rgba(255,255,255,.014)),
+        rgba(12,12,16,.78);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.035),
+        0 14px 34px rgba(0,0,0,.18);
+}
+
+.submit-card {
+    padding: 22px;
+}
+
+.submit-section-head {
+    padding-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.submit-section-head h2 {
+    margin: 0 0 4px;
+    font-size: 17px;
+}
+
+.submit-user-chip {
+    padding: 6px 9px 6px 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.07);
+    color: #d7d7dd;
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.submit-user-chip img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.submit-form-grid,
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.submit-form-grid {
+    padding-top: 20px;
+}
+
+.submit-field,
+.admin-field {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.submit-field > span,
+.admin-field > span {
+    color: #a8a8b0;
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.submit-field small {
+    color: #666670;
+    font-size: 9px;
+    font-weight: 500;
+}
+
+.submit-field-full,
+.admin-field-full {
+    grid-column: 1 / -1;
+}
+
+.submit-field input,
+.submit-field select,
+.submit-field textarea,
+.admin-field input {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 12px;
+
+    border: 1px solid rgba(255,255,255,.085);
+    border-radius: 10px;
+    outline: none;
+
+    background: rgba(255,255,255,.035);
+    color: #f1f1f3;
+
+    font: inherit;
+    font-size: 11px;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.submit-field textarea {
+    resize: vertical;
+    min-height: 92px;
+}
+
+.submit-field input:focus,
+.submit-field select:focus,
+.submit-field textarea:focus,
+.admin-field input:focus {
+    border-color: rgba(255,255,255,.20);
+    background: rgba(255,255,255,.055);
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.025),
+        0 0 15px rgba(255,255,255,.025);
+}
+
+.submit-percent-field,
+.admin-percent-field {
+    position: relative;
+}
+
+.submit-percent-field input,
+.admin-percent-field input {
+    padding-right: 32px;
+}
+
+.submit-percent-field strong,
+.admin-percent-field strong {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777781;
+    font-size: 10px;
+}
+
+.submit-mobile-card,
+.admin-mobile-card {
+    min-height: 61px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    align-self: end;
+
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.075);
+    background: rgba(255,255,255,.025);
+
+    cursor: pointer;
+}
+
+.submit-mobile-card input,
+.admin-mobile-card input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.submit-check-ui,
+.admin-check-ui {
+    position: relative;
+    width: 34px;
+    height: 19px;
+    flex-shrink: 0;
+
+    border-radius: 999px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.10);
+}
+
+.submit-check-ui::after,
+.admin-check-ui::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+
+    background: #a2a2aa;
+    transition: transform .22s cubic-bezier(.22,1,.36,1);
+}
+
+.submit-mobile-card input:checked + .submit-check-ui,
+.admin-mobile-card input:checked + .admin-check-ui {
+    background: rgba(255,255,255,.18);
+    border-color: rgba(255,255,255,.23);
+}
+
+.submit-mobile-card input:checked + .submit-check-ui::after,
+.admin-mobile-card input:checked + .admin-check-ui::after {
+    transform: translateX(15px);
+    background: #fff;
+}
+
+.submit-mobile-card > span:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.submit-mobile-card strong {
+    color: #eeeef1;
+    font-size: 10px;
+}
+
+.submit-mobile-card small {
+    color: #777781;
+    font-size: 9px;
+}
+
+.submit-actions {
+    margin-top: 18px;
+    padding-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border-top: 1px solid rgba(255,255,255,.06);
+}
+
+.submit-actions p {
+    margin: 0;
+    max-width: 430px;
+    color: #6f6f79;
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+.submit-primary-btn,
+.admin-primary-btn,
+.admin-refresh-btn,
+.admin-reject-btn,
+.admin-video-btn {
+    min-height: 38px;
+    padding: 9px 14px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.11);
+
+    font: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.submit-primary-btn,
+.admin-primary-btn {
+    color: #08080b;
+    background: #f2f2f4;
+    border-color: rgba(255,255,255,.65);
+}
+
+.submit-primary-btn:hover,
+.admin-primary-btn:hover {
+    transform: translateY(-1px);
+    background: #fff;
+    box-shadow: 0 0 16px rgba(255,255,255,.07);
+}
+
+.submit-primary-btn:disabled,
+.admin-primary-btn:disabled,
+.admin-reject-btn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.submit-error {
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: #fecaca;
+    background: rgba(239,68,68,.08);
+    border: 1px solid rgba(239,68,68,.18);
+    font-size: 10px;
+}
+
+.submit-state-card,
+.admin-access-card {
+    min-height: 300px;
+    padding: 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.submit-state-card h2,
+.admin-access-card h1 {
+    margin: 13px 0 5px;
+}
+
+.submit-state-card p,
+.admin-access-card p {
+    margin: 0 0 18px;
+    color: #84848e;
+    font-size: 11px;
+}
+
+.submit-state-icon,
+.admin-empty-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.04);
+}
+
+.submit-state-icon svg,
+.admin-empty-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+/* ---------- Admin ---------- */
+
+.admin-shell,
+.admin-access-card {
+    width: min(1000px, 100%);
+    margin: 0 auto;
+}
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-count,
+.admin-pending-pill {
+    padding: 6px 9px;
+    border-radius: 999px;
+    color: #d0d0d6;
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.075);
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.admin-refresh-btn,
+.admin-video-btn {
+    color: #d8d8dd;
+    background: rgba(255,255,255,.04);
+}
+
+.admin-refresh-btn:hover,
+.admin-video-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(255,255,255,.07);
+    border-color: rgba(255,255,255,.14);
+}
+
+.admin-refresh-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.admin-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.admin-record-card {
+    padding: 20px;
+}
+
+.admin-record-head {
+    padding-bottom: 15px;
+    margin-bottom: 17px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.admin-record-head h2 {
+    margin: 3px 0 0;
+    color: #fff;
+    font-size: 17px;
+}
+
+.admin-pending-pill {
+    color: #ffe68a;
+    background: rgba(202,138,4,.10);
+    border-color: rgba(250,204,21,.20);
+}
+
+.admin-mobile-card {
+    min-height: 58px;
+}
+
+.admin-mobile-card > span:last-child {
+    color: #dddde1;
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.admin-record-meta {
+    margin-top: 15px;
+    padding: 12px 13px;
+    display: grid;
+    gap: 8px;
+    border-radius: 11px;
+    background: rgba(255,255,255,.025);
+    border: 1px solid rgba(255,255,255,.055);
+}
+
+.admin-record-meta p {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 100px minmax(0,1fr);
+    gap: 12px;
+    font-size: 9px;
+}
+
+.admin-record-meta strong {
+    color: #787882;
+}
+
+.admin-record-meta span {
+    color: #c9c9ce;
+    overflow-wrap: anywhere;
+}
+
+.admin-record-actions {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.admin-decision-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.admin-reject-btn {
+    color: #fca5a5;
+    background: rgba(239,68,68,.06);
+    border-color: rgba(239,68,68,.14);
+}
+
+.admin-reject-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(239,68,68,.10);
+    border-color: rgba(239,68,68,.24);
+}
+
+.admin-empty {
+    min-height: 300px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.admin-empty h2 {
+    margin: 13px 0 4px;
+}
+
+.admin-empty p {
+    margin: 0;
+    color: #85858f;
+    font-size: 11px;
+}
+
+@media (max-width: 720px) {
+    .page-submit,
+    .page-admin {
+        padding:
+            calc(var(--topbar-height) + 20px)
+            14px
+            30px !important;
+    }
+
+    .submit-form-grid,
+    .admin-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .submit-field-full,
+    .admin-field-full {
+        grid-column: auto;
+    }
+
+    .submit-section-head,
+    .submit-actions,
+    .admin-header,
+    .admin-record-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .submit-user-chip {
+        width: fit-content;
+    }
+
+    .admin-header-actions,
+    .admin-decision-actions {
+        width: 100%;
+    }
+
+    .admin-header-actions > *,
+    .admin-decision-actions > * {
+        flex: 1;
+    }
+}

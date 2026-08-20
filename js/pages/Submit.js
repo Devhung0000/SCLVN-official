@@ -5,6 +5,7 @@ import Spinner from '../components/Spinner.js';
 
 export default {
     components: { Spinner },
+
     data: () => ({
         loading: true,
         levels: [],
@@ -20,67 +21,185 @@ export default {
         error: '',
         store,
     }),
+
     template: `
-        <main v-if="loading"><Spinner></Spinner></main>
-        <main v-else class="page-submit" style="display:flex; justify-content:center; padding: 2rem 1rem;">
-            <div style="width:100%; max-width: 480px; display:flex; flex-direction:column; gap:1rem;">
-                <h1>Nộp Record</h1>
+        <main v-if="loading">
+            <Spinner></Spinner>
+        </main>
 
-                <template v-if="!store.user">
-                    <p class="type-body-lg">Bạn cần đăng nhập để nộp record.</p>
-                    <router-link class="btn" to="/login">Đăng nhập / Đăng ký</router-link>
-                </template>
+        <main v-else class="page-submit">
+            <section class="submit-shell">
+                <header class="submit-header">
+                    <div>
+                        <span class="submit-kicker">SCLVN RECORDS</span>
+                        <h1>Submit Record</h1>
+                        <p>Send your run for moderator review.</p>
+                    </div>
 
-                <template v-else-if="success">
-                    <p class="type-body-lg">✅ Đã gửi! Record của bạn đang chờ admin duyệt.</p>
-                    <button class="btn" @click="resetForm">Nộp thêm record khác</button>
-                </template>
+                    <div class="submit-header-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 16V4"></path>
+                            <path d="m7 9 5-5 5 5"></path>
+                            <path d="M5 14v5h14v-5"></path>
+                        </svg>
+                    </div>
+                </header>
 
-                <template v-else>
-                    <label class="type-label-md">Level</label>
-                    <select v-model="levelId" class="btn">
-                        <option value="" disabled>-- Chọn level --</option>
-                        <option v-for="lvl in levels" :key="lvl.id" :value="lvl.id">{{ lvl.name }}</option>
-                    </select>
+                <div v-if="!store.user" class="submit-state-card">
+                    <div class="submit-state-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="8" r="4"></circle>
+                            <path d="M5 21a7 7 0 0 1 14 0"></path>
+                        </svg>
+                    </div>
+                    <h2>Login required</h2>
+                    <p>You need to be signed in before submitting a record.</p>
+                    <router-link class="submit-primary-btn" to="/login">
+                        Login / Register
+                    </router-link>
+                </div>
 
-                    <label class="type-label-md">Tên player của bạn</label>
-                    <input v-model="playerName" class="btn" type="text" placeholder="Tên hiển thị trên leaderboard" />
-
-                    <label class="type-label-md">Phần trăm hoàn thành (%)</label>
-                    <input v-model.number="percent" class="btn" type="number" min="1" max="100" />
-
-                    <label class="type-label-md">Hz / Thiết bị</label>
-                    <input v-model="hz" class="btn" type="text" placeholder="Ví dụ: 240, COS, CBF..." />
-
-                    <label class="type-label-md" style="display:flex; align-items:center; gap:0.5rem;">
-                        <input v-model="mobile" type="checkbox" /> Record trên Mobile
-                    </label>
-
-                    <label class="type-label-md">Link video</label>
-                    <input v-model="link" class="btn" type="text" placeholder="Link Youtube / Drive / Medal..." />
-
-                    <label class="type-label-md">Ghi chú thêm (không bắt buộc)</label>
-                    <textarea v-model="note" class="btn" rows="3" placeholder="Ghi chú cho admin, nếu có"></textarea>
-
-                    <p v-if="error" class="error">{{ error }}</p>
-
-                    <button class="btn" :disabled="submitting" @click="submitRecord">
-                        {{ submitting ? 'Đang gửi...' : 'Gửi record' }}
+                <div v-else-if="success" class="submit-state-card submit-success-card">
+                    <div class="submit-state-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20 6 9 17l-5-5"></path>
+                        </svg>
+                    </div>
+                    <h2>Record submitted</h2>
+                    <p>Your record is now waiting for moderator review.</p>
+                    <button class="submit-primary-btn" type="button" @click="resetForm">
+                        Submit another record
                     </button>
-                </template>
-            </div>
+                </div>
+
+                <div v-else class="submit-card">
+                    <div class="submit-section-head">
+                        <div>
+                            <h2>Run information</h2>
+                            <p>Fill in the details exactly as they should appear on the list.</p>
+                        </div>
+
+                        <div class="submit-user-chip">
+                            <img :src="store.user.avatar || '/assets/the sclvn logo.png'" alt="">
+                            <span>{{ store.user.username || store.user.displayName || 'Player' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="submit-form-grid">
+                        <label class="submit-field submit-field-full">
+                            <span>Level</span>
+                            <select v-model="levelId">
+                                <option value="" disabled>Select a level</option>
+                                <option
+                                    v-for="lvl in levels"
+                                    :key="lvl.id"
+                                    :value="lvl.id"
+                                >
+                                    {{ lvl.name }}
+                                </option>
+                            </select>
+                        </label>
+
+                        <label class="submit-field">
+                            <span>Player name</span>
+                            <input
+                                v-model="playerName"
+                                type="text"
+                                placeholder="Name shown on the list"
+                            >
+                        </label>
+
+                        <label class="submit-field">
+                            <span>Completion</span>
+                            <div class="submit-percent-field">
+                                <input
+                                    v-model.number="percent"
+                                    type="number"
+                                    min="1"
+                                    max="100"
+                                >
+                                <strong>%</strong>
+                            </div>
+                        </label>
+
+                        <label class="submit-field">
+                            <span>Hz / Device</span>
+                            <input
+                                v-model="hz"
+                                type="text"
+                                placeholder="240, COS, CBF..."
+                            >
+                        </label>
+
+                        <label class="submit-mobile-card">
+                            <input v-model="mobile" type="checkbox">
+                            <span class="submit-check-ui"></span>
+                            <span>
+                                <strong>Mobile record</strong>
+                                <small>Enable if the run was completed on mobile.</small>
+                            </span>
+                        </label>
+
+                        <label class="submit-field submit-field-full">
+                            <span>Video link</span>
+                            <input
+                                v-model="link"
+                                type="text"
+                                placeholder="YouTube / Drive / Medal..."
+                            >
+                        </label>
+
+                        <label class="submit-field submit-field-full">
+                            <span>Note <small>optional</small></span>
+                            <textarea
+                                v-model="note"
+                                rows="4"
+                                placeholder="Anything moderators should know..."
+                            ></textarea>
+                        </label>
+                    </div>
+
+                    <div v-if="error" class="submit-error">
+                        {{ error }}
+                    </div>
+
+                    <footer class="submit-actions">
+                        <p>Submissions are reviewed manually before appearing on the list.</p>
+
+                        <button
+                            class="submit-primary-btn"
+                            type="button"
+                            :disabled="submitting"
+                            @click="submitRecord"
+                        >
+                            {{ submitting ? 'Submitting...' : 'Submit Record' }}
+                        </button>
+                    </footer>
+                </div>
+            </section>
         </main>
     `,
+
     async mounted() {
         const list = await fetchList();
+
         this.levels = (list || [])
             .filter(([lvl]) => lvl)
-            .map(([lvl]) => ({ id: lvl.path, name: lvl.name }));
+            .map(([lvl]) => ({
+                id: lvl.path,
+                name: lvl.name,
+            }));
+
         if (store.user) {
-            this.playerName = store.user.displayName || '';
+            this.playerName =
+                store.user.displayName ||
+                store.user.username ||
+                '';
         }
+
         this.loading = false;
     },
+
     methods: {
         resetForm() {
             this.success = false;
@@ -91,17 +210,33 @@ export default {
             this.link = '';
             this.note = '';
         },
+
         async submitRecord() {
             this.error = '';
-            if (!this.levelId) { this.error = 'Vui lòng chọn level.'; return; }
-            if (!this.playerName.trim()) { this.error = 'Vui lòng nhập tên player.'; return; }
-            if (!this.percent || this.percent < 1 || this.percent > 100) { this.error = 'Phần trăm không hợp lệ.'; return; }
+
+            if (!this.levelId) {
+                this.error = 'Vui lòng chọn level.';
+                return;
+            }
+
+            if (!this.playerName.trim()) {
+                this.error = 'Vui lòng nhập tên player.';
+                return;
+            }
+
+            if (!this.percent || this.percent < 1 || this.percent > 100) {
+                this.error = 'Phần trăm không hợp lệ.';
+                return;
+            }
 
             this.submitting = true;
+
             try {
                 await addDoc(collection(db, 'submissions'), {
                     levelId: this.levelId,
-                    levelName: this.levels.find(l => l.id === this.levelId)?.name || this.levelId,
+                    levelName:
+                        this.levels.find(l => l.id === this.levelId)?.name ||
+                        this.levelId,
                     playerName: this.playerName.trim(),
                     percent: this.percent,
                     hz: this.hz.trim(),
@@ -113,9 +248,13 @@ export default {
                     submittedByEmail: store.user.email,
                     submittedAt: serverTimestamp(),
                 });
+
                 this.success = true;
             } catch (e) {
-                this.error = 'Gửi thất bại, thử lại sau. (' + (e.message || '') + ')';
+                this.error =
+                    'Gửi thất bại, thử lại sau. (' +
+                    (e.message || '') +
+                    ')';
             } finally {
                 this.submitting = false;
             }

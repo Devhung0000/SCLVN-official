@@ -661,3 +661,47 @@
         grid-template-columns: 1fr;
     }
 }
+
+
+/* =========================================================
+   ROULETTE POLISH V7
+   ========================================================= */
+
+/* Force all four corners to remain visibly rounded even with scrollbar */
+.roulette-panel {
+    border-radius: 20px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    background-clip: padding-box !important;
+    clip-path: inset(0 round 20px);
+}
+
+/* Very subtle white glass glow */
+.roulette-panel,
+.roulette-content {
+    border-color: rgba(255,255,255,.115) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.055),
+        0 0 0 1px rgba(255,255,255,.018),
+        0 0 16px rgba(255,255,255,.025),
+        0 14px 34px rgba(0,0,0,.20) !important;
+}
+
+.roulette-panel:hover,
+.roulette-content:hover {
+    border-color: rgba(255,255,255,.15) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.065),
+        0 0 0 1px rgba(255,255,255,.025),
+        0 0 18px rgba(255,255,255,.035),
+        0 16px 38px rgba(0,0,0,.22) !important;
+}
+
+/* Current roulette card: white glow only, no colored/neon feel */
+.roulette-level-card.is-current {
+    border-color: rgba(255,255,255,.22) !important;
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,.045),
+        0 0 12px rgba(255,255,255,.055),
+        0 10px 28px rgba(0,0,0,.20) !important;
+}
