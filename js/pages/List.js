@@ -114,36 +114,6 @@ export default {
                         </tr>
                     </table>
                 </div>
-                    <div v-else-if="selected == null" class="level" style="height: 100%; display: flex; justify-content: center; align-items: center; text-align: center;">
-                    <h2>Welcome to the Spam Challenge List Vietnam!</h2>
-                    <p>Click the levels on the left side to see information about them!</p>
-                    <p>For more information about the submission rules check the right side!</p>
-                    <a class="nav__icon" href="https://discord.gg/Qcj5JSRKa">
-                        <img src="../assets/discord.svg" alt="Discord Logo" />
-                    </a>
-                    <p>
-                        <a href="https://discord.gg/Qcj5JSRKa">
-                            Join the Discord server for more information about the list and Rules!
-                        </a>
-                    </p>
-					<h2>Changelog</h2>
-
-			<!-- new guide -->
-
-			<!-- add level: <p class="cl">- <span class="clw">name</span> has been placed at <span class="clw">#</span>, above <span class="clw">name</span> and below <span class="clw">name</span></p> -->
-			<!-- raise level: <p class="cl">- <span class="clw">name</span> has been raised from <span class="clw">#</span> to <span class="clw">#</span>, above <span class="clw">name</span> and below <span class="clw">name</span></p> -->
-			<!-- lower level: <p class="cl">- <span class="clw">name</span> has been lowered from <span class="clw">#</span> to <span class="clw">#</span>, above <span class="clw">name</span> and below <span class="clw">name</span></p> -->
-			<!-- swap levels: <p class="cl">- <span class="clw">name</span> and <span class="clw">name</span> have been swapped, with <span class="clw">name</span> now sitting above at <span class="clw">#</span></p> -->
-			<!-- delete level: <p class="cl">- <span class="clw">name</span> have been removed</p> --> 
-
-                    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px; text-align: left; overflow: hidden; overflow-y: auto; max-height: 300px; width: 100%; max-width: 700px; border: 3px solid var(--color-primary); border-radius: 5px; padding: 12px;">
-                        <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; overflow: visible;">
-                            <h2>5/30/26</h2>
-                            <p class="cl">- <span class="clw">mraow</span> has been placed at <span class="clw">#1</span></p>
-                            <p class="cl"><b>THẮNG HƯNG OWNER CỦA CÁI LIST NÀY LÀ THG NGU L</b></p>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="meta-container">
                 <div class="meta">
@@ -176,13 +146,6 @@ export default {
                             </li>
                         </ol>
                     </template>
-                    <h2>Submission Requirements</h2>
-                    <h3 style="font-weight: 550;">
-                        Submission Rules:
-                    </h3>
-                    <p>
-                        -The Website cannot display the entire rules, Join the server <a href="https://discord.gg/Qcj5JSRKa" style="text-decoration: underline;" target="_blank">here</a> to view the full rules!
-                    </p>
                 </div>
             </div>
         </main>
