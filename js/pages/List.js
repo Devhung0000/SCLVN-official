@@ -54,65 +54,184 @@ export default {
                 </p>
             </div>
             <div class="level-container">
-                <div class="level" v-if="level">
-					<div style="display: flex; flex-direction: column; gap: 1rem; width: 100%; justify-self: center;">
-                    <div class="button-holder" style="gap: 1em; ">
-                        <h1
-                            :class="{
-                                'level-title-top-1': selected === 0,
-                                'level-title-top-2': selected === 1,
-                                'level-title-top-3': selected === 2
-                            }"
-                        >
-                            {{ level.name }}
-                        </h1>
+                <div class="level level-detail" v-if="level">
+                    <section class="level-detail-hero" :style="getLevelThumbnail(selected, list)">
+                        <div class="level-detail-hero-overlay"></div>
+
+                        <div class="level-detail-hero-content">
+                            <div class="level-detail-hero-left">
+                                <div class="level-detail-title-row">
+                                    <span class="level-detail-rank">#{{ selected + 1 }}</span>
+                                    <h1
+                                        class="level-detail-title"
+                                        :class="{
+                                            'level-title-top-1': selected === 0,
+                                            'level-title-top-2': selected === 1,
+                                            'level-title-top-3': selected === 2
+                                        }"
+                                    >
+                                        {{ level.name }}
+                                    </h1>
+                                </div>
+
+                                <p class="level-detail-verifier">
+                                    Verified by <strong>{{ level.verifier || 'Unknown' }}</strong>
+                                </p>
+
+                                <div class="level-detail-tags">
+                                    <span v-if="level.handcam" class="level-tag">
+                                        Handcam: {{ level.handcam }}
+                                    </span>
+                                    <span v-if="level.device" class="level-tag">
+                                        {{ level.device }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="level-detail-hero-right">
+                                <div class="hero-stat">
+                                    <span>FPS</span>
+                                    <strong>{{ level.fps || 'N/A' }}</strong>
+                                </div>
+
+                                <div class="hero-stat">
+                                    <span>Method</span>
+                                    <strong>{{ level.method || 'N/A' }}</strong>
+                                </div>
+
+                                <div class="hero-points">
+                                    {{ score(selected + 1, 100, level.percentToQualify) }} pts
+                                </div>
+
+                                <button class="level-collapse-btn" @click="detailsOpen = !detailsOpen">
+                                    {{ detailsOpen ? 'Show less' : 'Show more' }}
+                                    <span :class="{ 'rotate-chevron': !detailsOpen }">⌄</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div v-show="detailsOpen" class="level-detail-content">
+                        <div class="level-main-row">
+                            <section class="level-video-card">
+                                <iframe
+                                    class="level-detail-video"
+                                    id="videoframe"
+                                    :src="video"
+                                    frameborder="0"
+                                    allowfullscreen
+                                    scrolling="no"
+                                    allow="encrypted-media *; fullscreen *;"
+                                ></iframe>
+
+                                <p
+                                    v-if="level.description"
+                                    class="level-detail-description"
+                                    v-html="level.description"
+                                ></p>
+                            </section>
+
+                            <aside class="level-info-card">
+                                <h2>Level Information</h2>
+
+                                <div class="level-info-row">
+                                    <span class="level-info-label">Level ID</span>
+                                    <div class="level-id-wrapper">
+                                        <strong>{{ level.id || 'N/A' }}</strong>
+                                        <button
+                                            v-if="level.id"
+                                            class="copy-level-id"
+                                            @click="copyLevelId(level.id)"
+                                            title="Copy Level ID"
+                                            aria-label="Copy Level ID"
+                                        >
+                                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                <rect x="9" y="9" width="11" height="11" rx="2"></rect>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="level-info-row">
+                                    <span class="level-info-label">Creators</span>
+                                    <strong>
+                                        {{ Array.isArray(level.creators) ? (level.creators.join(', ') || level.author || 'N/A') : (level.creators || level.author || 'N/A') }}
+                                    </strong>
+                                </div>
+
+                                <div class="level-info-row">
+                                    <span class="level-info-label">Verifier</span>
+                                    <strong>{{ level.verifier || 'N/A' }}</strong>
+                                </div>
+
+                                <div class="level-info-row">
+                                    <span class="level-info-label">Uploader</span>
+                                    <strong>{{ level.author || 'N/A' }}</strong>
+                                </div>
+
+                                <div class="level-info-row">
+                                    <span class="level-info-label">FPS</span>
+                                    <strong>{{ level.fps || 'N/A' }}</strong>
+                                </div>
+
+                                <div class="level-info-row">
+                                    <span class="level-info-label">Method</span>
+                                    <strong>{{ level.method || 'N/A' }}</strong>
+                                </div>
+                            </aside>
+                        </div>
+
+                        <section class="level-records-card">
+                            <div class="records-card-header">
+                                <div>
+                                    <h2>Records</h2>
+                                    <p>
+                                        {{ level.records?.length || 0 }}
+                                        record{{ (level.records?.length || 0) === 1 ? '' : 's' }}
+                                    </p>
+                                </div>
+
+                                <span v-if="selected + 1 <= 75" class="qualification-badge">
+                                    {{ level.percentToQualify }}%+ to qualify
+                                </span>
+                                <span v-else-if="selected + 1 <= 150" class="qualification-badge">
+                                    100% to qualify
+                                </span>
+                                <span v-else class="qualification-badge closed">
+                                    Closed
+                                </span>
+                            </div>
+
+                            <div v-if="level.records && level.records.length" class="records-list">
+                                <a
+                                    v-for="(record, recordIndex) in level.records"
+                                    :key="record.user + '-' + record.percent + '-' + recordIndex"
+                                    :href="record.link || null"
+                                    :target="record.link ? '_blank' : null"
+                                    :class="['record-row-new', { 'record-row-no-link': !record.link }]"
+                                    @click="!record.link && $event.preventDefault()"
+                                >
+                                    <div class="record-player">
+                                        <span class="record-avatar-placeholder">
+                                            {{ record.user?.charAt(0)?.toUpperCase() || '?' }}
+                                        </span>
+                                        <strong>{{ record.user || 'Unknown' }}</strong>
+                                    </div>
+
+                                    <div class="record-extra">
+                                        <span v-if="record.mobile">Mobile</span>
+                                        <span v-if="record.hz">{{ record.hz }}</span>
+                                        <strong class="record-percent">{{ record.percent }}%</strong>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div v-else class="records-empty">
+                                No records yet.
+                            </div>
+                        </section>
                     </div>
-                    <h1 style="border-bottom: 1px solid #808080;padding-bottom: 8px;"></h1>
-					<p class="desc" v-if="level.description" v-html="level.description"></p>
-					</div>
-                    <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier" :engine="level.engine"></LevelAuthors>
-                    <iframe class="video" id="videoframe" :src="video" frameborder="0" allowfullscreen scrolling="no" allow="encrypted-media *; fullscreen *;" style="border-radius: 1rem;"></iframe>
-                    <ul class="stats">
-                        <li>
-                            <div class="type-title-sm">Points when completed</div>
-                            <p>{{ score(selected + 1, 100, level.percentToQualify) }}</p>
-                        </li>
-                        <li>
-                            <div class="type-title-sm">ID</div>
-                            <p>{{ level.id }}</p>
-                        </li>
-                        <li>
-                            <div class="type-title-sm">FPS</div>
-                            <p>{{ level.fps || 'n/a' }}</p>
-                        </li>
-                        <li v-if="level.method">
-                            <div class="type-title-sm">Method</div>
-                            <p>{{ level.method }}</p>
-                        </li>
-                    </ul>
-                    <h2>Records ({{ level.records.length }})</h2>
-                    <p v-if="selected + 1 <= 75"><strong>{{ level.percentToQualify }}%</strong> or better to qualify</p>
-                    <p v-else-if="selected +1 <= 150"><strong>100%</strong> or better to qualify</p>
-                    <p v-else>This level does not accept new records.</p>
-                    <p v-if="level.handcam"><strong>Handcam is {{ level.handcam }} for this level.</strong></p>
-                    <p v-if="level.device"><strong>Device: {{ level.device }}</strong></p>
-                    <p v-else>This level does not accept new records.</p>
-                    <table class="records">
-                        <tr v-for="record in level.records" class="record">
-                            <td class="percent">
-                                <p>{{ record.percent }}%</p>
-                            </td>
-                            <td class="user">
-                                <a :href="record.link" target="_blank" class="type-label-lg">{{ record.user }}</a>
-                            </td>
-                            <td class="mobile">
-                                <img v-if="record.mobile" src="/assets/phone-landscape-dark.svg" alt="Mobile">
-                            </td>
-                            <td class="hz">
-                                <p>{{ record.hz }}</p>
-                            </td>
-                        </tr>
-                    </table>
                 </div>
             </div>
             <div class="meta-container">
@@ -155,6 +274,7 @@ export default {
         editors: [],
         loading: true,
         selected: null,
+        detailsOpen: true,
         engineAsked: getEngineSelect(),
         fpsAsked: getFpsSelect(),
         engineSelected: "All",
@@ -254,6 +374,9 @@ export default {
         },
     },
     watch: {
+        selected() {
+            this.detailsOpen = true;
+        },
         '$route.query.q': {
             immediate: true,
             handler(q) {
@@ -299,6 +422,15 @@ export default {
         this.loading = false;
     },
     methods: {
+        async copyLevelId(id) {
+            if (id == null) return;
+
+            try {
+                await navigator.clipboard.writeText(String(id));
+            } catch (err) {
+                console.error("Failed to copy Level ID:", err);
+            }
+        },
         applyFilters() {
             this.engineAsked = this.engineSelected;
             this.fpsAsked = this.fpsSelected.trim() || null;
