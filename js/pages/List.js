@@ -23,9 +23,8 @@ export default {
         </main>
 
         <main v-else class="page-list">
-            <!-- LEFT/CENTER: inline accordion list -->
             <div class="list-container accordion-list-container">
-                <div
+                <article
                     v-for="item in filteredListDisplay"
                     :key="item.originalIndex"
                     class="level-accordion-card"
@@ -38,71 +37,89 @@ export default {
                         class="level-accordion-summary"
                         type="button"
                         :disabled="!item.level"
-                        :style="getLevelThumbnail(item.originalIndex, list)"
                         @click="selected = selected === item.originalIndex ? null : item.originalIndex"
                     >
-                        <span class="level-accordion-overlay"></span>
-
-                        <div class="level-accordion-summary-left">
-                            <div class="level-accordion-title-row">
-                                <span
-                                    class="level-accordion-rank"
-                                    :class="{
-                                        'rank-top-1': item.originalIndex === 0,
-                                        'rank-top-2': item.originalIndex === 1,
-                                        'rank-top-3': item.originalIndex === 2
-                                    }"
-                                >
-                                    #{{ item.originalIndex + 1 }}
-                                </span>
-
-                                <h2 class="level-accordion-title">
-                                    {{ item.level?.name || ('Error (' + item.err + '.json)') }}
-                                </h2>
-                            </div>
-
-                            <p class="level-accordion-verifier">
-                                Verified by {{ item.level?.verifier || 'Unknown' }}
-                            </p>
-
-                            <div v-if="item.level" class="level-accordion-tags">
-                                <span v-if="item.level.handcam" class="level-tag">
-                                    Handcam: {{ item.level.handcam }}
-                                </span>
-
-                                <span v-if="item.level.device" class="level-tag">
-                                    {{ item.level.device }}
-                                </span>
-                            </div>
+                        <!-- Thumbnail block on the left -->
+                        <div
+                            class="level-card-thumb"
+                            :style="getLevelThumbnail(item.originalIndex, list)"
+                        >
+                            <span class="level-card-thumb-shade"></span>
                         </div>
 
-                        <div v-if="item.level" class="level-accordion-summary-right">
-                            <div class="accordion-stat">
-                                <strong>{{ item.level.fps || 'N/A' }}</strong>
-                                <span>FPS</span>
-                            </div>
+                        <!-- Main background/info area -->
+                        <div
+                            class="level-card-main"
+                            :style="getLevelThumbnail(item.originalIndex, list)"
+                        >
+                            <span class="level-card-main-shade"></span>
 
-                            <div class="accordion-stat">
-                                <strong>{{ item.level.method || 'N/A' }}</strong>
-                                <span>Method</span>
-                            </div>
+                            <div class="level-card-content">
+                                <div class="level-card-center">
+                                    <div class="level-card-title-row">
+                                        <span
+                                            class="level-card-rank"
+                                            :class="{
+                                                'rank-top-1': item.originalIndex === 0,
+                                                'rank-top-2': item.originalIndex === 1,
+                                                'rank-top-3': item.originalIndex === 2
+                                            }"
+                                        >
+                                            #{{ item.originalIndex + 1 }}
+                                        </span>
 
-                            <div class="accordion-points">
-                                {{ score(item.originalIndex + 1, 100, item.level.percentToQualify) }} pts
-                            </div>
+                                        <h2 class="level-card-title">
+                                            {{ item.level?.name || ('Error (' + item.err + '.json)') }}
+                                        </h2>
+                                    </div>
 
-                            <div class="accordion-toggle-label">
-                                {{ selected === item.originalIndex ? 'Show less' : 'Show details' }}
-                                <span :class="{ 'accordion-chevron-open': selected === item.originalIndex }">⌄</span>
+                                    <p class="level-card-verifier">
+                                        Verified by {{ item.level?.verifier || 'Unknown' }}
+                                    </p>
+
+                                    <div v-if="item.level" class="level-card-tags">
+                                        <span v-if="item.level.handcam" class="level-tag level-tag-gold">
+                                            {{ item.level.handcam }}
+                                        </span>
+
+                                        <span v-if="item.level.device" class="level-tag">
+                                            {{ item.level.device }}
+                                        </span>
+
+                                        <span v-if="item.level.method" class="level-tag">
+                                            {{ item.level.method }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div v-if="item.level" class="level-card-right">
+                                    <strong class="level-card-fps">
+                                        {{ item.level.fps || 'N/A' }} FPS
+                                    </strong>
+
+                                    <span class="level-card-method">
+                                        {{ item.level.method || 'N/A' }}
+                                    </span>
+
+                                    <strong class="level-card-points">
+                                        {{ score(item.originalIndex + 1, 100, item.level.percentToQualify) }} pts
+                                    </strong>
+
+                                    <span class="level-card-toggle">
+                                        {{ selected === item.originalIndex ? 'Show less' : 'Show details' }}
+                                        <span :class="{ 'level-card-chevron-open': selected === item.originalIndex }">⌄</span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </button>
 
+                    <!-- Expanded content stays under the SAME card -->
                     <div
                         v-if="item.level && selected === item.originalIndex"
                         class="level-accordion-detail"
                     >
-                        <div class="level-main-row">
+                        <div class="level-detail-top">
                             <section class="level-video-card">
                                 <iframe
                                     class="level-detail-video"
@@ -127,7 +144,6 @@ export default {
                                     <span class="level-info-label">Level ID</span>
                                     <div class="level-id-wrapper">
                                         <strong>{{ item.level.id || 'N/A' }}</strong>
-
                                         <button
                                             v-if="item.level.id"
                                             class="copy-level-id"
@@ -172,6 +188,16 @@ export default {
                                     <span class="level-info-label">Method</span>
                                     <strong>{{ item.level.method || 'N/A' }}</strong>
                                 </div>
+
+                                <div class="level-info-row">
+                                    <span class="level-info-label">Device</span>
+                                    <strong>{{ item.level.device || 'N/A' }}</strong>
+                                </div>
+
+                                <div class="level-info-row">
+                                    <span class="level-info-label">Handcam</span>
+                                    <strong>{{ item.level.handcam || 'N/A' }}</strong>
+                                </div>
                             </aside>
                         </div>
 
@@ -199,10 +225,7 @@ export default {
                                     100% to qualify
                                 </span>
 
-                                <span
-                                    v-else
-                                    class="qualification-badge closed"
-                                >
+                                <span v-else class="qualification-badge closed">
                                     Closed
                                 </span>
                             </div>
@@ -223,7 +246,6 @@ export default {
                                         <span class="record-avatar-placeholder">
                                             {{ record.user?.charAt(0)?.toUpperCase() || '?' }}
                                         </span>
-
                                         <strong>{{ record.user || 'Unknown' }}</strong>
                                     </div>
 
@@ -240,7 +262,7 @@ export default {
                             </div>
                         </section>
                     </div>
-                </div>
+                </article>
 
                 <p
                     v-if="list && list.length > 0 && filteredListDisplay.length === 0"
@@ -250,7 +272,6 @@ export default {
                 </p>
             </div>
 
-            <!-- RIGHT: fixed moderators -->
             <div class="meta-container">
                 <div class="meta">
                     <div class="errors" v-show="errors.length > 0">

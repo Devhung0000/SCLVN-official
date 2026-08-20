@@ -81,13 +81,9 @@
     box-shadow: 0 8px 20px rgba(0,0,0,.25);
 }
 .page-list .list .level.active button {
-    border: 1px solid rgba(168, 85, 247, .72);
-    background-color: rgba(168, 85, 247, .10);
+    border: 3px solid var(--color-primary);
+    background-color: var(--color-primary);
     color: var(--color-on-background);
-    box-shadow:
-        0 0 0 1px rgba(168, 85, 247, .12),
-        0 0 18px rgba(168, 85, 247, .30),
-        0 0 42px rgba(99, 102, 241, .18);
 }
 .page-list .level-container .level {
     display: flex;
@@ -476,170 +472,268 @@
 }
 
 /* =========================================================
-   LEVEL DETAIL V3
+   IMAGE-1 STYLE INLINE LEVEL ACCORDION
    ========================================================= */
 
-.page-list .level-container {
-    padding: 1.25rem;
-}
-
-.page-list .level-container .level.level-detail {
-    width: 100%;
-    padding: 0;
-    gap: 1.1rem;
-    min-width: 0;
-}
-
-.level-detail-hero {
-    position: relative;
-    min-height: 210px;
+.page-list {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, .30fr) !important;
+    column-gap: 1rem !important;
+    height: calc(100vh - var(--topbar-height));
+    min-height: 0;
     overflow: hidden;
-    border-radius: 18px;
+}
+
+.page-list .accordion-list-container {
+    height: 100%;
+    min-height: 0;
+    padding: 1.1rem 1.15rem 2rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.page-list .meta-container {
+    height: 100%;
+    min-height: 0;
+    padding: 1.4rem 1.5rem 1.4rem .7rem;
+    overflow: hidden !important;
+    position: sticky;
+    top: 0;
+    align-self: start;
+}
+
+.page-list .meta {
+    height: 100%;
+    overflow: hidden !important;
+}
+
+/* card shell */
+.level-accordion-card {
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(82, 211, 154, .22);
+    background: rgba(10,10,13,.82);
+    box-shadow: 0 10px 30px rgba(0,0,0,.20);
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        transform .25s cubic-bezier(.22,1,.36,1);
+}
+
+.level-accordion-card:hover {
+    border-color: rgba(255,255,255,.16);
+}
+
+.level-accordion-card.is-expanded {
+    border-color: rgba(52, 211, 153, .52);
+    box-shadow:
+        0 0 0 1px rgba(52,211,153,.08),
+        0 0 24px rgba(52,211,153,.11),
+        0 18px 44px rgba(0,0,0,.30);
+}
+
+/* Summary bar */
+.level-accordion-summary {
+    width: 100%;
+    min-height: 190px;
+    padding: 0;
+    border: 0;
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    color: #fff;
+    background: #0b0b0e;
+    text-align: left;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.level-accordion-summary:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+
+/* left image like screenshot */
+.level-card-thumb {
+    position: relative;
+    min-height: 190px;
     background-size: cover !important;
     background-position: center !important;
-    border: 1px solid rgba(255,255,255,.10);
-    box-shadow: 0 14px 34px rgba(0,0,0,.22);
 }
 
-.level-detail-hero-overlay {
+.level-card-thumb-shade {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(7,7,9,.48), rgba(7,7,9,.62) 48%, rgba(7,7,9,.88));
+    background: linear-gradient(90deg, rgba(0,0,0,.05), rgba(0,0,0,.16));
 }
 
-.level-detail-hero-content {
+/* right background */
+.level-card-main {
+    position: relative;
+    min-width: 0;
+    min-height: 190px;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.level-card-main-shade {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(7,7,9,.44) 0%,
+            rgba(7,7,9,.56) 48%,
+            rgba(7,7,9,.86) 100%
+        );
+}
+
+.level-card-content {
     position: relative;
     z-index: 1;
-    min-height: 210px;
-    padding: 26px;
+    min-height: 190px;
+    padding: 20px 22px;
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-    gap: 28px;
+    gap: 24px;
 }
 
-.level-detail-hero-left {
+.level-card-center {
     flex: 1;
     min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 13px;
+    gap: 11px;
 }
 
-.level-detail-title-row {
+.level-card-title-row {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     min-width: 0;
 }
 
-.level-detail-rank {
-    color: #a1a1aa;
-    font-size: 17px;
-    font-weight: 700;
+.level-card-rank {
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 1;
     white-space: nowrap;
 }
 
-.level-detail-title {
+.level-card-title {
     margin: 0;
     color: #fff;
-    font-size: clamp(26px, 3vw, 42px);
-    line-height: 1.08;
+    font-size: clamp(25px, 2.3vw, 36px);
+    line-height: 1.05;
     font-weight: 800;
     overflow-wrap: anywhere;
-    text-shadow: 0 3px 16px rgba(0,0,0,.5);
+    text-shadow: 0 3px 16px rgba(0,0,0,.62);
 }
 
-.level-detail-verifier {
+.level-card-verifier {
     margin: 0;
-    color: #c6c6cd;
+    color: rgba(255,255,255,.82);
     font-size: 14px;
 }
 
-.level-detail-verifier strong { color: #fff; }
-
-.level-detail-tags {
+.level-card-tags {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 7px;
 }
 
 .level-tag {
-    padding: 6px 10px;
+    padding: 5px 10px;
     border-radius: 999px;
-    background: rgba(255,255,255,.10);
-    border: 1px solid rgba(255,255,255,.10);
-    color: #e5e5e8;
+    background: rgba(79,70,229,.74);
+    border: 1px solid rgba(129,140,248,.75);
+    color: #fff;
     font-size: 11px;
     font-weight: 600;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
 
-.level-detail-hero-right {
+.level-tag-gold {
+    color: #ffe181;
+    background: rgba(145,105,14,.42);
+    border-color: rgba(250,204,21,.54);
+}
+
+.level-card-right {
     min-width: 175px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
-    gap: 9px;
+    gap: 7px;
 }
 
-.hero-stat {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    color: #a1a1aa;
-    font-size: 12px;
-}
-
-.hero-stat strong {
+.level-card-fps {
     color: #fff;
-    font-size: 14px;
+    font-size: clamp(24px, 2vw, 32px);
+    line-height: 1;
+    font-weight: 800;
+    text-shadow: 0 3px 14px rgba(0,0,0,.6);
 }
 
-.hero-points {
-    margin-top: 3px;
-    padding: 7px 11px;
-    border-radius: 9px;
-    color: #ffd166;
+.level-card-method {
+    color: rgba(255,255,255,.90);
+    font-size: 15px;
+    font-weight: 650;
+}
+
+.level-card-points {
+    color: #6ee7b7;
     font-family: Consolas, monospace;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 700;
-    background: rgba(255,209,102,.10);
-    border: 1px solid rgba(255,209,102,.20);
 }
 
-.level-collapse-btn {
-    margin-top: 3px;
-    padding: 5px;
+.level-card-toggle {
+    margin-top: 12px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    border: 0;
-    background: transparent;
-    color: #a1a1aa;
-    font: inherit;
+    color: rgba(255,255,255,.82);
     font-size: 12px;
-    cursor: pointer;
 }
 
-.level-collapse-btn:hover { color: #fff; }
-.level-collapse-btn span { transition: transform .25s ease; }
-.rotate-chevron { transform: rotate(180deg); }
-
-.level-detail-content {
-    width: 100%;
-    min-width: 0;
+.level-card-toggle > span {
+    display: inline-block;
+    transition: transform .25s ease;
 }
 
-.level-main-row {
-    width: 100%;
+.level-card-chevron-open {
+    transform: rotate(180deg);
+}
+
+/* expanded body */
+.level-accordion-detail {
+    padding: 16px;
+    border-top: 1px solid rgba(255,255,255,.075);
+    background: rgba(7,7,9,.90);
+    animation: level-open .28s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes level-open {
+    from {
+        opacity: 0;
+        transform: translateY(-7px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.level-detail-top {
     display: grid;
-    grid-template-columns: minmax(0, 1.65fr) minmax(250px, .75fr);
-    gap: 18px;
+    grid-template-columns: minmax(0, 1.75fr) minmax(290px, .78fr);
+    gap: 16px;
     align-items: stretch;
 }
 
@@ -647,9 +741,8 @@
 .level-info-card,
 .level-records-card {
     border-radius: 16px;
-    background: rgba(255,255,255,.035);
-    border: 1px solid rgba(255,255,255,.075);
-    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.08);
 }
 
 .level-video-card {
@@ -668,47 +761,51 @@
 }
 
 .level-detail-description {
-    margin: 14px 5px 3px;
+    margin: 12px 4px 3px;
     color: #a8a8b0;
     font-size: 13px;
     line-height: 1.65;
 }
 
 .level-info-card {
-    padding: 20px;
+    padding: 18px;
 }
 
-.level-info-card h2,
-.records-card-header h2 {
+.level-info-card h3,
+.records-card-header h3 {
     margin: 0;
     color: #fff;
     font-size: 17px;
 }
 
-.level-info-card h2 { margin-bottom: 17px; }
+.level-info-card h3 {
+    margin-bottom: 14px;
+}
 
 .level-info-row {
-    min-height: 41px;
-    padding: 9px 0;
+    min-height: 39px;
+    padding: 8px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 14px;
     border-bottom: 1px solid rgba(255,255,255,.055);
 }
 
-.level-info-row:last-child { border-bottom: 0; }
+.level-info-row:last-child {
+    border-bottom: 0;
+}
 
 .level-info-label {
-    color: #7e7e88;
+    color: #8b8b95;
     font-size: 12px;
     white-space: nowrap;
 }
 
 .level-info-row strong {
-    color: #e7e7eb;
+    color: #f0f0f2;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 650;
     text-align: right;
     overflow-wrap: anywhere;
 }
@@ -727,17 +824,10 @@
     align-items: center;
     justify-content: center;
     border-radius: 7px;
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.10);
     background: rgba(255,255,255,.055);
     color: #a1a1aa;
     cursor: pointer;
-    transition: color .2s ease, background .2s ease, transform .2s ease;
-}
-
-.copy-level-id:hover {
-    color: #fff;
-    background: rgba(255,255,255,.10);
-    transform: translateY(-1px);
 }
 
 .copy-level-id svg {
@@ -750,40 +840,41 @@
     stroke-linejoin: round;
 }
 
+/* Records = full width below */
 .level-records-card {
     width: 100%;
-    margin-top: 18px;
-    padding: 20px;
+    margin-top: 16px;
+    padding: 18px;
 }
 
 .records-card-header {
-    margin-bottom: 15px;
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 18px;
 }
 
 .records-card-header p {
     margin: 3px 0 0;
-    color: #71717a;
+    color: #777780;
     font-size: 11px;
 }
 
 .qualification-badge {
     padding: 6px 10px;
     border-radius: 999px;
+    color: #86efac;
     background: rgba(34,197,94,.10);
     border: 1px solid rgba(34,197,94,.20);
-    color: #86efac;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 650;
 }
 
 .qualification-badge.closed {
+    color: #fca5a5;
     background: rgba(239,68,68,.10);
     border-color: rgba(239,68,68,.20);
-    color: #fca5a5;
 }
 
 .records-list {
@@ -793,12 +884,12 @@
 }
 
 .record-row-new {
-    min-height: 50px;
-    padding: 8px 12px;
+    min-height: 48px;
+    padding: 8px 11px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 18px;
     border-radius: 10px;
     color: inherit;
     text-decoration: none;
@@ -810,7 +901,9 @@
     transform: translateX(2px);
 }
 
-.record-row-no-link { cursor: default; }
+.record-row-no-link {
+    cursor: default;
+}
 
 .record-player {
     min-width: 0;
@@ -820,15 +913,15 @@
 }
 
 .record-avatar-placeholder {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
+    width: 31px;
+    height: 31px;
+    min-width: 31px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1, #a855f7);
     color: #fff;
+    background: linear-gradient(135deg,#6366f1,#a855f7);
     font-size: 12px;
     font-weight: 700;
 }
@@ -836,15 +929,12 @@
 .record-player strong {
     color: #ededf0;
     font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .record-extra {
     display: flex;
     align-items: center;
-    gap: 17px;
+    gap: 16px;
     color: #85858e;
     font-size: 11px;
 }
@@ -858,309 +948,10 @@
 }
 
 .records-empty {
-    padding: 25px;
+    padding: 23px;
     color: #71717a;
     text-align: center;
     font-size: 13px;
-}
-
-@media (max-width: 1200px) {
-    .level-main-row { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 760px) {
-    .page-list .level-container { padding: .75rem; }
-    .level-detail-hero-content { flex-direction: column; }
-    .level-detail-hero-right { width: 100%; align-items: flex-start; }
-    .records-card-header { align-items: flex-start; flex-direction: column; }
-    .record-extra { gap: 8px; }
-}
-
-
-/* =========================================================
-   ACCORDION LEVEL LIST — INLINE EXPAND
-   ========================================================= */
-
-/* List page is now 2 columns:
-   main accordion area + fixed moderators */
-.page-list {
-    grid-template-columns: minmax(0, 1fr) minmax(260px, .30fr) !important;
-    column-gap: 1rem !important;
-    height: calc(100vh - var(--topbar-height));
-    min-height: 0;
-    overflow: hidden;
-}
-
-.page-list .accordion-list-container {
-    height: 100%;
-    min-height: 0;
-    padding: 1.25rem 1.25rem 2rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.page-list .meta-container {
-    height: 100%;
-    min-height: 0;
-    padding: 1.5rem 1.5rem 1.5rem .75rem;
-    overflow: hidden !important;
-    position: sticky;
-    top: 0;
-    align-self: start;
-}
-
-.page-list .meta {
-    height: 100%;
-    overflow: hidden !important;
-}
-
-/* one level = one expandable card */
-.level-accordion-card {
-    width: 100%;
-    margin-bottom: 16px;
-    overflow: hidden;
-    border-radius: 18px;
-    border: 1px solid rgba(255,255,255,.07);
-    background: rgba(255,255,255,.025);
-    box-shadow: 0 8px 28px rgba(0,0,0,.14);
-    transition:
-        border-color .25s ease,
-        box-shadow .25s ease,
-        transform .25s cubic-bezier(.22,1,.36,1);
-}
-
-.level-accordion-card:hover {
-    border-color: rgba(255,255,255,.12);
-}
-
-.level-accordion-card.is-expanded {
-    border-color: rgba(34, 211, 238, .42);
-    box-shadow:
-        0 0 0 1px rgba(34, 211, 238, .08),
-        0 0 24px rgba(34, 211, 238, .14),
-        0 16px 42px rgba(0,0,0,.24);
-}
-
-/* whole hero summary */
-.level-accordion-summary {
-    position: relative;
-    width: 100%;
-    min-height: 150px;
-    padding: 22px 24px;
-    border: 0;
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    gap: 24px;
-    text-align: left;
-    color: #fff;
-    cursor: pointer;
-    overflow: hidden;
-    background-size: cover !important;
-    background-position: center !important;
-}
-
-.level-accordion-summary:disabled {
-    cursor: not-allowed;
-    opacity: .55;
-}
-
-.level-accordion-overlay {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-        linear-gradient(
-            90deg,
-            rgba(7,7,9,.42) 0%,
-            rgba(7,7,9,.50) 42%,
-            rgba(7,7,9,.82) 100%
-        );
-    transition: background .25s ease;
-}
-
-.level-accordion-card:hover .level-accordion-overlay {
-    background:
-        linear-gradient(
-            90deg,
-            rgba(7,7,9,.34) 0%,
-            rgba(7,7,9,.46) 42%,
-            rgba(7,7,9,.78) 100%
-        );
-}
-
-.level-accordion-summary-left,
-.level-accordion-summary-right {
-    position: relative;
-    z-index: 1;
-}
-
-.level-accordion-summary-left {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 11px;
-}
-
-.level-accordion-title-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-width: 0;
-}
-
-.level-accordion-rank {
-    font-size: 20px;
-    font-weight: 800;
-    white-space: nowrap;
-}
-
-.level-accordion-title {
-    margin: 0;
-    font-size: clamp(24px, 2.2vw, 34px);
-    line-height: 1.08;
-    font-weight: 800;
-    text-shadow: 0 3px 16px rgba(0,0,0,.55);
-    overflow-wrap: anywhere;
-}
-
-.level-accordion-verifier {
-    margin: 0;
-    color: rgba(255,255,255,.82);
-    font-size: 14px;
-}
-
-.level-accordion-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.level-accordion-summary-right {
-    min-width: 190px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 8px;
-}
-
-.accordion-stat {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-}
-
-.accordion-stat strong {
-    color: #fff;
-    font-size: 15px;
-}
-
-.accordion-stat span {
-    color: rgba(255,255,255,.62);
-    font-size: 11px;
-}
-
-.accordion-points {
-    margin-top: 2px;
-    padding: 6px 10px;
-    border-radius: 9px;
-    color: #86efac;
-    background: rgba(34,197,94,.10);
-    border: 1px solid rgba(34,197,94,.18);
-    font-family: Consolas, monospace;
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.accordion-toggle-label {
-    margin-top: 3px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: rgba(255,255,255,.74);
-    font-size: 11px;
-}
-
-.accordion-toggle-label span {
-    display: inline-block;
-    transition: transform .25s ease;
-}
-
-.accordion-chevron-open {
-    transform: rotate(180deg);
-}
-
-/* detail expands downward INSIDE same card */
-.level-accordion-detail {
-    padding: 18px;
-    border-top: 1px solid rgba(255,255,255,.07);
-    background: rgba(7,7,9,.72);
-    animation: accordion-open .28s cubic-bezier(.22,1,.36,1);
-}
-
-@keyframes accordion-open {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.level-accordion-detail .level-main-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1.7fr) minmax(270px, .72fr);
-    gap: 18px;
-    align-items: stretch;
-}
-
-.level-accordion-detail .level-video-card,
-.level-accordion-detail .level-info-card,
-.level-accordion-detail .level-records-card {
-    border-radius: 14px;
-    background: rgba(255,255,255,.035);
-    border: 1px solid rgba(255,255,255,.075);
-    box-shadow: none;
-}
-
-.level-accordion-detail .level-video-card {
-    padding: 12px;
-}
-
-.level-accordion-detail .level-detail-video {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    height: auto;
-    display: block;
-    border: 0;
-    border-radius: 11px;
-    background: #000;
-}
-
-.level-accordion-detail .level-info-card {
-    padding: 18px;
-}
-
-.level-accordion-detail .level-info-card h3,
-.level-accordion-detail .records-card-header h3 {
-    margin: 0;
-    color: #fff;
-    font-size: 16px;
-}
-
-.level-accordion-detail .level-info-card h3 {
-    margin-bottom: 14px;
-}
-
-.level-accordion-detail .level-records-card {
-    width: 100%;
-    margin-top: 18px;
-    padding: 18px;
 }
 
 .accordion-empty {
@@ -1169,24 +960,22 @@
     color: #888;
 }
 
-/* kill legacy table/detail styles on this page */
-.page-list .accordion-list-container > .list,
+/* neutralize old page-detail area if stale CSS exists */
 .page-list .level-container {
     display: none !important;
 }
 
-/* Mobile / narrow */
 @media (max-width: 1180px) {
-    .page-list {
-        grid-template-columns: minmax(0,1fr) 250px !important;
+    .level-accordion-summary {
+        grid-template-columns: 280px minmax(0,1fr);
     }
 
-    .level-accordion-detail .level-main-row {
+    .level-detail-top {
         grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 920px) {
     .page-list {
         grid-template-columns: 1fr !important;
     }
@@ -1194,25 +983,25 @@
     .page-list .meta-container {
         display: none;
     }
-
-    .level-accordion-summary {
-        min-height: 135px;
-        padding: 18px;
-    }
-
-    .level-accordion-summary-right {
-        min-width: 150px;
-    }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 720px) {
     .level-accordion-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .level-card-thumb {
+        min-height: 160px;
+    }
+
+    .level-card-content {
+        min-height: 170px;
         flex-direction: column;
     }
 
-    .level-accordion-summary-right {
-        width: 100%;
+    .level-card-right {
         min-width: 0;
+        width: 100%;
         align-items: flex-start;
     }
 }
