@@ -19,6 +19,8 @@ const METHOD_OPTIONS = [
     'Button Mashing',
     'Rake',
     'Lip Spam',
+    "Butterfly",
+    "Scroll Clicking"
 ];
 
 const DEVICE_OPTIONS = [
