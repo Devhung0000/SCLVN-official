@@ -18,6 +18,8 @@ import {
 
     updateProfile,
 
+    getIdToken,
+
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 import {
@@ -49,6 +51,8 @@ import {
     arrayUnion,
 
     serverTimestamp,
+
+    runTransaction,
 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -104,6 +108,8 @@ export {
 
     updateProfile,
 
+    getIdToken,
+
     // Firestore functions
 
     doc,
@@ -131,5 +137,7 @@ export {
     arrayUnion,
 
     serverTimestamp,
+
+    runTransaction,
 
 };

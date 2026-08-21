@@ -2959,55 +2959,203 @@ input[type="radio"] {
 
 
 /* =========================================================
-   SUBMIT CUSTOM LEVEL DROPDOWN — CROSS-BROWSER FIX
-   Replaces the native <select> popup so Brave/Chrome/Firefox
-   all render the same compact dark dropdown.
+   SCLVN SUBMIT / ADMIN MODERATION V9
    ========================================================= */
+
+.submit-record-type {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 5px;
+    border: 1px solid rgba(255,255,255,.075);
+    border-radius: 12px;
+    background: rgba(255,255,255,.025);
+}
+
+.submit-record-type button {
+    min-height: 38px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background: transparent;
+    color: #777781;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .18s ease;
+}
+
+.submit-record-type button:hover {
+    color: #e7e7eb;
+    background: rgba(255,255,255,.04);
+}
+
+.submit-record-type button.active {
+    color: #fff;
+    border-color: rgba(255,255,255,.11);
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.085), rgba(255,255,255,.035)),
+        rgba(255,255,255,.02);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.055),
+        0 5px 16px rgba(0,0,0,.14);
+}
+
+.submit-fixed-percent {
+    min-height: 61px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.075);
+    background: rgba(255,255,255,.025);
+}
+
+.submit-fixed-percent strong {
+    color: #fff;
+    font-size: 13px;
+}
+
+.submit-fixed-percent small {
+    color: #686872;
+    font-size: 9px;
+}
+
+.submit-file-drop {
+    min-height: 72px;
+    padding: 11px 12px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    border-radius: 11px;
+    border: 1px dashed rgba(255,255,255,.13);
+    background: rgba(255,255,255,.025);
+    cursor: pointer;
+    transition: .18s ease;
+}
+
+.submit-file-drop:hover {
+    border-color: rgba(255,255,255,.23);
+    background: rgba(255,255,255,.045);
+}
+
+.submit-file-drop > input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.submit-file-icon {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.075);
+    color: #b8b8c0;
+}
+
+.submit-file-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.submit-file-info {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.submit-file-info strong {
+    overflow: hidden;
+    color: #e9e9ed;
+    font-size: 10px;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.submit-file-info small {
+    color: #6f6f78;
+    font-size: 9px;
+}
+
+.submit-file-button {
+    padding: 7px 9px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.045);
+    color: #b9b9c1;
+    font-size: 9px;
+    font-weight: 650;
+}
+
+.submit-raw-helper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: #666670;
+    font-size: 9px;
+}
+
+.submit-raw-helper a {
+    flex-shrink: 0;
+    color: #b7b7bf;
+    text-decoration: none;
+}
+
+.submit-raw-helper a:hover {
+    color: #fff;
+}
+
+/* ---------- Searchable level selector ---------- */
 
 .submit-level-field {
     position: relative;
-    z-index: 20;
+    z-index: 25;
 }
 
 .submit-level-trigger {
     width: 100%;
     min-height: 42px;
-
     padding: 0 12px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-
     border: 1px solid rgba(255,255,255,.085);
     border-radius: 10px;
     outline: none;
-
     background: rgba(255,255,255,.035);
     color: #f1f1f3;
-
     font: inherit;
     font-size: 11px;
-
     cursor: pointer;
-
-    transition:
-        background .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease,
-        transform .2s ease;
+    transition: .18s ease;
 }
 
-.submit-level-trigger:hover {
-    background: rgba(255,255,255,.052);
-    border-color: rgba(255,255,255,.13);
+.submit-level-trigger:hover,
+.submit-level-trigger.is-open {
+    background: rgba(255,255,255,.055);
+    border-color: rgba(255,255,255,.18);
 }
 
 .submit-level-trigger.is-open {
-    border-color: rgba(255,255,255,.22);
-    background: rgba(255,255,255,.055);
-
     box-shadow:
         0 0 0 3px rgba(255,255,255,.025),
         0 0 15px rgba(255,255,255,.028);
@@ -3029,21 +3177,12 @@ input[type="radio"] {
     width: 15px;
     height: 15px;
     flex-shrink: 0;
-
     fill: none;
     stroke: #81818a;
     stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
-
-    transition:
-        transform .22s cubic-bezier(.22,1,.36,1),
-        stroke .2s ease;
-}
-
-.submit-level-trigger:hover .submit-level-chevron,
-.submit-level-trigger.is-open .submit-level-chevron {
-    stroke: #d4d4d8;
+    transition: transform .22s cubic-bezier(.22,1,.36,1);
 }
 
 .submit-level-chevron.is-open {
@@ -3052,187 +3191,97 @@ input[type="radio"] {
 
 .submit-level-dropdown {
     position: absolute;
-
     z-index: 500;
-
     top: calc(100% + 8px);
     left: 0;
     right: 0;
-
     padding: 8px;
-
     overflow: hidden;
-
     border-radius: 13px;
     border: 1px solid rgba(255,255,255,.11);
-
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.045),
-            rgba(255,255,255,.015)
-        ),
-        rgba(12,12,16,.96);
-
-    backdrop-filter:
-        blur(22px)
-        saturate(155%);
-
-    -webkit-backdrop-filter:
-        blur(22px)
-        saturate(155%);
-
+        linear-gradient(135deg, rgba(255,255,255,.045), rgba(255,255,255,.015)),
+        rgba(12,12,16,.97);
+    backdrop-filter: blur(22px) saturate(155%);
+    -webkit-backdrop-filter: blur(22px) saturate(155%);
     box-shadow:
         inset 0 1px 0 rgba(255,255,255,.045),
         0 18px 42px rgba(0,0,0,.42),
         0 0 18px rgba(255,255,255,.025);
-
     transform-origin: top center;
-
-    animation:
-        submit-dropdown-open .18s cubic-bezier(.22,1,.36,1);
+    animation: submit-dropdown-open .18s cubic-bezier(.22,1,.36,1);
 }
 
 @keyframes submit-dropdown-open {
-    from {
-        opacity: 0;
-        transform: translateY(-6px) scale(.99);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    from { opacity: 0; transform: translateY(-6px) scale(.99); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .submit-level-search {
     position: relative;
-
     margin-bottom: 7px;
 }
 
 .submit-level-search svg {
     position: absolute;
-
     top: 50%;
     left: 11px;
-
     width: 15px;
     height: 15px;
-
     transform: translateY(-50%);
-
     fill: none;
     stroke: #73737d;
     stroke-width: 1.7;
     stroke-linecap: round;
     stroke-linejoin: round;
-
     pointer-events: none;
 }
 
 .submit-level-search input {
     width: 100%;
-
-    padding:
-        9px
-        11px
-        9px
-        34px !important;
-
-    border:
-        1px solid rgba(255,255,255,.075) !important;
-
-    border-radius:
-        9px !important;
-
-    outline:
-        none !important;
-
-    background:
-        rgba(255,255,255,.035) !important;
-
-    color:
-        #ececef !important;
-
-    font-size:
-        10px !important;
-
-    box-shadow:
-        none !important;
+    padding: 9px 11px 9px 34px !important;
+    border: 1px solid rgba(255,255,255,.075) !important;
+    border-radius: 9px !important;
+    outline: none !important;
+    background: rgba(255,255,255,.035) !important;
+    color: #ececef !important;
+    font-size: 10px !important;
+    box-shadow: none !important;
 }
 
 .submit-level-search input:focus {
-    border-color:
-        rgba(255,255,255,.17) !important;
-
-    background:
-        rgba(255,255,255,.052) !important;
-
-    box-shadow:
-        0 0 0 3px rgba(255,255,255,.02) !important;
-
-    transform:
-        none !important;
+    border-color: rgba(255,255,255,.17) !important;
+    background: rgba(255,255,255,.052) !important;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.02) !important;
 }
 
 .submit-level-options {
     max-height: 260px;
-
     overflow-y: auto;
     overflow-x: hidden;
-
     overscroll-behavior: contain;
-
     display: flex;
     flex-direction: column;
-
     gap: 3px;
-
     padding-right: 2px;
-}
-
-.submit-level-options::-webkit-scrollbar {
-    width: 4px;
-}
-
-.submit-level-options::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.submit-level-options::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: rgba(255,255,255,.18);
 }
 
 .submit-level-option {
     width: 100%;
     min-height: 37px;
-
     padding: 7px 9px;
-
     display: grid;
     grid-template-columns: 38px minmax(0,1fr) 18px;
     align-items: center;
     gap: 7px;
-
     border: 1px solid transparent;
     border-radius: 8px;
-
     background: transparent;
     color: #d7d7dc;
-
     font: inherit;
-
     cursor: pointer;
-
     text-align: left;
-
-    transition:
-        background .16s ease,
-        border-color .16s ease,
-        transform .16s ease,
-        color .16s ease;
+    transition: .16s ease;
 }
 
 .submit-level-option:hover {
@@ -3250,25 +3299,16 @@ input[type="radio"] {
 
 .submit-level-option-rank {
     color: #777781;
-
-    font-family:
-        Consolas,
-        monospace;
-
+    font-family: Consolas, monospace;
     font-size: 9px;
-
-    font-variant-numeric:
-        tabular-nums;
+    font-variant-numeric: tabular-nums;
 }
 
 .submit-level-option-name {
     min-width: 0;
-
     overflow: hidden;
-
     text-overflow: ellipsis;
     white-space: nowrap;
-
     font-size: 10px;
     font-weight: 600;
 }
@@ -3276,9 +3316,7 @@ input[type="radio"] {
 .submit-level-option-check {
     width: 14px;
     height: 14px;
-
     justify-self: end;
-
     fill: none;
     stroke: #fff;
     stroke-width: 2;
@@ -3288,25 +3326,416 @@ input[type="radio"] {
 
 .submit-level-empty {
     padding: 22px 10px;
-
     color: #6f6f78;
-
     font-size: 10px;
     text-align: center;
+}
+
+/* ---------- Admin moderation ---------- */
+
+.admin-tabs {
+    margin-bottom: 16px;
+    padding: 4px;
+    display: inline-flex;
+    gap: 4px;
+    border-radius: 11px;
+    border: 1px solid rgba(255,255,255,.075);
+    background: rgba(255,255,255,.025);
+}
+
+.admin-tabs button {
+    min-height: 34px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #777781;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.admin-tabs button.active {
+    background: rgba(255,255,255,.08);
+    color: #fff;
+}
+
+.admin-tabs button span {
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(255,255,255,.07);
+    color: #9d9da5;
+    font-size: 8px;
+}
+
+.admin-page-error {
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(239,68,68,.24);
+    background: rgba(239,68,68,.08);
+    color: #f3a5a5;
+    font-size: 10px;
+}
+
+.admin-record-head-pills {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.admin-verification-pill {
+    padding: 5px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+    color: #d6d6db;
+    font-size: 8px;
+    font-weight: 750;
+}
+
+.admin-record-id {
+    margin: 4px 0 0;
+    color: #61616a;
+    font-family: Consolas, monospace;
+    font-size: 9px;
+}
+
+.admin-record-self {
+    border-color: rgba(245,158,11,.18) !important;
+}
+
+.admin-self-review-warning {
+    margin: 14px 0;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-radius: 10px;
+    border: 1px solid rgba(245,158,11,.20);
+    background: rgba(245,158,11,.065);
+}
+
+.admin-self-review-warning strong {
+    color: #f0cf91;
+    font-size: 10px;
+}
+
+.admin-self-review-warning span {
+    color: #a48c65;
+    font-size: 9px;
+}
+
+.admin-field select,
+.admin-field textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid rgba(255,255,255,.085);
+    border-radius: 10px;
+    outline: none;
+    background: rgba(255,255,255,.035);
+    color: #f1f1f3;
+    font: inherit;
+    font-size: 11px;
+}
+
+.admin-field select option {
+    background: #111116;
+    color: #fff;
+}
+
+.admin-field textarea {
+    resize: vertical;
+}
+
+.admin-add-level {
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.075);
+    background: rgba(255,255,255,.018);
+}
+
+.admin-add-level-head {
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    border-bottom: 1px solid rgba(255,255,255,.055);
+}
+
+.admin-add-level-head h3 {
+    margin: 3px 0 0;
+    color: #ededf0;
+    font-size: 14px;
+}
+
+.admin-add-level-id {
+    min-width: 0;
+    max-width: 45%;
+    overflow: hidden;
+    color: #74747d;
+    font-family: Consolas, monospace;
+    font-size: 9px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-cps-field {
+    position: relative;
+}
+
+.admin-cps-field input {
+    padding-right: 38px !important;
+}
+
+.admin-cps-field strong {
+    position: absolute;
+    top: 50%;
+    right: 11px;
+    transform: translateY(-50%);
+    color: #777781;
+    font-size: 9px;
+}
+
+.admin-device-preview {
+    margin: 12px 0 0;
+    padding: 9px 10px;
+    border-radius: 9px;
+    background: rgba(255,255,255,.025);
+    color: #777781;
+    font-size: 9px;
+}
+
+.admin-device-preview strong {
+    color: #b9b9c1;
+}
+
+.admin-proof-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.admin-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-history-card {
+    padding: 15px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.075);
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.028), rgba(255,255,255,.01)),
+        rgba(12,12,16,.72);
+}
+
+.admin-history-card > header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.admin-history-card h3 {
+    margin: 3px 0 0;
+    color: #eeeef1;
+    font-size: 14px;
+}
+
+.admin-history-status {
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.admin-history-status.is-approved {
+    border: 1px solid rgba(74,222,128,.18);
+    background: rgba(74,222,128,.07);
+    color: #9ad8ad;
+}
+
+.admin-history-status.is-rejected {
+    border: 1px solid rgba(248,113,113,.18);
+    background: rgba(248,113,113,.07);
+    color: #e5a0a0;
+}
+
+.admin-history-grid {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 8px 14px;
+}
+
+.admin-history-grid p {
+    margin: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.admin-history-grid strong {
+    color: #666670;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.admin-history-grid span {
+    overflow-wrap: anywhere;
+    color: #bdbdc4;
+    font-size: 9px;
+}
+
+.admin-history-links {
+    margin-top: 12px;
+    padding-top: 10px;
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid rgba(255,255,255,.05);
+}
+
+.admin-history-links a {
+    color: #aaaab3;
+    font-size: 9px;
+    text-decoration: none;
+}
+
+.admin-history-links a:hover {
+    color: #fff;
+}
+
+/* ---------- Confirm decision modal ---------- */
+
+.admin-confirm-backdrop {
+    position: fixed;
+    z-index: 5000;
+    inset: 0;
+    padding: 20px;
+    display: grid;
+    place-items: center;
+    background: rgba(0,0,0,.58);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.admin-confirm-modal {
+    width: min(430px, 100%);
+    padding: 20px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.11);
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.045), rgba(255,255,255,.014)),
+        rgba(12,12,16,.97);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.045),
+        0 28px 80px rgba(0,0,0,.55);
+}
+
+.admin-confirm-modal h2 {
+    margin: 5px 0 14px;
+    color: #fff;
+    font-size: 20px;
+    letter-spacing: -.025em;
+}
+
+.admin-confirm-summary {
+    margin-bottom: 14px;
+    padding: 11px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.07);
+    background: rgba(255,255,255,.03);
+}
+
+.admin-confirm-summary strong {
+    color: #eeeef1;
+    font-size: 11px;
+}
+
+.admin-confirm-summary span {
+    color: #767680;
+    font-size: 9px;
+}
+
+.admin-confirm-warning {
+    margin: 12px 0 0;
+    color: #666670;
+    font-size: 9px;
+}
+
+.admin-confirm-actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.admin-confirm-cancel {
+    min-height: 38px;
+    padding: 9px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.085);
+    background: rgba(255,255,255,.035);
+    color: #aaaab2;
+    font: inherit;
+    font-size: 10px;
+    cursor: pointer;
 }
 
 @media (max-width: 720px) {
     .submit-level-dropdown {
         position: fixed;
-
         top: calc(var(--topbar-height) + 70px);
         left: 14px;
         right: 14px;
-
         width: auto;
     }
 
     .submit-level-options {
         max-height: min(55vh, 360px);
+    }
+
+    .submit-file-drop {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .submit-file-button {
+        margin-left: 49px;
+    }
+
+    .submit-raw-helper,
+    .admin-add-level-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-add-level-id {
+        max-width: 100%;
+    }
+
+    .admin-history-grid {
+        grid-template-columns: 1fr;
     }
 }

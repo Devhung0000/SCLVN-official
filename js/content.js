@@ -3,6 +3,34 @@ import {
     db, doc, getDoc, getDocs, collection
 } from './firebase-init.js';
 
+
+function normalizeRecordPlayer(value) {
+    return String(value || '').trim().toLowerCase();
+}
+
+function getUniqueBestRecords(level) {
+    const verifierKey = normalizeRecordPlayer(level?.verifier);
+    const bestByPlayer = new Map();
+
+    for (const record of (level?.records || [])) {
+        const playerKey = normalizeRecordPlayer(record?.user);
+
+        if (!playerKey || playerKey === verifierKey) {
+            continue;
+        }
+
+        const existing = bestByPlayer.get(playerKey);
+        const percent = Number(record?.percent) || 0;
+        const existingPercent = Number(existing?.percent) || 0;
+
+        if (!existing || percent > existingPercent) {
+            bestByPlayer.set(playerKey, record);
+        }
+    }
+
+    return [...bestByPlayer.values()];
+}
+
 export async function fetchList() {
     let params = new URLSearchParams(document.location.search);
     let whichList = params.get("list");
@@ -147,7 +175,7 @@ export async function fetchLeaderboard() {
             link: level.verification,
         });
 
-        level.records.forEach((record) => {
+        getUniqueBestRecords(level).forEach((record) => {
             const user = Object.keys(scoreMap).find(
                 (u) => u.trim().toLowerCase() === record.user.trim().toLowerCase(),
             ) || record.user.trim();
@@ -225,7 +253,7 @@ export async function fetchCreatorLeaderboard() {
             link: level.verification,
         });
 
-        level.records.forEach((record) => {
+        getUniqueBestRecords(level).forEach((record) => {
             const user = Object.keys(scoreMap).find(
                 (u) => u.trim().toLowerCase() === record.user.trim().toLowerCase(),
             ) || record.user.trim();

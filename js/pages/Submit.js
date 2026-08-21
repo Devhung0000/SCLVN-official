@@ -1,7 +1,37 @@
 import { store } from '../main.js';
 import { fetchList } from '../content.js';
-import { db, collection, addDoc, serverTimestamp } from '../firebase-init.js';
+import {
+    auth,
+    db,
+    doc,
+    getDoc,
+    collection,
+    addDoc,
+    serverTimestamp,
+    getIdToken,
+} from '../firebase-init.js';
 import Spinner from '../components/Spinner.js';
+
+const RAW_FOOTAGE_DRIVE_FOLDER =
+    'https://drive.google.com/drive/folders/1IY0r3Cak5WApJA2v4aoFeHx10VgS-FjPb1mmQ5l5XLsWqtopm6IyPXZh40TObiMJch7T1rtd?usp=drive_link';
+
+function normalizePlayerName(value) {
+    return String(value || '').trim().toLowerCase();
+}
+
+function formatBytes(bytes) {
+    const value = Number(bytes || 0);
+    if (!value) return '0 B';
+
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    const index = Math.min(
+        Math.floor(Math.log(value) / Math.log(1024)),
+        units.length - 1
+    );
+
+    const amount = value / Math.pow(1024, index);
+    return `${amount >= 10 || index === 0 ? amount.toFixed(0) : amount.toFixed(1)} ${units[index]}`;
+}
 
 export default {
     components: { Spinner },
@@ -9,20 +39,64 @@ export default {
     data: () => ({
         loading: true,
         levels: [],
+
+        recordType: 'completion',
+
         levelId: '',
         levelSearch: '',
         levelDropdownOpen: false,
+
+        verificationLevelId: '',
+        verificationLevelName: '',
+
         playerName: '',
         percent: 100,
         hz: '',
         mobile: false,
+
         link: '',
         note: '',
+
+        rawFootageFile: null,
+        rawFootageUploading: false,
+        rawFootageProgressText: '',
+
         submitting: false,
         success: false,
         error: '',
+
         store,
+        rawFootageDriveFolder: RAW_FOOTAGE_DRIVE_FOLDER,
     }),
+
+    computed: {
+        selectedLevel() {
+            return this.levels.find(level => level.id === this.levelId) || null;
+        },
+
+        filteredLevels() {
+            const query = this.levelSearch.trim().toLowerCase();
+
+            if (!query) {
+                return this.levels;
+            }
+
+            return this.levels.filter(level =>
+                level.name.toLowerCase().includes(query) ||
+                level.id.toLowerCase().includes(query)
+            );
+        },
+
+        rawFootageName() {
+            return this.rawFootageFile?.name || '';
+        },
+
+        rawFootageSize() {
+            return this.rawFootageFile
+                ? formatBytes(this.rawFootageFile.size)
+                : '';
+        },
+    },
 
     template: `
         <main v-if="loading">
@@ -54,8 +128,10 @@ export default {
                             <path d="M5 21a7 7 0 0 1 14 0"></path>
                         </svg>
                     </div>
+
                     <h2>Login required</h2>
                     <p>You need to be signed in before submitting a record.</p>
+
                     <router-link class="submit-primary-btn" to="/login">
                         Login / Register
                     </router-link>
@@ -67,8 +143,13 @@ export default {
                             <path d="M20 6 9 17l-5-5"></path>
                         </svg>
                     </div>
-                    <h2>Record submitted</h2>
-                    <p>Your record is now waiting for moderator review.</p>
+
+                    <h2>Submission sent</h2>
+                    <p>
+                        Your {{ recordType === 'verification' ? 'verification' : 'record' }}
+                        is waiting for another moderator to review it.
+                    </p>
+
                     <button class="submit-primary-btn" type="button" @click="resetForm">
                         Submit another record
                     </button>
@@ -88,7 +169,30 @@ export default {
                     </div>
 
                     <div class="submit-form-grid">
+                        <div class="submit-field submit-field-full">
+                            <span>Type of Record</span>
+
+                            <div class="submit-record-type">
+                                <button
+                                    type="button"
+                                    :class="{ active: recordType === 'completion' }"
+                                    @click="setRecordType('completion')"
+                                >
+                                    Completion
+                                </button>
+
+                                <button
+                                    type="button"
+                                    :class="{ active: recordType === 'verification' }"
+                                    @click="setRecordType('verification')"
+                                >
+                                    Verification
+                                </button>
+                            </div>
+                        </div>
+
                         <div
+                            v-if="recordType === 'completion'"
                             class="submit-field submit-field-full submit-level-field"
                             @click.stop
                         >
@@ -140,7 +244,7 @@ export default {
 
                                 <div class="submit-level-options">
                                     <button
-                                        v-for="(lvl, index) in filteredLevels"
+                                        v-for="lvl in filteredLevels"
                                         :key="lvl.id"
                                         class="submit-level-option"
                                         :class="{ 'is-selected': lvl.id === levelId }"
@@ -148,7 +252,7 @@ export default {
                                         @click="selectLevel(lvl)"
                                     >
                                         <span class="submit-level-option-rank">
-                                            #{{ index + 1 }}
+                                            #{{ lvl.rank }}
                                         </span>
 
                                         <span class="submit-level-option-name">
@@ -175,8 +279,29 @@ export default {
                             </div>
                         </div>
 
+                        <template v-else>
+                            <label class="submit-field">
+                                <span>Level ID</span>
+                                <input
+                                    v-model.trim="verificationLevelId"
+                                    type="text"
+                                    placeholder="Example: my_new_level"
+                                >
+                                <small>This becomes the Firestore level ID if approved.</small>
+                            </label>
+
+                            <label class="submit-field">
+                                <span>Level name</span>
+                                <input
+                                    v-model.trim="verificationLevelName"
+                                    type="text"
+                                    placeholder="Level name shown on the list"
+                                >
+                            </label>
+                        </template>
+
                         <label class="submit-field">
-                            <span>Player name</span>
+                            <span>{{ recordType === 'verification' ? 'Verifier name' : 'Player name' }}</span>
                             <input
                                 v-model="playerName"
                                 type="text"
@@ -184,8 +309,9 @@ export default {
                             >
                         </label>
 
-                        <label class="submit-field">
-                            <span>Completion</span>
+                        <label v-if="recordType === 'completion'" class="submit-field">
+                            <span>Percentage</span>
+
                             <div class="submit-percent-field">
                                 <input
                                     v-model.number="percent"
@@ -196,6 +322,15 @@ export default {
                                 <strong>%</strong>
                             </div>
                         </label>
+
+                        <div v-else class="submit-field">
+                            <span>Percentage</span>
+
+                            <div class="submit-fixed-percent">
+                                <strong>100%</strong>
+                                <small>Verification submissions are always full completions.</small>
+                            </div>
+                        </div>
 
                         <label class="submit-field">
                             <span>Hz / Device</span>
@@ -209,6 +344,7 @@ export default {
                         <label class="submit-mobile-card">
                             <input v-model="mobile" type="checkbox">
                             <span class="submit-check-ui"></span>
+
                             <span>
                                 <strong>Mobile record</strong>
                                 <small>Enable if the run was completed on mobile.</small>
@@ -216,13 +352,60 @@ export default {
                         </label>
 
                         <label class="submit-field submit-field-full">
-                            <span>Video link</span>
+                            <span>Video Link <small>optional</small></span>
                             <input
                                 v-model="link"
                                 type="text"
                                 placeholder="YouTube / Drive / Medal..."
                             >
                         </label>
+
+                        <div class="submit-field submit-field-full">
+                            <span>Raw Footage</span>
+
+                            <label class="submit-file-drop">
+                                <input
+                                    type="file"
+                                    accept="video/*,.mkv,.webm,.mov,.mp4,.avi"
+                                    @change="handleRawFootage"
+                                >
+
+                                <span class="submit-file-icon">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M12 16V5"></path>
+                                        <path d="m8 9 4-4 4 4"></path>
+                                        <path d="M5 15v4h14v-4"></path>
+                                    </svg>
+                                </span>
+
+                                <span v-if="rawFootageFile" class="submit-file-info">
+                                    <strong>{{ rawFootageName }}</strong>
+                                    <small>{{ rawFootageSize }}</small>
+                                </span>
+
+                                <span v-else class="submit-file-info">
+                                    <strong>Choose raw footage from your device</strong>
+                                    <small>Original, unedited footage.</small>
+                                </span>
+
+                                <span class="submit-file-button">
+                                    {{ rawFootageFile ? 'Change file' : 'Choose file' }}
+                                </span>
+                            </label>
+
+                            <div class="submit-raw-helper">
+                                <span v-if="rawFootageProgressText">{{ rawFootageProgressText }}</span>
+                                <span v-else>Raw footage will be uploaded to the SCLVN Drive folder.</span>
+
+                                <a
+                                    :href="rawFootageDriveFolder"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Open Drive folder
+                                </a>
+                            </div>
+                        </div>
 
                         <label class="submit-field submit-field-full">
                             <span>Note <small>optional</small></span>
@@ -239,15 +422,24 @@ export default {
                     </div>
 
                     <footer class="submit-actions">
-                        <p>Submissions are reviewed manually before appearing on the list.</p>
+                        <p>
+                            Submissions are reviewed manually.
+                            A moderator cannot approve or reject their own submission.
+                        </p>
 
                         <button
                             class="submit-primary-btn"
                             type="button"
-                            :disabled="submitting"
+                            :disabled="submitting || rawFootageUploading"
                             @click="submitRecord"
                         >
-                            {{ submitting ? 'Submitting...' : 'Submit Record' }}
+                            {{
+                                rawFootageUploading
+                                    ? 'Uploading raw footage...'
+                                    : submitting
+                                        ? 'Submitting...'
+                                        : 'Submit Record'
+                            }}
                         </button>
                     </footer>
                 </div>
@@ -255,32 +447,18 @@ export default {
         </main>
     `,
 
-    computed: {
-        selectedLevel() {
-            return this.levels.find(level => level.id === this.levelId) || null;
-        },
-
-        filteredLevels() {
-            const query = this.levelSearch.trim().toLowerCase();
-
-            if (!query) {
-                return this.levels;
-            }
-
-            return this.levels.filter(level =>
-                level.name.toLowerCase().includes(query)
-            );
-        },
-    },
-
     async mounted() {
         const list = await fetchList();
 
         this.levels = (list || [])
-            .filter(([lvl]) => lvl)
-            .map(([lvl]) => ({
+            .map(([lvl], index) => ({ lvl, index }))
+            .filter(item => item.lvl)
+            .map(({ lvl, index }) => ({
                 id: lvl.path,
                 name: lvl.name,
+                rank: index + 1,
+                verifier: lvl.verifier || '',
+                records: Array.isArray(lvl.records) ? lvl.records : [],
             }));
 
         if (store.user) {
@@ -290,9 +468,8 @@ export default {
                 '';
         }
 
-        this.loading = false;
-
         document.addEventListener('click', this.handleOutsideClick);
+        this.loading = false;
     },
 
     beforeUnmount() {
@@ -300,6 +477,22 @@ export default {
     },
 
     methods: {
+        setRecordType(type) {
+            if (this.recordType === type) return;
+
+            this.recordType = type;
+            this.error = '';
+            this.closeLevelDropdown();
+
+            if (type === 'verification') {
+                this.percent = 100;
+                this.levelId = '';
+            } else {
+                this.verificationLevelId = '';
+                this.verificationLevelName = '';
+            }
+        },
+
         toggleLevelDropdown() {
             this.levelDropdownOpen = !this.levelDropdownOpen;
 
@@ -326,23 +519,172 @@ export default {
             }
         },
 
+        handleRawFootage(event) {
+            const [file] = event.target.files || [];
+            this.rawFootageFile = file || null;
+            this.rawFootageProgressText = '';
+        },
+
         resetForm() {
             this.success = false;
+            this.error = '';
+
             this.levelId = '';
             this.levelSearch = '';
             this.levelDropdownOpen = false;
+
+            this.verificationLevelId = '';
+            this.verificationLevelName = '';
+
             this.percent = 100;
             this.hz = '';
             this.mobile = false;
             this.link = '';
             this.note = '';
+
+            this.rawFootageFile = null;
+            this.rawFootageProgressText = '';
+        },
+
+        async checkCompletionDuplicate() {
+            const levelRef = doc(db, 'levels', this.levelId);
+            const levelSnap = await getDoc(levelRef);
+
+            if (!levelSnap.exists()) {
+                throw new Error('Level không còn tồn tại trên list.');
+            }
+
+            const level = levelSnap.data();
+            const playerKey = normalizePlayerName(this.playerName);
+
+            if (normalizePlayerName(level.verifier) === playerKey) {
+                throw new Error(
+                    'Player này là verifier của level nên đã được tính là victor và không thể submit thêm record.'
+                );
+            }
+
+            const alreadyVictor = (level.records || []).some(record =>
+                normalizePlayerName(record.user) === playerKey &&
+                Number(record.percent) === 100
+            );
+
+            if (alreadyVictor) {
+                throw new Error(
+                    'Player này đã là victor của level (100%), không thể submit thêm record.'
+                );
+            }
+        },
+
+        async checkVerificationLevelId() {
+            const levelId = this.verificationLevelId.trim();
+
+            if (!levelId || levelId.includes('/')) {
+                throw new Error('Level ID không hợp lệ. Level ID không được chứa dấu "/".');
+            }
+
+            const levelSnap = await getDoc(doc(db, 'levels', levelId));
+
+            if (levelSnap.exists()) {
+                throw new Error('Level ID này đã tồn tại trên list.');
+            }
+        },
+
+        getRawUploadEndpoint() {
+            return (
+                window.SCLVN_RAW_UPLOAD_ENDPOINT ||
+                window.SCLVN_CONFIG?.rawUploadEndpoint ||
+                ''
+            ).trim();
+        },
+
+        async uploadRawFootage(file) {
+            if (!file) {
+                throw new Error('Vui lòng chọn Raw Footage.');
+            }
+
+            const endpoint = this.getRawUploadEndpoint();
+
+            if (!endpoint) {
+                throw new Error(
+                    'Raw Footage backend chưa được cấu hình. Hãy deploy worker trong thư mục worker/ của gói update rồi đặt SCLVN_RAW_UPLOAD_ENDPOINT.'
+                );
+            }
+
+            if (!auth.currentUser) {
+                throw new Error('Phiên đăng nhập đã hết. Vui lòng đăng nhập lại.');
+            }
+
+            this.rawFootageUploading = true;
+            this.rawFootageProgressText = 'Creating secure Google Drive upload session...';
+
+            try {
+                const idToken = await getIdToken(auth.currentUser, true);
+
+                const sessionResponse = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${idToken}`,
+                    },
+                    body: JSON.stringify({
+                        fileName: file.name,
+                        mimeType: file.type || 'application/octet-stream',
+                        size: file.size,
+                    }),
+                });
+
+                const sessionData = await sessionResponse.json().catch(() => ({}));
+
+                if (!sessionResponse.ok || !sessionData.uploadUrl) {
+                    throw new Error(
+                        sessionData.error ||
+                        `Không tạo được Drive upload session (${sessionResponse.status}).`
+                    );
+                }
+
+                this.rawFootageProgressText = `Uploading ${formatBytes(file.size)} to Google Drive...`;
+
+                const uploadResponse = await fetch(sessionData.uploadUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': file.type || 'application/octet-stream',
+                    },
+                    body: file,
+                });
+
+                const uploaded = await uploadResponse.json().catch(() => ({}));
+
+                if (!uploadResponse.ok) {
+                    throw new Error(
+                        uploaded.error?.message ||
+                        uploaded.error ||
+                        `Google Drive upload failed (${uploadResponse.status}).`
+                    );
+                }
+
+                this.rawFootageProgressText = 'Raw footage uploaded successfully.';
+
+                return {
+                    driveFileId: uploaded.id || null,
+                    link:
+                        uploaded.webViewLink ||
+                        (uploaded.id
+                            ? `https://drive.google.com/file/d/${uploaded.id}/view`
+                            : ''),
+                    name: file.name,
+                    size: file.size,
+                    mimeType: file.type || 'application/octet-stream',
+                };
+            } finally {
+                this.rawFootageUploading = false;
+            }
         },
 
         async submitRecord() {
             this.error = '';
 
-            if (!this.levelId) {
-                this.error = 'Vui lòng chọn level.';
+            if (!store.user) {
+                this.error = 'Vui lòng đăng nhập.';
                 return;
             }
 
@@ -351,37 +693,93 @@ export default {
                 return;
             }
 
-            if (!this.percent || this.percent < 1 || this.percent > 100) {
-                this.error = 'Phần trăm không hợp lệ.';
-                return;
+            if (this.recordType === 'completion') {
+                if (!this.levelId) {
+                    this.error = 'Vui lòng chọn level.';
+                    return;
+                }
+
+                if (!this.percent || this.percent < 1 || this.percent > 100) {
+                    this.error = 'Percentage không hợp lệ.';
+                    return;
+                }
+            } else {
+                if (!this.verificationLevelId.trim()) {
+                    this.error = 'Vui lòng nhập Level ID.';
+                    return;
+                }
+
+                if (!this.verificationLevelName.trim()) {
+                    this.error = 'Vui lòng nhập Level name.';
+                    return;
+                }
+
+                this.percent = 100;
             }
 
             this.submitting = true;
 
             try {
+                if (this.recordType === 'completion') {
+                    await this.checkCompletionDuplicate();
+                } else {
+                    await this.checkVerificationLevelId();
+                }
+
+                const rawFootage = this.rawFootageFile
+                    ? await this.uploadRawFootage(this.rawFootageFile)
+                    : null;
+
+                const targetLevelId =
+                    this.recordType === 'verification'
+                        ? this.verificationLevelId.trim()
+                        : this.levelId;
+
+                const targetLevelName =
+                    this.recordType === 'verification'
+                        ? this.verificationLevelName.trim()
+                        : this.selectedLevel?.name || this.levelId;
+
                 await addDoc(collection(db, 'submissions'), {
-                    levelId: this.levelId,
-                    levelName:
-                        this.levels.find(l => l.id === this.levelId)?.name ||
-                        this.levelId,
+                    type: this.recordType,
+
+                    levelId: targetLevelId,
+                    levelName: targetLevelName,
+
                     playerName: this.playerName.trim(),
-                    percent: this.percent,
+                    playerNameLower: normalizePlayerName(this.playerName),
+
+                    percent:
+                        this.recordType === 'verification'
+                            ? 100
+                            : Number(this.percent),
+
                     hz: this.hz.trim(),
                     mobile: this.mobile,
+
                     link: this.link.trim(),
+                    rawFootage,
                     note: this.note.trim(),
+
                     status: 'pending',
+
                     submittedByUid: store.user.uid,
-                    submittedByEmail: store.user.email,
+                    submittedByEmail: store.user.email || '',
+                    submittedByName:
+                        store.user.username ||
+                        store.user.displayName ||
+                        this.playerName.trim(),
+
                     submittedAt: serverTimestamp(),
                 });
 
                 this.success = true;
             } catch (e) {
+                console.error(e);
+
                 this.error =
-                    'Gửi thất bại, thử lại sau. (' +
-                    (e.message || '') +
-                    ')';
+                    e?.message ||
+                    'Gửi thất bại, thử lại sau.';
             } finally {
                 this.submitting = false;
             }
