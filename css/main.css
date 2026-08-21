@@ -3817,3 +3817,660 @@ input[type="radio"] {
 .admin-record-meta.admin-record-meta-inline .admin-meta-note span {
     color: #e3e3e7 !important;
 }
+
+
+/* =========================================================
+   BUG REPORT
+   ========================================================= */
+
+.page-bug-report {
+    width: 100% !important;
+    min-height: 100vh !important;
+
+    padding:
+        calc(var(--topbar-height) + 30px)
+        26px
+        48px !important;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    background:
+        radial-gradient(
+            circle at 50% -8%,
+            rgba(255,255,255,.045),
+            transparent 34%
+        ),
+        var(--color-background) !important;
+}
+
+.bug-report-shell {
+    width: min(980px, 100%);
+    margin: 0 auto;
+}
+
+.bug-report-header {
+    margin-bottom: 18px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.bug-report-kicker {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #74747e;
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .13em;
+}
+
+.bug-report-header h1 {
+    margin: 0;
+
+    color: #f4f4f5;
+
+    font-size: clamp(25px, 3vw, 36px);
+    font-weight: 750;
+    letter-spacing: -.035em;
+}
+
+.bug-report-header > div:first-child > p {
+    width: min(650px, 100%);
+
+    margin: 8px 0 0;
+
+    color: #777781;
+
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+.bug-report-account,
+.bug-report-login {
+    flex-shrink: 0;
+
+    min-height: 48px;
+
+    padding: 6px 11px;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.035);
+}
+
+.bug-report-account img {
+    width: 32px;
+    height: 32px;
+
+    object-fit: cover;
+
+    border-radius: 9px;
+}
+
+.bug-report-account > div {
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1.15;
+}
+
+.bug-report-account span {
+    color: #6f6f78;
+
+    font-size: 8px;
+    font-weight: 600;
+}
+
+.bug-report-account strong {
+    margin-top: 3px;
+
+    color: #ededf0;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.bug-report-login {
+    justify-content: center;
+
+    min-width: 92px;
+
+    color: #ededf0;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.bug-report-auth-notice {
+    margin-bottom: 14px;
+    padding: 11px 13px;
+
+    border:
+        1px solid rgba(245,158,11,.18);
+    border-radius: 11px;
+
+    background:
+        rgba(245,158,11,.055);
+
+    color: #d6b67c;
+
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+.bug-report-card {
+    overflow: hidden;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+    border-radius: 19px;
+
+    background:
+        linear-gradient(
+            150deg,
+            rgba(255,255,255,.033),
+            rgba(255,255,255,.012)
+        ),
+        rgba(10,10,13,.88);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.045),
+        0 18px 44px rgba(0,0,0,.22);
+}
+
+.bug-report-section {
+    padding: 23px 24px 25px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.055);
+}
+
+.bug-report-section-heading {
+    margin-bottom: 18px;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+}
+
+.bug-report-section-heading > span {
+    min-width: 27px;
+
+    padding-top: 3px;
+
+    color: #5f5f69;
+
+    font-family: Consolas, monospace;
+    font-size: 8px;
+    font-weight: 700;
+}
+
+.bug-report-section-heading h2 {
+    margin: 0;
+
+    color: #e9e9ec;
+
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+}
+
+.bug-report-section-heading p {
+    margin: 4px 0 0;
+
+    color: #696973;
+
+    font-size: 9px;
+    line-height: 1.55;
+}
+
+.bug-report-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+}
+
+.bug-field {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.bug-field-full {
+    grid-column: 1 / -1;
+}
+
+.bug-field > span {
+    color: #a3a3ac;
+
+    font-size: 9px;
+    font-weight: 650;
+}
+
+.bug-field > span small {
+    margin-left: 4px;
+
+    color: #62626c;
+
+    font-size: 8px;
+    font-weight: 500;
+}
+
+.bug-field input,
+.bug-field select,
+.bug-field textarea {
+    width: 100%;
+
+    border:
+        1px solid rgba(255,255,255,.085) !important;
+    border-radius: 10px !important;
+    outline: none !important;
+
+    background:
+        rgba(255,255,255,.03) !important;
+
+    color: #ededf0 !important;
+
+    font: inherit !important;
+    font-size: 10px !important;
+
+    box-shadow: none !important;
+
+    transition:
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+}
+
+.bug-field input,
+.bug-field select {
+    min-height: 42px;
+
+    padding:
+        0
+        12px !important;
+}
+
+.bug-field textarea {
+    min-height: 110px;
+
+    padding:
+        11px
+        12px !important;
+
+    resize: vertical;
+    line-height: 1.65;
+}
+
+.bug-field input::placeholder,
+.bug-field textarea::placeholder {
+    color: #55555f;
+}
+
+.bug-field input:focus,
+.bug-field select:focus,
+.bug-field textarea:focus {
+    border-color:
+        rgba(255,255,255,.19) !important;
+
+    background:
+        rgba(255,255,255,.045) !important;
+
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.018) !important;
+
+    transform: none !important;
+}
+
+.bug-field select {
+    cursor: pointer;
+}
+
+.bug-upload-box {
+    padding: 13px;
+
+    border:
+        1px dashed rgba(255,255,255,.11);
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,.018);
+}
+
+.bug-upload-input {
+    display: none;
+}
+
+.bug-upload-button {
+    width: 100%;
+
+    padding: 11px 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    border:
+        1px solid rgba(255,255,255,.065);
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,.028);
+
+    color: #dcdce1;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition:
+        background .18s ease,
+        border-color .18s ease;
+}
+
+.bug-upload-button:hover:not(:disabled) {
+    border-color:
+        rgba(255,255,255,.12);
+
+    background:
+        rgba(255,255,255,.045);
+}
+
+.bug-upload-button:disabled {
+    opacity: .55;
+    cursor: default;
+}
+
+.bug-upload-button svg {
+    width: 19px;
+    height: 19px;
+
+    flex-shrink: 0;
+
+    fill: none;
+    stroke: #898993;
+    stroke-width: 1.65;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.bug-upload-button > span {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.bug-upload-button strong {
+    color: #e7e7ea;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.bug-upload-button small {
+    color: #686872;
+
+    font-size: 8px;
+}
+
+.bug-upload-list {
+    margin-top: 9px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.bug-upload-file {
+    min-height: 38px;
+
+    padding:
+        6px
+        8px
+        6px
+        10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    border:
+        1px solid rgba(255,255,255,.055);
+    border-radius: 9px;
+
+    background:
+        rgba(255,255,255,.022);
+}
+
+.bug-upload-file > div {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bug-upload-file strong {
+    overflow: hidden;
+
+    color: #cfcfd4;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bug-upload-file span {
+    color: #5f5f69;
+
+    font-size: 8px;
+}
+
+.bug-upload-file button {
+    width: 27px;
+    height: 27px;
+
+    flex-shrink: 0;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #777781;
+
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+.bug-upload-file button:hover:not(:disabled) {
+    background:
+        rgba(239,68,68,.08);
+
+    color: #ef8d8d;
+}
+
+.bug-upload-progress {
+    margin: 9px 2px 0;
+
+    color: #8e8e98;
+
+    font-size: 8px;
+    line-height: 1.55;
+}
+
+.bug-notes-field {
+    margin-top: 14px;
+}
+
+.bug-report-message {
+    margin:
+        17px
+        24px
+        0;
+
+    padding:
+        11px
+        12px;
+
+    border-radius: 10px;
+
+    font-size: 9px;
+    line-height: 1.55;
+}
+
+.bug-report-message.is-error {
+    border:
+        1px solid rgba(239,68,68,.20);
+
+    background:
+        rgba(239,68,68,.055);
+
+    color: #ef9c9c;
+}
+
+.bug-report-message.is-success {
+    border:
+        1px solid rgba(74,222,128,.18);
+
+    background:
+        rgba(74,222,128,.05);
+
+    color: #a7dfb7;
+}
+
+.bug-report-footer {
+    padding: 18px 24px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.bug-report-footer p {
+    width: min(570px, 100%);
+
+    margin: 0;
+
+    color: #62626c;
+
+    font-size: 8px;
+    line-height: 1.55;
+}
+
+.bug-report-submit {
+    min-width: 148px;
+    min-height: 42px;
+
+    padding:
+        0
+        15px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #f1f1f3;
+    color: #0d0d10;
+
+    font: inherit;
+    font-size: 9px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        opacity .18s ease,
+        background .18s ease;
+}
+
+.bug-report-submit:hover:not(:disabled) {
+    transform: translateY(-1px);
+
+    background: #fff;
+}
+
+.bug-report-submit:disabled {
+    opacity: .48;
+    cursor: default;
+}
+
+@media (max-width: 760px) {
+    .page-bug-report {
+        padding:
+            calc(var(--topbar-height) + 18px)
+            13px
+            34px !important;
+    }
+
+    .bug-report-header {
+        flex-direction: column;
+    }
+
+    .bug-report-account,
+    .bug-report-login {
+        align-self: stretch;
+    }
+
+    .bug-report-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bug-field-full {
+        grid-column: auto;
+    }
+
+    .bug-report-section {
+        padding:
+            20px
+            15px
+            22px;
+    }
+
+    .bug-report-footer {
+        padding:
+            16px
+            15px
+            18px;
+
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .bug-report-submit {
+        width: 100%;
+    }
+
+    .bug-report-message {
+        margin:
+            14px
+            15px
+            0;
+    }
+}

@@ -26,12 +26,10 @@
 
         <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
         <script src="https://unpkg.com/vue-router@4.0.14/dist/vue-router.global.prod.js"></script>
-
         <script>
             window.SCLVN_RAW_UPLOAD_ENDPOINT =
                 "https://sclvn-raw-upload.thespamchallengelistvietnam.workers.dev/upload-session";
         </script>
-
         <script type="module" src="/js/main.js"></script>
     </head>
 
@@ -57,6 +55,19 @@
                     <router-link class="sidebar-item" to="/submit" title="Submit Record">
                         <span class="sidebar-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"></path><path d="m7 9 5-5 5 5"></path><path d="M5 14v5h14v-5"></path></svg></span>
                         <span class="sidebar-label">Submit</span>
+                    </router-link>
+
+                    <router-link class="sidebar-item" to="/bug-report" title="Bug Report">
+                        <span class="sidebar-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M9 8h6"></path>
+                                <path d="M9 12h6"></path>
+                                <path d="M10 4h4l1 3H9l1-3Z"></path>
+                                <rect x="6" y="7" width="12" height="13" rx="5"></rect>
+                                <path d="M3 10h3M18 10h3M3 15h3M18 15h3"></path>
+                            </svg>
+                        </span>
+                        <span class="sidebar-label">Bug Report</span>
                     </router-link>
 
                     <router-link
