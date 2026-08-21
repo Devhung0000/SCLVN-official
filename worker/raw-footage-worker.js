@@ -1,13 +1,16 @@
 /**
- * SCLVN Raw Footage Upload Session Worker
+ * SCLVN Raw Footage Worker
  *
- * Purpose:
- * 1) Verify the Firebase user ID token.
- * 2) Use the SCLVN Google account OAuth refresh token server-side.
- * 3) Create a resumable Google Drive upload session inside the Raw Footage folder.
- * 4) Return only the one-time resumable upload URL to the browser.
+ * This version intentionally DOES NOT upload browser -> Google Drive directly,
+ * because Google Drive's resumable upload URL does not provide the CORS headers
+ * required by browsers for the final PUT.
  *
- * The large video bytes then go browser -> Google Drive directly.
+ * Flow:
+ * Browser -> Worker /upload-session -> Google Drive creates resumable session
+ * Browser -> Worker /upload-chunk   -> Worker forwards each small chunk to Drive
+ *
+ * Large files are split client-side into 8 MiB chunks, avoiding one huge
+ * browser -> Worker request.
  *
  * Required Cloudflare Worker secrets/vars:
  *   GOOGLE_CLIENT_ID
@@ -16,10 +19,6 @@
  *   FIREBASE_WEB_API_KEY
  *   DRIVE_FOLDER_ID
  *   ALLOWED_ORIGINS
- *
- * Example:
- *   DRIVE_FOLDER_ID=1IY0r3Cak5WApJA2v4aoFeHx10VgS-FjPb1mmQ5l5XLsWqtopm6IyPXZh40TObiMJch7T1rtd
- *   ALLOWED_ORIGINS=https://your-domain.example,https://your-workers-domain.workers.dev
  */
 
 function json(data, status = 200, origin = '') {
@@ -62,9 +61,7 @@ async function verifyFirebaseUser(idToken, env) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                idToken,
-            }),
+            body: JSON.stringify({ idToken }),
         }
     );
 
@@ -81,6 +78,12 @@ async function verifyFirebaseUser(idToken, env) {
         email: user.email || '',
         displayName: user.displayName || '',
     };
+}
+
+function getBearerToken(request) {
+    const authorization = request.headers.get('Authorization') || '';
+    const match = authorization.match(/^Bearer\s+(.+)$/i);
+    return match ? match[1] : '';
 }
 
 async function getGoogleAccessToken(env) {
@@ -118,11 +121,57 @@ function safeFileName(name) {
         .slice(0, 220);
 }
 
-async function createDriveUploadSession(request, env, origin) {
-    const authorization = request.headers.get('Authorization') || '';
-    const match = authorization.match(/^Bearer\s+(.+)$/i);
+function isAllowedDriveUploadUrl(value) {
+    try {
+        const url = new URL(value);
 
-    if (!match) {
+        return (
+            url.protocol === 'https:' &&
+            url.hostname === 'www.googleapis.com' &&
+            url.pathname === '/upload/drive/v3/files' &&
+            url.searchParams.get('uploadType') === 'resumable' &&
+            Boolean(url.searchParams.get('upload_id'))
+        );
+    } catch (_) {
+        return false;
+    }
+}
+
+function parseContentRange(value) {
+    const match = String(value || '').match(
+        /^bytes\s+(\d+)-(\d+)\/(\d+)$/i
+    );
+
+    if (!match) return null;
+
+    const start = Number(match[1]);
+    const end = Number(match[2]);
+    const total = Number(match[3]);
+
+    if (
+        !Number.isSafeInteger(start) ||
+        !Number.isSafeInteger(end) ||
+        !Number.isSafeInteger(total) ||
+        start < 0 ||
+        end < start ||
+        total <= 0 ||
+        end >= total
+    ) {
+        return null;
+    }
+
+    return {
+        start,
+        end,
+        total,
+        length: end - start + 1,
+    };
+}
+
+async function createDriveUploadSession(request, env, origin) {
+    const idToken = getBearerToken(request);
+
+    if (!idToken) {
         return json({ error: 'Missing Authorization token.' }, 401, origin);
     }
 
@@ -133,14 +182,16 @@ async function createDriveUploadSession(request, env, origin) {
     }
 
     const fileName = safeFileName(body.fileName);
-    const mimeType = String(body.mimeType || 'application/octet-stream');
+    const mimeType = String(
+        body.mimeType || 'application/octet-stream'
+    );
     const size = Number(body.size);
 
     if (!fileName || !Number.isFinite(size) || size <= 0) {
         return json({ error: 'Invalid file metadata.' }, 400, origin);
     }
 
-    const user = await verifyFirebaseUser(match[1], env);
+    const user = await verifyFirebaseUser(idToken, env);
     const accessToken = await getGoogleAccessToken(env);
 
     const metadata = {
@@ -187,9 +238,12 @@ async function createDriveUploadSession(request, env, origin) {
 
     const uploadUrl = driveResponse.headers.get('Location');
 
-    if (!uploadUrl) {
+    if (!uploadUrl || !isAllowedDriveUploadUrl(uploadUrl)) {
         return json(
-            { error: 'Google Drive did not return a resumable upload URL.' },
+            {
+                error:
+                    'Google Drive did not return a valid resumable upload URL.',
+            },
             502,
             origin
         );
@@ -199,6 +253,110 @@ async function createDriveUploadSession(request, env, origin) {
         {
             uploadUrl,
             fileName,
+        },
+        200,
+        origin
+    );
+}
+
+async function uploadDriveChunk(request, env, origin) {
+    const idToken = getBearerToken(request);
+
+    if (!idToken) {
+        return json({ error: 'Missing Authorization token.' }, 401, origin);
+    }
+
+    // Require a valid signed-in Firebase user for every chunk.
+    await verifyFirebaseUser(idToken, env);
+
+    const uploadUrl = request.headers.get('X-Upload-Url') || '';
+
+    if (!isAllowedDriveUploadUrl(uploadUrl)) {
+        return json({ error: 'Invalid Drive upload URL.' }, 400, origin);
+    }
+
+    const contentRange = request.headers.get('Content-Range') || '';
+    const range = parseContentRange(contentRange);
+
+    if (!range) {
+        return json({ error: 'Invalid Content-Range.' }, 400, origin);
+    }
+
+    // Frontend currently uses 8 MiB chunks. Keep some headroom but reject
+    // unexpectedly large requests so this endpoint cannot be abused.
+    const MAX_CHUNK_BYTES = 12 * 1024 * 1024;
+
+    if (range.length > MAX_CHUNK_BYTES) {
+        return json({ error: 'Chunk is too large.' }, 413, origin);
+    }
+
+    const bytes = await request.arrayBuffer();
+
+    if (bytes.byteLength !== range.length) {
+        return json(
+            {
+                error:
+                    `Chunk size mismatch: expected ${range.length}, received ${bytes.byteLength}.`,
+            },
+            400,
+            origin
+        );
+    }
+
+    const mimeType =
+        request.headers.get('Content-Type') ||
+        'application/octet-stream';
+
+    const driveResponse = await fetch(uploadUrl, {
+        method: 'PUT',
+        redirect: 'manual',
+        headers: {
+            'Content-Type': mimeType,
+            'Content-Length': String(bytes.byteLength),
+            'Content-Range': contentRange,
+        },
+        body: bytes,
+    });
+
+    // 308 = chunk accepted, upload not finished yet.
+    if (driveResponse.status === 308) {
+        return json(
+            {
+                complete: false,
+                receivedRange:
+                    driveResponse.headers.get('Range') || '',
+            },
+            200,
+            origin
+        );
+    }
+
+    const driveData = await driveResponse
+        .clone()
+        .json()
+        .catch(() => ({}));
+
+    if (!driveResponse.ok) {
+        return json(
+            {
+                error:
+                    driveData?.error?.message ||
+                    driveData?.error ||
+                    `Google Drive chunk upload failed (${driveResponse.status}).`,
+            },
+            502,
+            origin
+        );
+    }
+
+    return json(
+        {
+            complete: true,
+            file: {
+                id: driveData.id || null,
+                name: driveData.name || null,
+                webViewLink: driveData.webViewLink || null,
+            },
         },
         200,
         origin
@@ -220,7 +378,8 @@ export default {
                 headers: {
                     'Access-Control-Allow-Origin': origin,
                     'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                    'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+                    'Access-Control-Allow-Headers':
+                        'Authorization, Content-Type, Content-Range, X-Upload-Url',
                     'Access-Control-Max-Age': '86400',
                     'Vary': 'Origin',
                 },
@@ -237,7 +396,11 @@ export default {
 
         if (request.method === 'POST' && url.pathname === '/upload-session') {
             try {
-                return await createDriveUploadSession(request, env, origin);
+                return await createDriveUploadSession(
+                    request,
+                    env,
+                    origin
+                );
             } catch (error) {
                 console.error(error);
 
@@ -246,6 +409,28 @@ export default {
                         error:
                             error?.message ||
                             'Unexpected upload-session error.',
+                    },
+                    500,
+                    origin
+                );
+            }
+        }
+
+        if (request.method === 'POST' && url.pathname === '/upload-chunk') {
+            try {
+                return await uploadDriveChunk(
+                    request,
+                    env,
+                    origin
+                );
+            } catch (error) {
+                console.error(error);
+
+                return json(
+                    {
+                        error:
+                            error?.message ||
+                            'Unexpected upload-chunk error.',
                     },
                     500,
                     origin

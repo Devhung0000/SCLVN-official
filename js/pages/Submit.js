@@ -614,8 +614,18 @@ export default {
                 throw new Error('Phiên đăng nhập đã hết. Vui lòng đăng nhập lại.');
             }
 
+            const chunkEndpoint = endpoint.replace(
+                /\/upload-session\/?$/,
+                '/upload-chunk'
+            );
+
+            // Google Drive requires resumable chunks to be multiples of 256 KiB
+            // (except the last chunk). 8 MiB = 32 * 256 KiB.
+            const CHUNK_SIZE = 8 * 1024 * 1024;
+
             this.rawFootageUploading = true;
-            this.rawFootageProgressText = 'Creating secure Google Drive upload session...';
+            this.rawFootageProgressText =
+                'Creating secure Google Drive upload session...';
 
             try {
                 const idToken = await getIdToken(auth.currentUser, true);
@@ -633,7 +643,9 @@ export default {
                     }),
                 });
 
-                const sessionData = await sessionResponse.json().catch(() => ({}));
+                const sessionData = await sessionResponse
+                    .json()
+                    .catch(() => ({}));
 
                 if (!sessionResponse.ok || !sessionData.uploadUrl) {
                     throw new Error(
@@ -642,36 +654,71 @@ export default {
                     );
                 }
 
-                this.rawFootageProgressText = `Uploading ${formatBytes(file.size)} to Google Drive...`;
+                let uploadedFile = null;
 
-                const uploadResponse = await fetch(sessionData.uploadUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': file.type || 'application/octet-stream',
-                    },
-                    body: file,
-                });
+                for (let start = 0; start < file.size; start += CHUNK_SIZE) {
+                    const end = Math.min(start + CHUNK_SIZE, file.size);
+                    const chunk = file.slice(start, end);
+                    const percentBefore = Math.floor((start / file.size) * 100);
 
-                const uploaded = await uploadResponse.json().catch(() => ({}));
+                    this.rawFootageProgressText =
+                        `Uploading ${formatBytes(file.size)} to Google Drive... ` +
+                        `${percentBefore}%`;
 
-                if (!uploadResponse.ok) {
+                    // Get a current Firebase token for every chunk so very large
+                    // uploads keep working even if the original token ages.
+                    const chunkIdToken = await getIdToken(auth.currentUser);
+
+                    const chunkResponse = await fetch(chunkEndpoint, {
+                        method: 'POST',
+                        headers: {
+                            Authorization: `Bearer ${chunkIdToken}`,
+                            'Content-Type':
+                                file.type || 'application/octet-stream',
+                            'Content-Range':
+                                `bytes ${start}-${end - 1}/${file.size}`,
+                            'X-Upload-Url': sessionData.uploadUrl,
+                        },
+                        body: chunk,
+                    });
+
+                    const chunkData = await chunkResponse
+                        .json()
+                        .catch(() => ({}));
+
+                    if (!chunkResponse.ok) {
+                        throw new Error(
+                            chunkData.error ||
+                            `Raw Footage chunk upload failed (${chunkResponse.status}).`
+                        );
+                    }
+
+                    const percentAfter = Math.floor((end / file.size) * 100);
+
+                    this.rawFootageProgressText =
+                        `Uploading ${formatBytes(file.size)} to Google Drive... ` +
+                        `${percentAfter}%`;
+
+                    if (chunkData.complete) {
+                        uploadedFile = chunkData.file || null;
+                    }
+                }
+
+                if (!uploadedFile?.id) {
                     throw new Error(
-                        uploaded.error?.message ||
-                        uploaded.error ||
-                        `Google Drive upload failed (${uploadResponse.status}).`
+                        'Google Drive did not confirm the completed upload.'
                     );
                 }
 
-                this.rawFootageProgressText = 'Raw footage uploaded successfully.';
+                this.rawFootageProgressText =
+                    'Raw footage uploaded successfully.';
 
                 return {
-                    driveFileId: uploaded.id || null,
+                    driveFileId: uploadedFile.id,
                     link:
-                        uploaded.webViewLink ||
-                        (uploaded.id
-                            ? `https://drive.google.com/file/d/${uploaded.id}/view`
-                            : ''),
-                    name: file.name,
+                        uploadedFile.webViewLink ||
+                        `https://drive.google.com/file/d/${uploadedFile.id}/view`,
+                    name: uploadedFile.name || file.name,
                     size: file.size,
                     mimeType: file.type || 'application/octet-stream',
                 };
