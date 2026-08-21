@@ -425,8 +425,8 @@ export default {
                                 </p>
                             </section>
 
-                            <div class="admin-record-meta">
-                                <p v-if="sub.note">
+                            <div class="admin-record-meta admin-record-meta-inline">
+                                <p v-if="sub.note" class="admin-meta-note">
                                     <strong>Note</strong>
                                     <span>{{ sub.note }}</span>
                                 </p>

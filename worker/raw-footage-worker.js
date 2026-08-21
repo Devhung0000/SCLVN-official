@@ -1,18 +1,10 @@
 /**
- * SCLVN Raw Footage Worker
+ * SCLVN Raw Footage Worker — CORS preflight fix
  *
- * This version intentionally DOES NOT upload browser -> Google Drive directly,
- * because Google Drive's resumable upload URL does not provide the CORS headers
- * required by browsers for the final PUT.
- *
- * Flow:
  * Browser -> Worker /upload-session -> Google Drive creates resumable session
- * Browser -> Worker /upload-chunk   -> Worker forwards each small chunk to Drive
+ * Browser -> Worker /upload-chunk   -> Worker forwards chunks to Drive
  *
- * Large files are split client-side into 8 MiB chunks, avoiding one huge
- * browser -> Worker request.
- *
- * Required Cloudflare Worker secrets/vars:
+ * Required vars/secrets:
  *   GOOGLE_CLIENT_ID
  *   GOOGLE_CLIENT_SECRET
  *   GOOGLE_REFRESH_TOKEN
@@ -21,6 +13,27 @@
  *   ALLOWED_ORIGINS
  */
 
+function corsHeaders(origin, request = null) {
+    const headers = {
+        'Access-Control-Allow-Origin': origin,
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Max-Age': '86400',
+        'Vary': 'Origin',
+    };
+
+    // Firefox/Chromium may vary the exact Access-Control-Request-Headers set.
+    // Echo the browser-requested header names for an already-whitelisted origin.
+    const requestedHeaders = request?.headers?.get(
+        'Access-Control-Request-Headers'
+    );
+
+    headers['Access-Control-Allow-Headers'] =
+        requestedHeaders ||
+        'Authorization, Content-Type, Content-Range, X-Upload-Url';
+
+    return headers;
+}
+
 function json(data, status = 200, origin = '') {
     const headers = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -28,8 +41,7 @@ function json(data, status = 200, origin = '') {
     };
 
     if (origin) {
-        headers['Access-Control-Allow-Origin'] = origin;
-        headers['Vary'] = 'Origin';
+        Object.assign(headers, corsHeaders(origin));
     }
 
     return new Response(JSON.stringify(data), {
@@ -266,7 +278,6 @@ async function uploadDriveChunk(request, env, origin) {
         return json({ error: 'Missing Authorization token.' }, 401, origin);
     }
 
-    // Require a valid signed-in Firebase user for every chunk.
     await verifyFirebaseUser(idToken, env);
 
     const uploadUrl = request.headers.get('X-Upload-Url') || '';
@@ -282,8 +293,6 @@ async function uploadDriveChunk(request, env, origin) {
         return json({ error: 'Invalid Content-Range.' }, 400, origin);
     }
 
-    // Frontend currently uses 8 MiB chunks. Keep some headroom but reject
-    // unexpectedly large requests so this endpoint cannot be abused.
     const MAX_CHUNK_BYTES = 12 * 1024 * 1024;
 
     if (range.length > MAX_CHUNK_BYTES) {
@@ -318,7 +327,6 @@ async function uploadDriveChunk(request, env, origin) {
         body: bytes,
     });
 
-    // 308 = chunk accepted, upload not finished yet.
     if (driveResponse.status === 308) {
         return json(
             {
@@ -370,19 +378,17 @@ export default {
 
         if (request.method === 'OPTIONS') {
             if (!origin) {
-                return new Response(null, { status: 403 });
+                return new Response(null, {
+                    status: 403,
+                    headers: {
+                        'Cache-Control': 'no-store',
+                    },
+                });
             }
 
             return new Response(null, {
                 status: 204,
-                headers: {
-                    'Access-Control-Allow-Origin': origin,
-                    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                    'Access-Control-Allow-Headers':
-                        'Authorization, Content-Type, Content-Range, X-Upload-Url',
-                    'Access-Control-Max-Age': '86400',
-                    'Vary': 'Origin',
-                },
+                headers: corsHeaders(origin, request),
             });
         }
 

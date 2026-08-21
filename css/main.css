@@ -3739,3 +3739,81 @@ input[type="radio"] {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* =========================================================
+   ADMIN META — INLINE OUTPUT STYLE
+   Example:
+   Note: test
+   Submitted by: finaliteration
+   Submitted at: 21 Aug 2026, 18:53
+   ========================================================= */
+
+.admin-record-meta.admin-record-meta-inline,
+.admin-history-meta.admin-record-meta-inline {
+    margin-top: 14px !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 7px !important;
+
+    min-height: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.admin-record-meta.admin-record-meta-inline p,
+.admin-history-meta.admin-record-meta-inline p {
+    width: 100% !important;
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: block !important;
+
+    color: #c9c9ce !important;
+    font-size: 10px !important;
+    line-height: 1.65 !important;
+
+    white-space: normal !important;
+}
+
+.admin-record-meta.admin-record-meta-inline strong,
+.admin-history-meta.admin-record-meta-inline strong {
+    display: inline !important;
+
+    margin: 0 6px 0 0 !important;
+
+    color: #a2a2ac !important;
+    font-weight: 700 !important;
+}
+
+.admin-record-meta.admin-record-meta-inline span,
+.admin-history-meta.admin-record-meta-inline span {
+    display: inline !important;
+
+    color: #e1e1e5 !important;
+    overflow-wrap: anywhere !important;
+}
+
+
+/* ADMIN META V2 — no colons; Note is emphasized */
+.admin-record-meta.admin-record-meta-inline strong,
+.admin-history-meta.admin-record-meta-inline strong {
+    margin-right: 7px !important;
+}
+
+.admin-record-meta.admin-record-meta-inline .admin-meta-note strong {
+    color: #f2f2f5 !important;
+    font-weight: 800 !important;
+}
+
+.admin-record-meta.admin-record-meta-inline .admin-meta-note span {
+    color: #e3e3e7 !important;
+}
