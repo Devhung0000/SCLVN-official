@@ -2956,3 +2956,357 @@ input[type="radio"] {
         padding: 26px 22px;
     }
 }
+
+
+/* =========================================================
+   SUBMIT CUSTOM LEVEL DROPDOWN — CROSS-BROWSER FIX
+   Replaces the native <select> popup so Brave/Chrome/Firefox
+   all render the same compact dark dropdown.
+   ========================================================= */
+
+.submit-level-field {
+    position: relative;
+    z-index: 20;
+}
+
+.submit-level-trigger {
+    width: 100%;
+    min-height: 42px;
+
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    border: 1px solid rgba(255,255,255,.085);
+    border-radius: 10px;
+    outline: none;
+
+    background: rgba(255,255,255,.035);
+    color: #f1f1f3;
+
+    font: inherit;
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+}
+
+.submit-level-trigger:hover {
+    background: rgba(255,255,255,.052);
+    border-color: rgba(255,255,255,.13);
+}
+
+.submit-level-trigger.is-open {
+    border-color: rgba(255,255,255,.22);
+    background: rgba(255,255,255,.055);
+
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.025),
+        0 0 15px rgba(255,255,255,.028);
+}
+
+.submit-level-trigger-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.submit-level-trigger-text.is-placeholder {
+    color: #696972;
+}
+
+.submit-level-chevron {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+
+    fill: none;
+    stroke: #81818a;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    transition:
+        transform .22s cubic-bezier(.22,1,.36,1),
+        stroke .2s ease;
+}
+
+.submit-level-trigger:hover .submit-level-chevron,
+.submit-level-trigger.is-open .submit-level-chevron {
+    stroke: #d4d4d8;
+}
+
+.submit-level-chevron.is-open {
+    transform: rotate(180deg);
+}
+
+.submit-level-dropdown {
+    position: absolute;
+
+    z-index: 500;
+
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+
+    padding: 8px;
+
+    overflow: hidden;
+
+    border-radius: 13px;
+    border: 1px solid rgba(255,255,255,.11);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.015)
+        ),
+        rgba(12,12,16,.96);
+
+    backdrop-filter:
+        blur(22px)
+        saturate(155%);
+
+    -webkit-backdrop-filter:
+        blur(22px)
+        saturate(155%);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.045),
+        0 18px 42px rgba(0,0,0,.42),
+        0 0 18px rgba(255,255,255,.025);
+
+    transform-origin: top center;
+
+    animation:
+        submit-dropdown-open .18s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes submit-dropdown-open {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.submit-level-search {
+    position: relative;
+
+    margin-bottom: 7px;
+}
+
+.submit-level-search svg {
+    position: absolute;
+
+    top: 50%;
+    left: 11px;
+
+    width: 15px;
+    height: 15px;
+
+    transform: translateY(-50%);
+
+    fill: none;
+    stroke: #73737d;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    pointer-events: none;
+}
+
+.submit-level-search input {
+    width: 100%;
+
+    padding:
+        9px
+        11px
+        9px
+        34px !important;
+
+    border:
+        1px solid rgba(255,255,255,.075) !important;
+
+    border-radius:
+        9px !important;
+
+    outline:
+        none !important;
+
+    background:
+        rgba(255,255,255,.035) !important;
+
+    color:
+        #ececef !important;
+
+    font-size:
+        10px !important;
+
+    box-shadow:
+        none !important;
+}
+
+.submit-level-search input:focus {
+    border-color:
+        rgba(255,255,255,.17) !important;
+
+    background:
+        rgba(255,255,255,.052) !important;
+
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.02) !important;
+
+    transform:
+        none !important;
+}
+
+.submit-level-options {
+    max-height: 260px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    overscroll-behavior: contain;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    padding-right: 2px;
+}
+
+.submit-level-options::-webkit-scrollbar {
+    width: 4px;
+}
+
+.submit-level-options::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.submit-level-options::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(255,255,255,.18);
+}
+
+.submit-level-option {
+    width: 100%;
+    min-height: 37px;
+
+    padding: 7px 9px;
+
+    display: grid;
+    grid-template-columns: 38px minmax(0,1fr) 18px;
+    align-items: center;
+    gap: 7px;
+
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    background: transparent;
+    color: #d7d7dc;
+
+    font: inherit;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition:
+        background .16s ease,
+        border-color .16s ease,
+        transform .16s ease,
+        color .16s ease;
+}
+
+.submit-level-option:hover {
+    background: rgba(255,255,255,.065);
+    border-color: rgba(255,255,255,.055);
+    color: #fff;
+    transform: translateX(2px);
+}
+
+.submit-level-option.is-selected {
+    background: rgba(255,255,255,.085);
+    border-color: rgba(255,255,255,.10);
+    color: #fff;
+}
+
+.submit-level-option-rank {
+    color: #777781;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 9px;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+.submit-level-option-name {
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.submit-level-option-check {
+    width: 14px;
+    height: 14px;
+
+    justify-self: end;
+
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.submit-level-empty {
+    padding: 22px 10px;
+
+    color: #6f6f78;
+
+    font-size: 10px;
+    text-align: center;
+}
+
+@media (max-width: 720px) {
+    .submit-level-dropdown {
+        position: fixed;
+
+        top: calc(var(--topbar-height) + 70px);
+        left: 14px;
+        right: 14px;
+
+        width: auto;
+    }
+
+    .submit-level-options {
+        max-height: min(55vh, 360px);
+    }
+}

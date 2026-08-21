@@ -10,6 +10,8 @@ export default {
         loading: true,
         levels: [],
         levelId: '',
+        levelSearch: '',
+        levelDropdownOpen: false,
         playerName: '',
         percent: 100,
         hz: '',
@@ -86,19 +88,92 @@ export default {
                     </div>
 
                     <div class="submit-form-grid">
-                        <label class="submit-field submit-field-full">
+                        <div
+                            class="submit-field submit-field-full submit-level-field"
+                            @click.stop
+                        >
                             <span>Level</span>
-                            <select v-model="levelId">
-                                <option value="" disabled>Select a level</option>
-                                <option
-                                    v-for="lvl in levels"
-                                    :key="lvl.id"
-                                    :value="lvl.id"
+
+                            <button
+                                class="submit-level-trigger"
+                                type="button"
+                                :class="{ 'is-open': levelDropdownOpen }"
+                                @click="toggleLevelDropdown"
+                            >
+                                <span
+                                    :class="[
+                                        'submit-level-trigger-text',
+                                        { 'is-placeholder': !selectedLevel }
+                                    ]"
                                 >
-                                    {{ lvl.name }}
-                                </option>
-                            </select>
-                        </label>
+                                    {{ selectedLevel ? selectedLevel.name : 'Select a level' }}
+                                </span>
+
+                                <svg
+                                    class="submit-level-chevron"
+                                    :class="{ 'is-open': levelDropdownOpen }"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <path d="m7 10 5 5 5-5"></path>
+                                </svg>
+                            </button>
+
+                            <div
+                                v-if="levelDropdownOpen"
+                                class="submit-level-dropdown"
+                            >
+                                <div class="submit-level-search">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <circle cx="11" cy="11" r="6"></circle>
+                                        <path d="m16 16 4 4"></path>
+                                    </svg>
+
+                                    <input
+                                        v-model="levelSearch"
+                                        type="search"
+                                        autocomplete="off"
+                                        placeholder="Search levels..."
+                                        @keydown.esc="closeLevelDropdown"
+                                    >
+                                </div>
+
+                                <div class="submit-level-options">
+                                    <button
+                                        v-for="(lvl, index) in filteredLevels"
+                                        :key="lvl.id"
+                                        class="submit-level-option"
+                                        :class="{ 'is-selected': lvl.id === levelId }"
+                                        type="button"
+                                        @click="selectLevel(lvl)"
+                                    >
+                                        <span class="submit-level-option-rank">
+                                            #{{ index + 1 }}
+                                        </span>
+
+                                        <span class="submit-level-option-name">
+                                            {{ lvl.name }}
+                                        </span>
+
+                                        <svg
+                                            v-if="lvl.id === levelId"
+                                            class="submit-level-option-check"
+                                            viewBox="0 0 24 24"
+                                            aria-hidden="true"
+                                        >
+                                            <path d="m5 12 4 4L19 6"></path>
+                                        </svg>
+                                    </button>
+
+                                    <div
+                                        v-if="filteredLevels.length === 0"
+                                        class="submit-level-empty"
+                                    >
+                                        No levels found.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <label class="submit-field">
                             <span>Player name</span>
@@ -180,6 +255,24 @@ export default {
         </main>
     `,
 
+    computed: {
+        selectedLevel() {
+            return this.levels.find(level => level.id === this.levelId) || null;
+        },
+
+        filteredLevels() {
+            const query = this.levelSearch.trim().toLowerCase();
+
+            if (!query) {
+                return this.levels;
+            }
+
+            return this.levels.filter(level =>
+                level.name.toLowerCase().includes(query)
+            );
+        },
+    },
+
     async mounted() {
         const list = await fetchList();
 
@@ -198,12 +291,46 @@ export default {
         }
 
         this.loading = false;
+
+        document.addEventListener('click', this.handleOutsideClick);
+    },
+
+    beforeUnmount() {
+        document.removeEventListener('click', this.handleOutsideClick);
     },
 
     methods: {
+        toggleLevelDropdown() {
+            this.levelDropdownOpen = !this.levelDropdownOpen;
+
+            if (!this.levelDropdownOpen) {
+                this.levelSearch = '';
+            }
+        },
+
+        closeLevelDropdown() {
+            this.levelDropdownOpen = false;
+            this.levelSearch = '';
+        },
+
+        selectLevel(level) {
+            this.levelId = level.id;
+            this.closeLevelDropdown();
+        },
+
+        handleOutsideClick(event) {
+            const dropdown = this.$el?.querySelector('.submit-level-field');
+
+            if (dropdown && !dropdown.contains(event.target)) {
+                this.closeLevelDropdown();
+            }
+        },
+
         resetForm() {
             this.success = false;
             this.levelId = '';
+            this.levelSearch = '';
+            this.levelDropdownOpen = false;
             this.percent = 100;
             this.hz = '';
             this.mobile = false;
