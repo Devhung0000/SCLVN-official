@@ -1453,3 +1453,78 @@
         grid-template-columns: 180px minmax(0, 1fr) !important;
     }
 }
+
+
+/* =========================================================
+   V11 — COPY LEVEL ID
+   ========================================================= */
+
+.copy-level-id {
+    transition:
+        transform .16s ease,
+        border-color .16s ease,
+        background .16s ease,
+        box-shadow .16s ease !important;
+}
+
+.copy-level-id:hover {
+    transform: translateY(-1px) scale(1.03);
+
+    border-color:
+        rgba(255,255,255,.20) !important;
+
+    background:
+        rgba(255,255,255,.075) !important;
+
+    box-shadow:
+        0 0 14px rgba(255,255,255,.06) !important;
+}
+
+.copy-level-id:active {
+    transform: scale(.96);
+}
+
+.level-copy-toast {
+    position: fixed;
+    z-index: 6000;
+
+    left: 50%;
+    bottom: 26px;
+
+    transform: translateX(-50%);
+
+    padding: 9px 13px;
+
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+
+    background:
+        rgba(20,20,24,.86);
+
+    color: #f0f0f2;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.05),
+        0 12px 30px rgba(0,0,0,.35);
+
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+.copy-toast-fade-enter-active,
+.copy-toast-fade-leave-active {
+    transition:
+        opacity .16s ease,
+        transform .16s ease;
+}
+
+.copy-toast-fade-enter-from,
+.copy-toast-fade-leave-to {
+    opacity: 0;
+    transform:
+        translateX(-50%)
+        translateY(5px);
+}

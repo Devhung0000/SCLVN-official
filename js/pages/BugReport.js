@@ -1,4 +1,5 @@
 import { store } from '../main.js';
+import SclvnSelect from '../components/SclvnSelect.js';
 import {
     auth,
     db,
@@ -40,6 +41,8 @@ function isValidEmail(value) {
 }
 
 export default {
+    components: { SclvnSelect },
+
     template: `
         <main class="page-bug-report">
             <div class="bug-report-shell">
@@ -97,7 +100,7 @@ export default {
                 >
                     <section class="bug-report-section">
                         <div class="bug-report-section-heading">
-                            <span>01</span>
+                            <span>#1</span>
                             <div>
                                 <h2>Reporter Information</h2>
                                 <p>How the SCLVN team can identify and contact you.</p>
@@ -141,7 +144,7 @@ export default {
 
                     <section class="bug-report-section">
                         <div class="bug-report-section-heading">
-                            <span>02</span>
+                            <span>#2</span>
                             <div>
                                 <h2>Issue Details</h2>
                                 <p>Give us enough information to reproduce the bug.</p>
@@ -165,12 +168,11 @@ export default {
                                     <small>optional</small>
                                 </span>
 
-                                <select v-model="frequency">
-                                    <option value="">Select frequency</option>
-                                    <option value="always">Always (100%)</option>
-                                    <option value="sometimes">Sometimes (50%)</option>
-                                    <option value="rarely">Rarely (below 25%)</option>
-                                </select>
+                                <SclvnSelect
+                                    v-model="frequency"
+                                    :options="frequencyOptions"
+                                    placeholder="Select frequency"
+                                ></SclvnSelect>
                             </label>
 
                             <label class="bug-field">
@@ -187,7 +189,7 @@ export default {
 
                     <section class="bug-report-section">
                         <div class="bug-report-section-heading">
-                            <span>03</span>
+                            <span>#3</span>
                             <div>
                                 <h2>Environment</h2>
                                 <p>Tell us which device and operating system are affected.</p>
@@ -198,13 +200,11 @@ export default {
                             <label class="bug-field">
                                 <span>Device Type</span>
 
-                                <select v-model="deviceType" required>
-                                    <option value="" disabled>Select a device</option>
-                                    <option value="desktop-laptop">Desktop / Laptop</option>
-                                    <option value="mobile-phone">Mobile Phone</option>
-                                    <option value="tablet">Tablet</option>
-                                    <option value="other">Other</option>
-                                </select>
+                                <SclvnSelect
+                                    v-model="deviceType"
+                                    :options="deviceOptions"
+                                    placeholder="Select a device"
+                                ></SclvnSelect>
                             </label>
 
                             <label
@@ -223,15 +223,13 @@ export default {
                             <label class="bug-field">
                                 <span>Operating System</span>
 
-                                <select v-model="operatingSystem" required>
-                                    <option value="" disabled>Select an operating system</option>
-                                    <option value="windows">Windows</option>
-                                    <option value="linux">Linux</option>
-                                    <option value="macos">macOS</option>
-                                    <option value="ios-ipados">iOS / iPadOS</option>
-                                    <option value="android">Android</option>
-                                    <option value="other">Other</option>
-                                </select>
+                                <SclvnSelect
+                                    v-model="operatingSystem"
+                                    :options="osOptions"
+                                    placeholder="Select an operating system"
+                                    searchable
+                                    search-placeholder="Search operating systems..."
+                                ></SclvnSelect>
                             </label>
 
                             <label
@@ -251,7 +249,7 @@ export default {
 
                     <section class="bug-report-section">
                         <div class="bug-report-section-heading">
-                            <span>04</span>
+                            <span>#4</span>
                             <div>
                                 <h2>Evidence</h2>
                                 <p>Screenshots or videos make bugs much easier to reproduce.</p>
@@ -396,6 +394,28 @@ export default {
         error: '',
 
         store,
+
+        frequencyOptions: [
+            { value: 'always', label: 'Always (100%)' },
+            { value: 'sometimes', label: 'Sometimes (50%)' },
+            { value: 'rarely', label: 'Rarely (below 25%)' },
+        ],
+
+        deviceOptions: [
+            { value: 'desktop-laptop', label: 'Desktop / Laptop' },
+            { value: 'mobile-phone', label: 'Mobile Phone' },
+            { value: 'tablet', label: 'Tablet' },
+            { value: 'other', label: 'Other' },
+        ],
+
+        osOptions: [
+            { value: 'windows', label: 'Windows' },
+            { value: 'linux', label: 'Linux' },
+            { value: 'macos', label: 'macOS' },
+            { value: 'ios-ipados', label: 'iOS / iPadOS' },
+            { value: 'android', label: 'Android' },
+            { value: 'other', label: 'Other' },
+        ],
     }),
 
     watch: {

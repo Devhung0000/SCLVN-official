@@ -55,7 +55,14 @@ export async function fetchList() {
                     return [
                         {
                             ...level,
+                            id: level.id ?? levelId,
                             path: levelId,
+                            fps: level.fps ?? '',
+                            verification:
+                                level.verification ??
+                                level.video ??
+                                level.showcase ??
+                                '',
                             records: (level.records || [])
                                 .slice()
                                 .sort((a, b) => b.percent - a.percent),

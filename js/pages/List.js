@@ -290,15 +290,6 @@ export default {
 
                     <div class="og">
                         <p class="type-label-md">
-                            Website layout and UI made by
-                            <a
-                                href="https://therakelist.pages.dev/"
-                                style="text-decoration: underline;"
-                                target="_blank"
-                            >
-                                SCL[gwa]
-                            </a>.
-                            <br>
                             The Official Spam Challenge List in Vietnam!
                         </p>
                     </div>
@@ -337,6 +328,15 @@ export default {
                     </template>
                 </div>
             </div>
+
+            <transition name="copy-toast-fade">
+                <div
+                    v-if="copyToast"
+                    class="level-copy-toast"
+                >
+                    {{ copyToast }}
+                </div>
+            </transition>
         </main>
     `,
 
@@ -462,8 +462,20 @@ export default {
 
             try {
                 await navigator.clipboard.writeText(String(id));
+
+                this.copyToast = 'ID Copied!';
+
+                if (this.copyToastTimer) {
+                    clearTimeout(this.copyToastTimer);
+                }
+
+                this.copyToastTimer = setTimeout(() => {
+                    this.copyToast = '';
+                    this.copyToastTimer = null;
+                }, 1600);
             } catch (err) {
                 console.error("Failed to copy Level ID:", err);
+                this.copyToast = 'Copy failed';
             }
         },
 

@@ -74,14 +74,42 @@ export default {
             return this.levels.find(level => level.id === this.levelId) || null;
         },
 
-        filteredLevels() {
-            const query = this.levelSearch.trim().toLowerCase();
+        eligibleLevels() {
+            const playerKey =
+                normalizePlayerName(this.playerName);
 
-            if (!query) {
+            if (!playerKey) {
                 return this.levels;
             }
 
-            return this.levels.filter(level =>
+            return this.levels.filter(level => {
+                if (
+                    normalizePlayerName(level.verifier) ===
+                    playerKey
+                ) {
+                    return false;
+                }
+
+                const isVictor = level.records.some(
+                    record =>
+                        normalizePlayerName(record.user) ===
+                            playerKey &&
+                        Number(record.percent) === 100
+                );
+
+                return !isVictor;
+            });
+        },
+
+        filteredLevels() {
+            const query =
+                this.levelSearch.trim().toLowerCase();
+
+            if (!query) {
+                return this.eligibleLevels;
+            }
+
+            return this.eligibleLevels.filter(level =>
                 level.name.toLowerCase().includes(query) ||
                 level.id.toLowerCase().includes(query)
             );
@@ -196,7 +224,7 @@ export default {
                             class="submit-field submit-field-full submit-level-field"
                             @click.stop
                         >
-                            <span>Level</span>
+                            <span>Level <small>victor levels are hidden automatically</small></span>
 
                             <button
                                 class="submit-level-trigger"

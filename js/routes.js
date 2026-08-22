@@ -8,6 +8,7 @@ import Submit from './pages/Submit.js';
 import Admin from './pages/Admin.js';
 import Profile from './pages/Profile.js';
 import BugReport from './pages/BugReport.js';
+import BugReports from './pages/BugReports.js';
 
 export default [
     { path: '/', component: List },
@@ -19,5 +20,6 @@ export default [
     { path: '/submit', component: Submit },
     { path: '/bug-report', component: BugReport },
     { path: '/admin', component: Admin },
+    { path: '/admin/bug-reports', component: BugReports },
     { path: '/profile', component: Profile },
 ];

@@ -1,5 +1,6 @@
 import { store } from '../main.js';
 import {
+    auth,
     db,
     collection,
     getDocs,
@@ -9,8 +10,10 @@ import {
     getDoc,
     runTransaction,
     serverTimestamp,
+    getIdToken,
 } from '../firebase-init.js';
 import Spinner from '../components/Spinner.js';
+import SclvnSelect from '../components/SclvnSelect.js';
 
 const METHOD_OPTIONS = [
     'Alternate',
@@ -19,8 +22,6 @@ const METHOD_OPTIONS = [
     'Button Mashing',
     'Rake',
     'Lip Spam',
-    "Butterfly",
-    "Scroll Clicking"
 ];
 
 const DEVICE_OPTIONS = [
@@ -45,7 +46,7 @@ function timestampToMillis(value) {
 }
 
 export default {
-    components: { Spinner },
+    components: { Spinner, SclvnSelect },
 
     data: () => ({
         loading: true,
@@ -105,6 +106,13 @@ export default {
                     </div>
 
                     <div class="admin-header-actions">
+                        <router-link
+                            class="admin-refresh-btn admin-nav-btn"
+                            to="/admin/bug-reports"
+                        >
+                            Bug Reports
+                        </router-link>
+
                         <span class="admin-count">
                             {{ pendingCount }} pending
                         </span>
@@ -285,6 +293,38 @@ export default {
                                         <input v-model.trim="sub._level.name" type="text">
                                     </label>
 
+
+                                    <label class="admin-field admin-field-full">
+                                        <span>Thumbnail</span>
+
+                                        <div class="admin-thumbnail-upload">
+                                            <div class="admin-thumbnail-preview">
+                                                <img
+                                                    v-if="sub._level.thumbnailPreview || sub._level.thumbnailUrl"
+                                                    :src="sub._level.thumbnailPreview || sub._level.thumbnailUrl"
+                                                    alt="Level thumbnail preview"
+                                                >
+
+                                                <div v-else>
+                                                    No thumbnail selected
+                                                </div>
+                                            </div>
+
+                                            <label class="admin-thumbnail-button">
+                                                Upload thumbnail
+                                                <input
+                                                    type="file"
+                                                    accept="image/png,image/jpeg,image/webp"
+                                                    @change="handleLevelThumbnail(sub, $event)"
+                                                >
+                                            </label>
+
+                                            <small v-if="sub._level.thumbnailFile">
+                                                {{ sub._level.thumbnailFile.name }}
+                                            </small>
+                                        </div>
+                                    </label>
+
                                     <label class="admin-field">
                                         <span>FPS</span>
                                         <input
@@ -297,26 +337,23 @@ export default {
                                     <label class="admin-field">
                                         <span>Handcam</span>
 
-                                        <select v-model="sub._level.handcam">
-                                            <option>Recommended</option>
-                                            <option>Necessary</option>
-                                        </select>
+                                        <SclvnSelect
+                                            v-model="sub._level.handcam"
+                                            :options="handcamPickerOptions"
+                                            placeholder="Select handcam"
+                                        ></SclvnSelect>
                                     </label>
 
                                     <label class="admin-field">
                                         <span>Method</span>
 
-                                        <select v-model="sub._level.methodChoice">
-                                            <option
-                                                v-for="method in methodOptions"
-                                                :key="method"
-                                                :value="method"
-                                            >
-                                                {{ method }}
-                                            </option>
-
-                                            <option value="Custom">Custom...</option>
-                                        </select>
+                                        <SclvnSelect
+                                            v-model="sub._level.methodChoice"
+                                            :options="methodPickerOptions"
+                                            placeholder="Select a method"
+                                            searchable
+                                            search-placeholder="Search methods..."
+                                        ></SclvnSelect>
                                     </label>
 
                                     <label
@@ -335,19 +372,13 @@ export default {
                                     <label class="admin-field">
                                         <span>Device</span>
 
-                                        <select v-model="sub._level.deviceChoice">
-                                            <option
-                                                v-for="device in deviceOptions"
-                                                :key="device"
-                                                :value="device"
-                                            >
-                                                {{ device }}
-                                            </option>
-
-                                            <option value="CPS Cap">
-                                                CPS Cap...
-                                            </option>
-                                        </select>
+                                        <SclvnSelect
+                                            v-model="sub._level.deviceChoice"
+                                            :options="devicePickerOptions"
+                                            placeholder="Select a device"
+                                            searchable
+                                            search-placeholder="Search devices..."
+                                        ></SclvnSelect>
                                     </label>
 
                                     <label
@@ -405,7 +436,7 @@ export default {
                                     </label>
 
                                     <label class="admin-field">
-                                        <span>List position</span>
+                                        <span>Rank</span>
 
                                         <input
                                             v-model.number="sub._level.listPosition"
@@ -707,6 +738,33 @@ export default {
         deviceOptions() {
             return DEVICE_OPTIONS;
         },
+
+        handcamPickerOptions() {
+            return [
+                { value: 'Recommended', label: 'Recommended' },
+                { value: 'Necessary', label: 'Necessary' },
+            ];
+        },
+
+        methodPickerOptions() {
+            return [
+                ...METHOD_OPTIONS.map(value => ({
+                    value,
+                    label: value,
+                })),
+                { value: 'Custom', label: 'Custom...' },
+            ];
+        },
+
+        devicePickerOptions() {
+            return [
+                ...DEVICE_OPTIONS.map(value => ({
+                    value,
+                    label: value,
+                })),
+                { value: 'CPS Cap', label: 'CPS Cap...' },
+            ];
+        },
     },
 
     methods: {
@@ -807,7 +865,24 @@ export default {
                         Number(sub.percentToQualify || 100),
 
                     listPosition:
-                        Number(sub.listPosition || this.listLength + 1),
+                        Number(
+                            sub.rank ||
+                            sub.listPosition ||
+                            this.listLength + 1
+                        ),
+
+                    thumbnailFile: null,
+                    thumbnailPreview:
+                        sub.thumbnail ||
+                        sub.thumbnailUrl ||
+                        '',
+                    thumbnailUrl:
+                        sub.thumbnail ||
+                        sub.thumbnailUrl ||
+                        '',
+                    thumbnailFileId:
+                        sub.thumbnailFileId ||
+                        '',
                 };
             }
 
@@ -926,6 +1001,187 @@ export default {
             }
         },
 
+        handleLevelThumbnail(sub, event) {
+            const [file] = event.target.files || [];
+
+            if (!file) {
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                this.pageError = 'Thumbnail phải là file ảnh.';
+                event.target.value = '';
+                return;
+            }
+
+            if (file.size > 8 * 1024 * 1024) {
+                this.pageError = 'Thumbnail phải nhỏ hơn 8 MB.';
+                event.target.value = '';
+                return;
+            }
+
+            if (sub._level.thumbnailPreview?.startsWith?.('blob:')) {
+                URL.revokeObjectURL(sub._level.thumbnailPreview);
+            }
+
+            sub._level.thumbnailFile = file;
+            sub._level.thumbnailPreview = URL.createObjectURL(file);
+            event.target.value = '';
+        },
+
+        getRawUploadEndpoint() {
+            return (
+                window.SCLVN_RAW_UPLOAD_ENDPOINT ||
+                window.SCLVN_CONFIG?.rawUploadEndpoint ||
+                ''
+            ).trim();
+        },
+
+        async uploadFileThroughWorker(file, prefix = 'LEVEL_THUMBNAIL') {
+            const endpoint = this.getRawUploadEndpoint();
+
+            if (!endpoint) {
+                throw new Error('Upload Worker chưa được cấu hình.');
+            }
+
+            if (!auth.currentUser) {
+                throw new Error('Phiên đăng nhập đã hết.');
+            }
+
+            const chunkEndpoint = endpoint.replace(
+                /\/upload-session\/?$/,
+                '/upload-chunk'
+            );
+
+            const CHUNK_SIZE = 8 * 1024 * 1024;
+            const idToken = await getIdToken(auth.currentUser, true);
+
+            const safeName = String(file.name || 'thumbnail')
+                .replace(/[\u0000-\u001F]/g, '')
+                .replace(/[\\/:*?"<>|]/g, '_')
+                .slice(0, 180);
+
+            const uploadName =
+                `${prefix}_${Date.now()}_${safeName}`;
+
+            const sessionResponse = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${idToken}`,
+                },
+                body: JSON.stringify({
+                    fileName: uploadName,
+                    mimeType:
+                        file.type ||
+                        'application/octet-stream',
+                    size: file.size,
+                    purpose: 'level-thumbnail',
+                }),
+            });
+
+            const sessionData = await sessionResponse
+                .json()
+                .catch(() => ({}));
+
+            if (!sessionResponse.ok || !sessionData.uploadUrl) {
+                throw new Error(
+                    sessionData.error ||
+                    `Không tạo được upload session (${sessionResponse.status}).`
+                );
+            }
+
+            let uploadedFile = null;
+
+            for (
+                let start = 0;
+                start < file.size;
+                start += CHUNK_SIZE
+            ) {
+                const end = Math.min(
+                    start + CHUNK_SIZE,
+                    file.size
+                );
+
+                const chunk = file.slice(start, end);
+                const chunkToken =
+                    await getIdToken(auth.currentUser);
+
+                const chunkResponse = await fetch(
+                    chunkEndpoint,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Authorization:
+                                `Bearer ${chunkToken}`,
+                            'Content-Type':
+                                file.type ||
+                                'application/octet-stream',
+                            'Content-Range':
+                                `bytes ${start}-${end - 1}/${file.size}`,
+                            'X-Upload-Url':
+                                sessionData.uploadUrl,
+                        },
+                        body: chunk,
+                    }
+                );
+
+                const chunkData = await chunkResponse
+                    .json()
+                    .catch(() => ({}));
+
+                if (!chunkResponse.ok) {
+                    throw new Error(
+                        chunkData.error ||
+                        `Thumbnail upload failed (${chunkResponse.status}).`
+                    );
+                }
+
+                if (chunkData.complete) {
+                    uploadedFile =
+                        chunkData.file ||
+                        null;
+                }
+            }
+
+            if (!uploadedFile?.id) {
+                throw new Error(
+                    'Google Drive không xác nhận thumbnail upload.'
+                );
+            }
+
+            return {
+                id: uploadedFile.id,
+                name:
+                    uploadedFile.name ||
+                    uploadName,
+
+                // Works when the Drive file/folder is viewable by the site.
+                displayUrl:
+                    `https://drive.google.com/thumbnail?id=${encodeURIComponent(uploadedFile.id)}&sz=w1200`,
+
+                viewUrl:
+                    uploadedFile.webViewLink ||
+                    `https://drive.google.com/file/d/${uploadedFile.id}/view`,
+            };
+        },
+
+        async uploadVerificationThumbnail(sub) {
+            const file = sub?._level?.thumbnailFile;
+
+            if (!file) {
+                return;
+            }
+
+            const result = await this.uploadFileThroughWorker(
+                file,
+                'LEVEL_THUMBNAIL'
+            );
+
+            sub._level.thumbnailFileId = result.id;
+            sub._level.thumbnailUrl = result.displayUrl;
+        },
+
         validateVerificationConfig(sub) {
             const config = sub._level;
 
@@ -991,23 +1247,59 @@ export default {
                 .map(value => value.trim())
                 .filter(Boolean);
 
-            return {
+            const levelId = config.id.trim();
+            const verification =
+                String(sub.link || sub.verification || '').trim();
+
+            const rank = Math.max(
+                1,
+                Math.floor(
+                    Number(config.listPosition) ||
+                    this.listLength + 1
+                )
+            );
+
+            const levelData = {
+                id: levelId,
                 name: config.name.trim(),
-                author: String(config.author || '').trim() || String(sub.playerName || '').trim(),
+
+                author:
+                    String(config.author || '').trim() ||
+                    String(sub.playerName || '').trim(),
+
                 creators,
 
-                verifier: String(sub.playerName || '').trim(),
-                verification: String(sub.link || '').trim(),
+                verifier:
+                    String(sub.playerName || '').trim(),
 
-                fps: String(config.fps || '').trim(),
+                verification,
+                showcase: verification,
+
+                fps:
+                    String(config.fps || sub.fps || sub.hz || '').trim(),
+
                 method,
                 handcam: config.handcam,
                 device,
 
-                percentToQualify: Number(config.percentToQualify),
+                rank,
+                percentToQualify:
+                    Number(config.percentToQualify),
+
                 records: [],
                 tags: [],
             };
+
+            if (config.thumbnailUrl) {
+                levelData.thumbnail = config.thumbnailUrl;
+            }
+
+            if (config.thumbnailFileId) {
+                levelData.thumbnailFileId =
+                    config.thumbnailFileId;
+            }
+
+            return levelData;
         },
 
         async approve(sub) {
@@ -1151,6 +1443,8 @@ export default {
 
         async approveVerification(sub) {
             this.validateVerificationConfig(sub);
+
+            await this.uploadVerificationThumbnail(sub);
 
             const levelData = this.buildLevelData(sub);
             const levelId = sub._level.id.trim();
