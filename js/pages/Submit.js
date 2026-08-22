@@ -11,6 +11,16 @@ import {
     getIdToken,
 } from '../firebase-init.js';
 import Spinner from '../components/Spinner.js';
+import SclvnSelect from '../components/SclvnSelect.js';
+
+const METHOD_OPTIONS = [
+    'Alternate',
+    'Alt-Jitter',
+    'Jitter',
+    'Button Mashing',
+    'Rake',
+    'Lip Spam',
+];
 
 const RAW_FOOTAGE_DRIVE_FOLDER =
     'https://drive.google.com/drive/folders/1IY0r3Cak5WApJA2v4aoFeHx10VgS-FjPb1mmQ5l5XLsWqtopm6IyPXZh40TObiMJch7T1rtd?usp=drive_link';
@@ -34,7 +44,7 @@ function formatBytes(bytes) {
 }
 
 export default {
-    components: { Spinner },
+    components: { Spinner, SclvnSelect },
 
     data: () => ({
         loading: true,
@@ -52,6 +62,8 @@ export default {
         playerName: '',
         percent: 100,
         hz: '',
+        methodChoice: '',
+        methodCustom: '',
         mobile: false,
 
         link: '',
@@ -67,6 +79,11 @@ export default {
 
         store,
         rawFootageDriveFolder: RAW_FOOTAGE_DRIVE_FOLDER,
+
+        methodOptions: [
+            ...METHOD_OPTIONS.map(value => ({ value, label: value })),
+            { value: 'Custom', label: 'Custom...' },
+        ],
     }),
 
     computed: {
@@ -113,6 +130,12 @@ export default {
                 level.name.toLowerCase().includes(query) ||
                 level.id.toLowerCase().includes(query)
             );
+        },
+
+        submissionMethod() {
+            return this.methodChoice === 'Custom'
+                ? this.methodCustom.trim()
+                : this.methodChoice;
         },
 
         rawFootageName() {
@@ -361,11 +384,35 @@ export default {
                         </div>
 
                         <label class="submit-field">
-                            <span>Hz / Device</span>
+                            <span>FPS <small class="submit-required-text">required</small></span>
                             <input
-                                v-model="hz"
+                                v-model.trim="hz"
                                 type="text"
-                                placeholder="240, COS, CBF..."
+                                placeholder="60 / 240 / CBF..."
+                            >
+                        </label>
+
+                        <div class="submit-field">
+                            <span>Method <small class="submit-required-text">required</small></span>
+
+                            <SclvnSelect
+                                v-model="methodChoice"
+                                :options="methodOptions"
+                                placeholder="Select a method"
+                                searchable
+                                search-placeholder="Search methods..."
+                            ></SclvnSelect>
+                        </div>
+
+                        <label
+                            v-if="methodChoice === 'Custom'"
+                            class="submit-field"
+                        >
+                            <span>Custom Method <small class="submit-required-text">required</small></span>
+                            <input
+                                v-model.trim="methodCustom"
+                                type="text"
+                                placeholder="Enter another method"
                             >
                         </label>
 
@@ -389,7 +436,7 @@ export default {
                         </label>
 
                         <div class="submit-field submit-field-full">
-                            <span>Raw Footage</span>
+                            <span>Raw Footage <small class="submit-required-text">required</small></span>
 
                             <label class="submit-file-drop">
                                 <input
@@ -566,6 +613,8 @@ export default {
 
             this.percent = 100;
             this.hz = '';
+            this.methodChoice = '';
+            this.methodCustom = '';
             this.mobile = false;
             this.link = '';
             this.note = '';
@@ -768,6 +817,29 @@ export default {
                 return;
             }
 
+            if (!this.hz.trim()) {
+                this.error = 'FPS là bắt buộc.';
+                return;
+            }
+
+            if (!this.methodChoice) {
+                this.error = 'Vui lòng chọn Method.';
+                return;
+            }
+
+            if (
+                this.methodChoice === 'Custom' &&
+                !this.methodCustom.trim()
+            ) {
+                this.error = 'Vui lòng nhập Custom Method.';
+                return;
+            }
+
+            if (!this.rawFootageFile) {
+                this.error = 'Raw Footage là bắt buộc.';
+                return;
+            }
+
             if (this.recordType === 'completion') {
                 if (!this.levelId) {
                     this.error = 'Vui lòng chọn level.';
@@ -801,9 +873,8 @@ export default {
                     await this.checkVerificationLevelId();
                 }
 
-                const rawFootage = this.rawFootageFile
-                    ? await this.uploadRawFootage(this.rawFootageFile)
-                    : null;
+                const rawFootage =
+                    await this.uploadRawFootage(this.rawFootageFile);
 
                 const targetLevelId =
                     this.recordType === 'verification'
@@ -830,6 +901,7 @@ export default {
                             : Number(this.percent),
 
                     hz: this.hz.trim(),
+                    method: this.submissionMethod,
                     mobile: this.mobile,
 
                     link: this.link.trim(),

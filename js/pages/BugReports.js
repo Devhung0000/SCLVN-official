@@ -81,12 +81,6 @@ export default {
                     </div>
 
                     <div class="admin-header-actions">
-                        <router-link
-                            class="admin-refresh-btn admin-nav-btn"
-                            to="/admin"
-                        >
-                            Record Review
-                        </router-link>
 
                         <button
                             class="admin-refresh-btn"

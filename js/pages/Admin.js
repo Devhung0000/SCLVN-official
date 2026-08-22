@@ -64,6 +64,8 @@ export default {
         },
 
         pageError: '',
+        copyToast: '',
+        copyToastTimer: null,
         store,
     }),
 
@@ -106,12 +108,6 @@ export default {
                     </div>
 
                     <div class="admin-header-actions">
-                        <router-link
-                            class="admin-refresh-btn admin-nav-btn"
-                            to="/admin/bug-reports"
-                        >
-                            Bug Reports
-                        </router-link>
 
                         <span class="admin-count">
                             {{ pendingCount }} pending
@@ -192,9 +188,24 @@ export default {
 
                                     <h2>{{ sub.levelName }}</h2>
 
-                                    <p class="admin-record-id">
-                                        ID: {{ sub.levelId }}
-                                    </p>
+                                    <div class="admin-record-id-row">
+                                        <p class="admin-record-id">
+                                            ID: {{ sub.levelId }}
+                                        </p>
+
+                                        <button
+                                            class="admin-copy-id-btn"
+                                            type="button"
+                                            title="Copy Level ID"
+                                            aria-label="Copy Level ID"
+                                            @click="copyLevelId(sub.levelId)"
+                                        >
+                                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                                <rect x="9" y="9" width="11" height="11" rx="2"></rect>
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <div class="admin-record-head-pills">
@@ -251,8 +262,21 @@ export default {
                                 </label>
 
                                 <label class="admin-field">
-                                    <span>Hz / Device submitted</span>
-                                    <input v-model="sub.hz" type="text">
+                                    <span>FPS <small>required</small></span>
+                                    <input
+                                        v-model.trim="sub.hz"
+                                        type="text"
+                                        placeholder="60 / 240 / CBF..."
+                                    >
+                                </label>
+
+                                <label class="admin-field">
+                                    <span>Method <small>required</small></span>
+                                    <input
+                                        v-model.trim="sub.method"
+                                        type="text"
+                                        placeholder="Alternate / Jitter / Rake..."
+                                    >
                                 </label>
 
                                 <label class="admin-mobile-card">
@@ -265,6 +289,29 @@ export default {
                                     <span>Video Link <small>optional</small></span>
                                     <input v-model="sub.link" type="text">
                                 </label>
+
+                                <div class="admin-field admin-field-full">
+                                    <span>Raw Footage <small class="admin-required-text">required</small></span>
+
+                                    <a
+                                        v-if="sub.rawFootage && sub.rawFootage.link"
+                                        :href="sub.rawFootage.link"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="admin-raw-footage-card"
+                                    >
+                                        <span>Open Raw Footage</span>
+                                        <small>{{ sub.rawFootage.name || 'Google Drive video' }}</small>
+                                    </a>
+
+                                    <div
+                                        v-else
+                                        class="admin-raw-footage-card is-missing"
+                                    >
+                                        <span>Missing Raw Footage</span>
+                                        <small>Legacy submission — approval is blocked until footage is provided.</small>
+                                    </div>
+                                </div>
                             </div>
 
                             <section
@@ -492,16 +539,6 @@ export default {
                                     >
                                         View video
                                     </a>
-
-                                    <a
-                                        v-if="sub.rawFootage && sub.rawFootage.link"
-                                        :href="sub.rawFootage.link"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="admin-video-btn"
-                                    >
-                                        Raw Footage
-                                    </a>
                                 </div>
 
                                 <div class="admin-decision-actions">
@@ -515,7 +552,7 @@ export default {
                                     </button>
 
                                     <button
-                                        class="admin-primary-btn"
+                                        class="admin-primary-btn admin-approve-btn"
                                         type="button"
                                         :disabled="busyId === sub.id || isOwnSubmission(sub)"
                                         @click="requestDecision('approve', sub)"
@@ -705,7 +742,7 @@ export default {
                         <button
                             v-else
                             type="button"
-                            class="admin-primary-btn"
+                            class="admin-primary-btn admin-approve-btn"
                             @click="confirmDecision"
                         >
                             Yes, Approve
@@ -713,6 +750,12 @@ export default {
                     </div>
                 </section>
             </div>
+
+            <transition name="admin-copy-toast-fade">
+                <div v-if="copyToast" class="admin-copy-toast">
+                    {{ copyToast }}
+                </div>
+            </transition>
         </main>
     `,
 
@@ -954,6 +997,41 @@ export default {
                 this.pageError = 'Không tải được moderation queue: ' + (e.message || '');
             } finally {
                 this.loading = false;
+            }
+        },
+
+        async copyLevelId(id) {
+            if (id == null || String(id).trim() === '') return;
+
+            try {
+                await navigator.clipboard.writeText(String(id));
+                this.copyToast = 'ID Copied!';
+
+                if (this.copyToastTimer) {
+                    clearTimeout(this.copyToastTimer);
+                }
+
+                this.copyToastTimer = setTimeout(() => {
+                    this.copyToast = '';
+                    this.copyToastTimer = null;
+                }, 1500);
+            } catch (error) {
+                console.error(error);
+                this.copyToast = 'Copy failed';
+            }
+        },
+
+        validateRequiredSubmissionFields(sub) {
+            if (!String(sub.hz || '').trim()) {
+                throw new Error('FPS là bắt buộc.');
+            }
+
+            if (!String(sub.method || '').trim()) {
+                throw new Error('Method là bắt buộc.');
+            }
+
+            if (!sub.rawFootage?.link) {
+                throw new Error('Raw Footage là bắt buộc.');
             }
         },
 
@@ -1313,6 +1391,8 @@ export default {
             this.pageError = '';
 
             try {
+                this.validateRequiredSubmissionFields(sub);
+
                 if (this.submissionType(sub) === 'verification') {
                     await this.approveVerification(sub);
                 } else {
